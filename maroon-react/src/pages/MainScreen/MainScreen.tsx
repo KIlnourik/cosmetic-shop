@@ -36,14 +36,13 @@ function MainScreen(): JSX.Element {
         <p className="bestsellers__slogan">Легендарные продукты, завоевавшие любовь наших клиентов</p>
         <a href="" className="besstellers__button button">Смотреть все</a>
 
-        <div className="slider__wrapper">
-
+        <div className="slider">
           <ul className="slider__list">
-            <li className="slider__item">
-              <div className="slider__card bestsellers">
-                <h3 className="slider__card-title">High</h3>
-                <p className="slider__card-desc">крем для лица</p>
-                <a href="" className="slider__card-link">Подробнее</a>
+            <li className="slider__item bestsellers">
+              <div className="bestsellers__card">
+                <h3 className="bestsellers__card-title">High</h3>
+                <p className="bestsellers__card-desc">крем для лица</p>
+                <a href="" className="bestsellers__card-link">Подробнее</a>
               </div>
             </li>
           </ul>
@@ -54,7 +53,6 @@ function MainScreen(): JSX.Element {
               </svg>
             </button>
             <button className="slider__btn slider__btn--next">
-
             </button>
           </div>
         </div>
@@ -70,8 +68,8 @@ function MainScreen(): JSX.Element {
       <section className="care-form">
         <h2 className="care-form__title">Индивидуальный уход</h2>
         <p className="care-form__desc">Заполните анкету, и мы подберем уход, подходящий именно вам, учитывая ваш образ
-          жизни,
-          место жительства и другие факторы. </p>
+          жизни,место жительства и другие факторы.
+        </p>
         <a href="" className="care-form__button button">Заполнить анкету</a>
         <img src="./img/mobile/care-mob@1x.jpg" alt="" className="care-form__img" />
       </section>
@@ -79,7 +77,8 @@ function MainScreen(): JSX.Element {
       <section className="about">
         <h2 className="about__title visually-hidden">Наша история</h2>
         <p className="about__desc">“Мы стремимся сделать уход за кожей доступным и приятным ритуалом для всех, кто хочет
-          заботиться о себе и своем теле” </p>
+          заботиться о себе и своем теле”
+        </p>
         <a href="" className="about__button button">Наша история</a>
       </section>
 
@@ -114,8 +113,9 @@ function MainScreen(): JSX.Element {
         <ul className="contacts__list">
           <li className="contacts__item">
             <h3 className="contacts__title">Адрес</h3>
-            <p className="contacts__desc">Санкт-Петербург,
-              ул. Большая Конюшенная, 19</p>
+            <p className="contacts__desc">
+              Санкт-Петербург,ул. Большая Конюшенная, 19
+            </p>
           </li>
           <li className="contacts__item">
             <h3 className="contacts__title">Телефон</h3>
@@ -127,36 +127,36 @@ function MainScreen(): JSX.Element {
           </li>
         </ul>
         <ul className="social">
-            <li className="social__item">
-              <a href="" className="social__link">
-                <svg className="social__icon">
-                  <use xlinkHref="./img/sprite.svg#facebook-icon"></use>
-                </svg>
-                <span className="social__name visually-hidden">Фейсбук</span>
-              </a>
-            </li>
-            <li className="social__item">
-              <a href="" className="social__link">
-                <svg className="social__icon">
-                  <use xlinkHref="./img/sprite.svg#instagram-icon"></use>
-                </svg>
-                <span className="social__name visually-hidden">Инстаграм</span>
-              </a>
-            </li>
-            <li className="social__item">
-              <a href="" className="social__link">
-                <svg className="social__icon">
-                  <use xlinkHref="./img/sprite.svg#twitter-icon"></use>
-                </svg>
-                <span className="social__name visually-hidden">Твиттер</span>
-              </a>
-            </li>
-          </ul>
+          <li className="social__item">
+            <a href="" className="social__link">
+              <svg className="social__icon">
+                <use xlinkHref="./img/sprite.svg#facebook-icon"></use>
+              </svg>
+              <span className="social__name visually-hidden">Фейсбук</span>
+            </a>
+          </li>
+          <li className="social__item">
+            <a href="" className="social__link">
+              <svg className="social__icon">
+                <use xlinkHref="./img/sprite.svg#instagram-icon"></use>
+              </svg>
+              <span className="social__name visually-hidden">Инстаграм</span>
+            </a>
+          </li>
+          <li className="social__item">
+            <a href="" className="social__link">
+              <svg className="social__icon">
+                <use xlinkHref="./img/sprite.svg#twitter-icon"></use>
+              </svg>
+              <span className="social__name visually-hidden">Твиттер</span>
+            </a>
+          </li>
+        </ul>
         <div className="contacts__map-wrapper"></div>
       </section>
 
     </main>
-  )
+  );
 }
 
 export default MainScreen;

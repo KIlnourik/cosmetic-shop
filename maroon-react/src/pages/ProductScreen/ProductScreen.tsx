@@ -53,6 +53,6 @@ function ProductScreen(): JSX.Element {
       </section>
     </main>
   );
-};
+}
 
 export default ProductScreen;
