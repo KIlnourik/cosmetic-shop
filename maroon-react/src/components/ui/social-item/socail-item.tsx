@@ -2,7 +2,7 @@ type Props = {
   social: string;
 }
 
-function NavSocialItem({social}: Props): JSX.Element {
+function SocialItem({social}: Props): JSX.Element {
   return (
     <li className="social__item">
       <a href="" className="social__link">
@@ -15,4 +15,4 @@ function NavSocialItem({social}: Props): JSX.Element {
   );
 }
 
-export default NavSocialItem;
+export default SocialItem;
