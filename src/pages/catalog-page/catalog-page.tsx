@@ -28,15 +28,15 @@ function CatalogPage(): JSX.Element {
                       <div className="accordion__content">
                         <ul className="filter__list accordion__inner">
                           <li className="filter__item">
-                            <input className="visually-hidden" type="checkbox" id="filter-face-care-0" name="face-care" value="cream" checked />
+                            <input className="visually-hidden" type="checkbox" id="filter-face-care-0" name="face-care" value="cream" defaultChecked />
                             <label className="filter__checkbox-label" htmlFor="filter-face-care-0">Крема</label>
                           </li>
                           <li className="filter__item">
-                            <input className="visually-hidden" type="checkbox" id="filter-face-care-1" name="face-care" value="serum" checked />
+                            <input className="visually-hidden" type="checkbox" id="filter-face-care-1" name="face-care" value="serum" defaultChecked />
                             <label className="filter__checkbox-label" htmlFor="filter-face-care-1">Сыворотки</label>
                           </li>
                           <li className="filter__item">
-                            <input className="visually-hidden" type="checkbox" id="filter-face-care-2" name="face-care" value="mask" checked />
+                            <input className="visually-hidden" type="checkbox" id="filter-face-care-2" name="face-care" value="mask" defaultChecked />
                             <label className="filter__checkbox-label" htmlFor="filter-face-care-2">Маски</label>
                           </li>
                           <li className="filter__item">
@@ -48,7 +48,7 @@ function CatalogPage(): JSX.Element {
                             <label className="filter__checkbox-label" htmlFor="filter-face-care-4">Тоники</label>
                           </li>
                           <li className="filter__item">
-                            <input className="visually-hidden" type="checkbox" id="filter-face-care-5" name="face-care" value="powder" checked />
+                            <input className="visually-hidden" type="checkbox" id="filter-face-care-5" name="face-care" value="powder" defaultChecked />
                             <label className="filter__checkbox-label" htmlFor="filter-face-care-5">Пудры</label>
                           </li>
                         </ul>
@@ -66,7 +66,7 @@ function CatalogPage(): JSX.Element {
                             <label className="filter__checkbox-label" htmlFor="filter-body-care-0">Крема</label>
                           </li>
                           <li className="filter__item">
-                            <input className="visually-hidden" type="checkbox" id="filter-body-care-1" name="body-care" value="oil" checked />
+                            <input className="visually-hidden" type="checkbox" id="filter-body-care-1" name="body-care" value="oil" defaultChecked />
                             <label className="filter__checkbox-label" htmlFor="filter-body-care-1">Масла</label>
                           </li>
                           <li className="filter__item">
@@ -74,11 +74,11 @@ function CatalogPage(): JSX.Element {
                             <label className="filter__checkbox-label" htmlFor="filter-body-care-2">Скрабы</label>
                           </li>
                           <li className="filter__item">
-                            <input className="visually-hidden" type="checkbox" id="filter-body-care-3" name="body-care" value="soap" checked />
+                            <input className="visually-hidden" type="checkbox" id="filter-body-care-3" name="body-care" value="soap" defaultChecked />
                             <label className="filter__checkbox-label" htmlFor="filter-body-care-3">Мыло</label>
                           </li>
                           <li className="filter__item">
-                            <input className="visually-hidden" type="checkbox" id="filter-body-care-4" name="body-care" value="bomb" checked />
+                            <input className="visually-hidden" type="checkbox" id="filter-body-care-4" name="body-care" value="bomb" defaultChecked />
                             <label className="filter__checkbox-label" htmlFor="filter-body-care-4">Бомбочки для ванны</label>
                           </li>
                           <li className="filter__item">
@@ -100,7 +100,7 @@ function CatalogPage(): JSX.Element {
                             <label className="filter__checkbox-label" htmlFor="filter-skin-type-0">Нормальная</label>
                           </li>
                           <li className="filter__item">
-                            <input className="visually-hidden" type="checkbox" id="filter-skin-type-1" name="skin-type" value="dry" checked />
+                            <input className="visually-hidden" type="checkbox" id="filter-skin-type-1" name="skin-type" value="dry" defaultChecked />
                             <label className="filter__checkbox-label" htmlFor="filter-skin-type-1">Сухая</label>
                           </li>
                           <li className="filter__item">
@@ -108,7 +108,7 @@ function CatalogPage(): JSX.Element {
                             <label className="filter__checkbox-label" htmlFor="filter-skin-type-2">Жирная</label>
                           </li>
                           <li className="filter__item">
-                            <input className="visually-hidden" type="checkbox" id="filter-skin-type-3" name="skin-type" value="combined" checked />
+                            <input className="visually-hidden" type="checkbox" id="filter-skin-type-3" name="skin-type" value="combined" defaultChecked />
                             <label className="filter__checkbox-label" htmlFor="filter-skin-type-3">Комбинированная</label>
                           </li>
                         </ul>
