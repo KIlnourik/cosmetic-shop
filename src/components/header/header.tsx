@@ -1,91 +1,96 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import Logo from '../logo/logo';
+import { useEffect, useRef } from 'react';
 
 
 function Header(): JSX.Element {
-  const header = document.querySelector(`.header`);
-  const menu = document.querySelector(`.navigation`);
-  const button = document.querySelector(`.header__menu-button`);
-  const overlay = document.querySelector(`.navigation__overlay`);
+  const headerRef = useRef<HTMLElement | null>(null);
+  const menuRef = useRef<HTMLElement | null>(null);
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
+  const overlayRef = useRef<HTMLDivElement | null>(null);
 
   const isScrolled = (): boolean => {
     const pxAmount = 0;
     const scrollTop = document.documentElement.scrollTop;
-
     return scrollTop > pxAmount;
   };
 
   const setMenuHeight = (): void => {
-    if (menu && header) {
-      menu.removeAttribute(`style`);
+    if (menuRef.current && headerRef.current) {
+      menuRef.current.removeAttribute(`style`);
 
-      const deltaHeight = document.body.offsetHeight - header.offsetHeight;
-      const menuHeight = menu.offsetHeight;
+      const deltaHeight = document.body.offsetHeight - headerRef.current.offsetHeight;
+      const menuHeight = menuRef.current.offsetHeight;
 
       if (deltaHeight < menuHeight) {
-        menu.setAttribute(`style`, `height: ${deltaHeight}px`);
+        menuRef.current.setAttribute(`style`, `height: ${deltaHeight}px`);
       }
     }
-  }
-
-  const onEscPress = (evt: KeyboardEvent): void => {
-    if (evt.code === '27') {
-      closeHeaderMenu();
-    }
-  }
+  };
 
   const openHeaderMenu = (): void => {
-    if (button && overlay && header && menu) {
-      button.removeEventListener(`click`, openHeaderMenu);
-      button.addEventListener(`click`, closeHeaderMenu);
-      overlay.addEventListener(`click`, closeHeaderMenu);
+    if (buttonRef.current && overlayRef.current && headerRef.current && menuRef.current) {
+      buttonRef.current.removeEventListener(`click`, openHeaderMenu);
+      buttonRef.current.addEventListener(`click`, closeHeaderMenu);
+      overlayRef.current.addEventListener(`click`, closeHeaderMenu);
 
       document.addEventListener(`keydown`, onEscPress);
 
       document.body.classList.add(`no-scroll`);
-      header.classList.add(`header_colored`);
-      menu.classList.add(`navigation_open`);
-      button.classList.add(`header__menu-button_active`);
+      headerRef.current.classList.add(`header_colored`);
+      menuRef.current.classList.add(`navigation_open`);
+      buttonRef.current.classList.add(`header__menu-button_active`);
 
       setMenuHeight();
     }
-  }
+  };
 
   const closeHeaderMenu = (): void => {
-    if (button && overlay && header && menu) {
-      button.removeEventListener(`click`, closeHeaderMenu);
-      button.addEventListener(`click`, openHeaderMenu);
-      overlay.removeEventListener(`click`, closeHeaderMenu);
+    if (buttonRef.current && overlayRef.current && headerRef.current && menuRef.current) {
+      buttonRef.current.removeEventListener(`click`, closeHeaderMenu);
+      buttonRef.current.addEventListener(`click`, openHeaderMenu);
+      overlayRef.current.removeEventListener(`click`, closeHeaderMenu);
 
       document.removeEventListener(`keydown`, onEscPress);
 
       document.body.classList.remove(`no-scroll`);
       if (!isScrolled()) {
-        header.classList.remove(`header_colored`);
+        headerRef.current.classList.remove(`header_colored`);
       }
-      menu.classList.remove(`navigation_open`);
-      button.classList.remove(`header__menu-button_active`);
+      menuRef.current.classList.remove(`navigation_open`);
+      buttonRef.current.classList.remove(`header__menu-button_active`);
     }
   };
 
-  if (menu && header) {
-    window.addEventListener(`scroll`, () => {
-      if (isScrolled()) {
-        header.classList.add(`header_colored`);
-      } else {
-        header.classList.remove(`header_colored`);
-      }
-    });
-    closeHeaderMenu();
-  }
+  const onEscPress = (evt: KeyboardEvent): void => {
+    if (evt.code === '27') {
+      closeHeaderMenu();
+    }
+  };
+
+  useEffect(() => {
+    if (menuRef.current && headerRef.current) {
+      window.addEventListener(`scroll`, () => {
+        if (isScrolled()) {
+          headerRef.current?.classList.add(`header_colored`);
+        } else {
+          headerRef.current?.classList.remove(`header_colored`);
+        }
+      });
+      closeHeaderMenu();
+    }
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [headerRef, menuRef]);
+
 
   return (
-    <header className="header header_transparent">
-      <button className="header__menu-button" aria-label="Меню"></button>
+    <header className="header header_transparent" ref={headerRef}>
+      <button className="header__menu-button" aria-label="Меню" ref={buttonRef}></button>
       <Logo />
-      <nav className="header__navigation navigation">
-        <div className="navigation__overlay"></div>
+      <nav className="header__navigation navigation" ref={menuRef}>
+        <div className="navigation__overlay" ref={overlayRef}></div>
         <div className="navigation__content">
           <ul className="navigation__list">
             <li className="navigation__item">
