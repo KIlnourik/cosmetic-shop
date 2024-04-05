@@ -3,9 +3,9 @@ import { Helmet } from "react-helmet-async";
 function CatalogPage(): JSX.Element {
   return (
     <>
-    <Helmet>
-      Maroon: Каталог
-    </Helmet>
+      <Helmet>
+        <title>Maroon: Каталог</title>
+      </Helmet>
       <main className="main main_top-spaced catalog-main">
         <section className="catalog">
           <div className="catalog-head">
@@ -125,55 +125,60 @@ function CatalogPage(): JSX.Element {
           </div>
           <div className="catalog__wrapper wrapper">
             <ul className="catalog__list">
-              <li className="catalog__item product"><a className="product__link" href="#">
-                <picture>
-                  <source type="image/webp" media="(min-width: 1200px)"
-                    srcSet="img/catalog/high@1x.webp 1x, img/catalog/high@2x.webp 2x" />
-                  <source type="image/jpeg" media="(min-width: 1200px)"
-                    srcSet="img/catalog/high@1x.jpg 1x, img/catalog/high@2x.jpg 2x" />
-                  <source type="image/webp" media="(min-width: 768px)"
-                    srcSet="img/catalog/high-lap@1x.webp 1x, img/catalog/high-lap@2x.webp 2x" />
-                  <source type="image/jpeg" media="(min-width: 768px)"
-                    srcSet="img/catalog/high-lap@1x.jpg 1x, img/catalog/high-lap@2x.jpg 2x" />
-                  <source type="image/webp" srcSet="img/catalog/high-mob@1x.webp 1x, img/catalog/high-mob@2x.webp 2x" />
-                  <source type="image/jpeg" srcSet="img/catalog/high-mob@1x.jpg 1x, img/catalog/high-mob@2x.jpg 2x" /><img
-                    className="product__image" src="img/catalog/high@1x.jpg" width="270" height="350" alt="High - крем для лица" />
-                </picture>
-                <div className="product__wrapper">
-                  <div className="product__text">
-                    <h3 className="product__title">High</h3><span className="product__price">990 ₽</span>
+              <li className="catalog__item product">
+                <a className="product__link" href="#">
+                  <picture>
+                    <source type="image/webp" media="(min-width: 1200px)"
+                      srcSet="img/catalog/high@1x.webp 1x, img/catalog/high@2x.webp 2x" />
+                    <source type="image/jpeg" media="(min-width: 1200px)"
+                      srcSet="img/catalog/high@1x.jpg 1x, img/catalog/high@2x.jpg 2x" />
+                    <source type="image/webp" media="(min-width: 768px)"
+                      srcSet="img/catalog/high-lap@1x.webp 1x, img/catalog/high-lap@2x.webp 2x" />
+                    <source type="image/jpeg" media="(min-width: 768px)"
+                      srcSet="img/catalog/high-lap@1x.jpg 1x, img/catalog/high-lap@2x.jpg 2x" />
+                    <source type="image/webp" srcSet="img/catalog/high-mob@1x.webp 1x, img/catalog/high-mob@2x.webp 2x" />
+                    <source type="image/jpeg" srcSet="img/catalog/high-mob@1x.jpg 1x, img/catalog/high-mob@2x.jpg 2x" /><img
+                      className="product__image" src="img/catalog/high@1x.jpg" width="270" height="350" alt="High - крем для лица" />
+                  </picture>
+                  <div className="product__wrapper">
+                    <div className="product__text">
+                      <h3 className="product__title">High</h3><span className="product__price">990 ₽</span>
+                    </div>
+                    <div className="product__text">
+                      <div className="product__description">крем для лица</div>
+                      <div className="product__description">50ml</div>
+                    </div>
                   </div>
-                  <div className="product__text">
-                    <div className="product__description">крем для лица</div>
-                    <div className="product__description">50ml</div>
+                </a></li>
+              <li className="catalog__item product">
+                <a className="product__link" href="#">
+                  <picture>
+                    <source type="image/webp" media="(min-width: 1200px)"
+                      srcSet="img/catalog/rest@1x.webp 1x, img/catalog/rest@2x.webp 2x" />
+                    <source type="image/jpeg" media="(min-width: 1200px)"
+                      srcSet="img/catalog/rest@1x.jpg 1x, img/catalog/rest@2x.jpg 2x" />
+                    <source type="image/webp" media="(min-width: 768px)"
+                      srcSet="img/catalog/rest-lap@1x.webp 1x, img/catalog/rest-lap@2x.webp 2x" />
+                    <source type="image/jpeg" media="(min-width: 768px)"
+                      srcSet="img/catalog/rest-lap@1x.jpg 1x, img/catalog/rest-lap@2x.jpg 2x" />
+                    <source type="image/webp" srcSet="img/catalog/rest-mob@1x.webp 1x, img/catalog/rest-mob@2x.webp 2x" />
+                    <source type="image/jpeg" srcSet="img/catalog/rest-mob@1x.jpg 1x, img/catalog/rest-mob@2x.jpg 2x" />
+                    <img
+                      className="product__image" src="img/catalog/rest@1x.jpg" width="270" height="350"
+                      alt="Rest - минеральная пудра" />
+                  </picture>
+                  <div className="product__wrapper">
+                    <div className="product__text">
+                      <h3 className="product__title">Rest</h3>
+                      <span className="product__price">690 ₽</span>
+                    </div>
+                    <div className="product__text">
+                      <div className="product__description">минеральная пудра</div>
+                      <div className="product__description">20g</div>
+                    </div>
                   </div>
-                </div>
-              </a></li>
-              <li className="catalog__item product"><a className="product__link" href="#">
-                <picture>
-                  <source type="image/webp" media="(min-width: 1200px)"
-                    srcSet="img/catalog/rest@1x.webp 1x, img/catalog/rest@2x.webp 2x" />
-                  <source type="image/jpeg" media="(min-width: 1200px)"
-                    srcSet="img/catalog/rest@1x.jpg 1x, img/catalog/rest@2x.jpg 2x" />
-                  <source type="image/webp" media="(min-width: 768px)"
-                    srcSet="img/catalog/rest-lap@1x.webp 1x, img/catalog/rest-lap@2x.webp 2x" />
-                  <source type="image/jpeg" media="(min-width: 768px)"
-                    srcSet="img/catalog/rest-lap@1x.jpg 1x, img/catalog/rest-lap@2x.jpg 2x" />
-                  <source type="image/webp" srcSet="img/catalog/rest-mob@1x.webp 1x, img/catalog/rest-mob@2x.webp 2x" />
-                  <source type="image/jpeg" srcSet="img/catalog/rest-mob@1x.jpg 1x, img/catalog/rest-mob@2x.jpg 2x" /><img
-                    className="product__image" src="img/catalog/rest@1x.jpg" width="270" height="350"
-                    alt="Rest - минеральная пудра" />
-                </picture>
-                <div className="product__wrapper">
-                  <div className="product__text">
-                    <h3 className="product__title">Rest</h3><span className="product__price">690 ₽</span>
-                  </div>
-                  <div className="product__text">
-                    <div className="product__description">минеральная пудра</div>
-                    <div className="product__description">20g</div>
-                  </div>
-                </div>
-              </a></li>
+                </a>
+              </li>
               <li className="catalog__item product"><a className="product__link" href="card.html">
                 <picture>
                   <source type="image/webp" media="(min-width: 1200px)"
@@ -554,14 +559,30 @@ function CatalogPage(): JSX.Element {
               </a></li>
             </ul>
             <div className="pagination">
-              <div className="pagination__numbers"><span className="pagination__number"><a className="pagination__number-link pagination__number-link_current" href="#" aria-label="Первая страница">1</a></span><span className="pagination__number"><a className="pagination__number-link" href="#" aria-label="Третья страница (последняя)">3</a></span></div>
-              <div className="pagination__arrows"><a className="pagination__arrow" href="#" aria-label="Предыдущая страница">
-                <svg className="slider-icon" height="12" width="26">
-                  <use xlinkHref="#arrow-left"></use>
-                </svg></a><a className="pagination__arrow" href="#" aria-label="Следующая страница">
+              <div className="pagination__numbers">
+                <span className="pagination__number">
+                  <a className="pagination__number-link pagination__number-link_current" href="#" aria-label="Первая страница">
+                    1
+                  </a>
+                </span>
+                <span className="pagination__number">
+                  <a className="pagination__number-link" href="#" aria-label="Третья страница (последняя)">
+                    3
+                  </a>
+                </span>
+              </div>
+              <div className="pagination__arrows">
+                <a className="pagination__arrow" href="#" aria-label="Предыдущая страница">
+                  <svg className="slider-icon" height="12" width="26">
+                    <use xlinkHref="#arrow-left"></use>
+                  </svg>
+                </a>
+                <a className="pagination__arrow" href="#" aria-label="Следующая страница">
                   <svg className="slider-icon" height="12" width="26">
                     <use xlinkHref="#main-arrow"></use>
-                  </svg></a></div>
+                  </svg>
+                </a>
+              </div>
             </div>
           </div>
         </section>

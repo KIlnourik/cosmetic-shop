@@ -3,7 +3,9 @@ import { Helmet } from "react-helmet-async";
 function MainPage(): JSX.Element {
   return (
     <>
-      <Helmet>Maroon</Helmet>
+      <Helmet>
+        <title>Maroon</title>
+      </Helmet>
       <main className="main main_no-top-spaced">
         <section className="main__block about">
           <div className="about__container">

@@ -4,21 +4,21 @@ function ProductPage(): JSX.Element {
   return (
     <>
       <Helmet>
-        Maroon: ProductName
+        <title>Maroon: ProductName</title>
       </Helmet>
       <main className="main main_top-spaced">
         <section className="card">
           <div className="card__wrapper">
             <div className="card__image-wrapper">
               <picture>
-                <source type="image/webp" media="(min-width: 1200px)" srcSet="img/card@1x.webp 1x, img/card@2x.webp 2x" />
-                <source type="image/jpeg" media="(min-width: 1200px)" srcSet="img/card@1x.jpg 1x, img/card@2x.jpg 2x" />
+                <source type="image/webp" media="(min-width: 1200px)" srcSet="/img/card@1x.webp 1x, /img/card@2x.webp 2x" />
+                <source type="image/jpeg" media="(min-width: 1200px)" srcSet="/img/card@1x.jpg 1x, /img/card@2x.jpg 2x" />
                 <source type="image/webp" media="(min-width: 768px)"
-                  srcSet="img/card-lap@1x.webp 1x, img/card-lap@2x.webp 2x" />
+                  srcSet="/img/card-lap@1x.webp 1x, /img/card-lap@2x.webp 2x" />
                 <source type="image/jpeg" media="(min-width: 768px)"
-                  srcSet="img/card-lap@1x.jpg 1x, img/card-lap@2x.jpg 2x" />
-                <source type="image/webp" srcSet="img/card-mob@1x.webp 1x, img/card-mob@2x.webp 2x" />
-                <source type="image/jpeg" srcSet="img/card-mob@1x.jpg 1x, img/card-mob@2x.jpg 2x" /><img className="card__image" src="img/card@1x.jpg" width="630" height="647" alt="Rose - крем для лица" />
+                  srcSet="/img/card-lap@1x.jpg 1x, /img/card-lap@2x.jpg 2x" />
+                <source type="image/webp" srcSet="/img/card-mob@1x.webp 1x, /img/card-mob@2x.webp 2x" />
+                <source type="image/jpeg" srcSet="/img/card-mob@1x.jpg 1x, /img/card-mob@2x.jpg 2x" /><img className="card__image" src="/img/card@1x.jpg" width="630" height="647" alt="Rose - крем для лица" />
               </picture>
             </div>
             <div className="card__content">
@@ -56,7 +56,7 @@ function ProductPage(): JSX.Element {
                   <ul className="card__option-list">
                     <li className="card__option-item">
                       <input className="card__input-radio visually-hidden" id="50ml" type="radio" name="volume" value="50ml"
-                        checked />
+                        defaultChecked />
                       <label className="card__radio" htmlFor="50ml">50ml</label>
                     </li>
                     <li className="card__option-item">
@@ -79,16 +79,16 @@ function ProductPage(): JSX.Element {
               <li className="catalog-history__item product"><a className="product__link" href="#">
                 <picture>
                   <source type="image/webp" media="(min-width: 1200px)"
-                    srcSet="img/catalog/clean@1x.webp 1x, img/catalog/clean@2x.webp 2x" />
+                    srcSet="/img/catalog/clean@1x.webp 1x, /img/catalog/clean@2x.webp 2x" />
                   <source type="image/jpeg" media="(min-width: 1200px)"
-                    srcSet="img/catalog/clean@1x.jpg 1x, img/catalog/clean@2x.jpg 2x" />
+                    srcSet="/img/catalog/clean@1x.jpg 1x, /img/catalog/clean@2x.jpg 2x" />
                   <source type="image/webp" media="(min-width: 768px)"
-                    srcSet="img/catalog/clean-lap@1x.webp 1x, img/catalog/clean-lap@2x.webp 2x" />
+                    srcSet="/img/catalog/clean-lap@1x.webp 1x, /img/catalog/clean-lap@2x.webp 2x" />
                   <source type="image/jpeg" media="(min-width: 768px)"
-                    srcSet="img/catalog/clean-lap@1x.jpg 1x, img/catalog/clean-lap@2x.jpg 2x" />
-                  <source type="image/webp" srcSet="img/catalog/clean-mob@1x.webp 1x, img/catalog/clean-mob@2x.webp 2x" />
-                  <source type="image/jpeg" srcSet="img/catalog/clean-mob@1x.jpg 1x, img/catalog/clean-mob@2x.jpg 2x" /><img
-                    className="product__image" src="img/catalog/clean@1x.jpg" width="270" height="350"
+                    srcSet="/img/catalog/clean-lap@1x.jpg 1x, /img/catalog/clean-lap@2x.jpg 2x" />
+                  <source type="image/webp" srcSet="/img/catalog/clean-mob@1x.webp 1x, /img/catalog/clean-mob@2x.webp 2x" />
+                  <source type="image/jpeg" srcSet="/img/catalog/clean-mob@1x.jpg 1x, /img/catalog/clean-mob@2x.jpg 2x" /><img
+                    className="product__image" src="/img/catalog/clean@1x.jpg" width="270" height="350"
                     alt="Clean - маска для лица" />
                 </picture>
                 <div className="product__wrapper">
@@ -104,16 +104,16 @@ function ProductPage(): JSX.Element {
               <li className="catalog-history__item product"><a className="product__link" href="#">
                 <picture>
                   <source type="image/webp" media="(min-width: 1200px)"
-                    srcSet="img/catalog/lotos@1x.webp 1x, img/catalog/lotos@2x.webp 2x" />
+                    srcSet="/img/catalog/lotos@1x.webp 1x, /img/catalog/lotos@2x.webp 2x" />
                   <source type="image/jpeg" media="(min-width: 1200px)"
-                    srcSet="img/catalog/lotos@1x.jpg 1x, img/catalog/lotos@2x.jpg 2x" />
+                    srcSet="/img/catalog/lotos@1x.jpg 1x, /img/catalog/lotos@2x.jpg 2x" />
                   <source type="image/webp" media="(min-width: 768px)"
-                    srcSet="img/catalog/lotos-lap@1x.webp 1x, img/catalog/lotos-lap@2x.webp 2x" />
+                    srcSet="/img/catalog/lotos-lap@1x.webp 1x, /img/catalog/lotos-lap@2x.webp 2x" />
                   <source type="image/jpeg" media="(min-width: 768px)"
-                    srcSet="img/catalog/lotos-lap@1x.jpg 1x, img/catalog/lotos-lap@2x.jpg 2x" />
-                  <source type="image/webp" srcSet="img/catalog/lotos-mob@1x.webp 1x, img/catalog/lotos-mob@2x.webp 2x" />
-                  <source type="image/jpeg" srcSet="img/catalog/lotos-mob@1x.jpg 1x, img/catalog/lotos-mob@2x.jpg 2x" /><img
-                    className="product__image" src="img/catalog/lotos@1x.jpg" width="270" height="350" alt="Lotos - маска для лица" />
+                    srcSet="/img/catalog/lotos-lap@1x.jpg 1x, /img/catalog/lotos-lap@2x.jpg 2x" />
+                  <source type="image/webp" srcSet="/img/catalog/lotos-mob@1x.webp 1x, /img/catalog/lotos-mob@2x.webp 2x" />
+                  <source type="image/jpeg" srcSet="/img/catalog/lotos-mob@1x.jpg 1x, /img/catalog/lotos-mob@2x.jpg 2x" /><img
+                    className="product__image" src="/img/catalog/lotos@1x.jpg" width="270" height="350" alt="Lotos - маска для лица" />
                 </picture>
                 <div className="product__wrapper">
                   <div className="product__text">
@@ -128,18 +128,18 @@ function ProductPage(): JSX.Element {
               <li className="catalog-history__item product"><a className="product__link" href="#">
                 <picture>
                   <source type="image/webp" media="(min-width: 1200px)"
-                    srcSet="img/catalog/lavender@1x.webp 1x, img/catalog/lavender@2x.webp 2x" />
+                    srcSet="/img/catalog/lavender@1x.webp 1x, /img/catalog/lavender@2x.webp 2x" />
                   <source type="image/jpeg" media="(min-width: 1200px)"
-                    srcSet="img/catalog/lavender@1x.jpg 1x, img/catalog/lavender@2x.jpg 2x" />
+                    srcSet="/img/catalog/lavender@1x.jpg 1x, /img/catalog/lavender@2x.jpg 2x" />
                   <source type="image/webp" media="(min-width: 768px)"
-                    srcSet="img/catalog/lavender-lap@1x.webp 1x, img/catalog/lavender-lap@2x.webp 2x" />
+                    srcSet="/img/catalog/lavender-lap@1x.webp 1x, /img/catalog/lavender-lap@2x.webp 2x" />
                   <source type="image/jpeg" media="(min-width: 768px)"
-                    srcSet="img/catalog/lavender-lap@1x.jpg 1x, img/catalog/lavender-lap@2x.jpg 2x" />
+                    srcSet="/img/catalog/lavender-lap@1x.jpg 1x, /img/catalog/lavender-lap@2x.jpg 2x" />
                   <source type="image/webp"
-                    srcSet="img/catalog/lavender-mob@1x.webp 1x, img/catalog/lavender-mob@2x.webp 2x" />
+                    srcSet="/img/catalog/lavender-mob@1x.webp 1x, /img/catalog/lavender-mob@2x.webp 2x" />
                   <source type="image/jpeg"
-                    srcSet="img/catalog/lavender-mob@1x.jpg 1x, img/catalog/lavender-mob@2x.jpg 2x" /><img
-                    className="product__image" src="img/catalog/lavender@1x.jpg" width="270" height="350"
+                    srcSet="/img/catalog/lavender-mob@1x.jpg 1x, /img/catalog/lavender-mob@2x.jpg 2x" /><img
+                    className="product__image" src="/img/catalog/lavender@1x.jpg" width="270" height="350"
                     alt="Lavender - мыло ручной работы" />
                 </picture>
                 <div className="product__wrapper">
@@ -155,17 +155,17 @@ function ProductPage(): JSX.Element {
               <li className="catalog-history__item product"><a className="product__link" href="#">
                 <picture>
                   <source type="image/webp" media="(min-width: 1200px)"
-                    srcSet="img/catalog/coconut@1x.webp 1x, img/catalog/coconut@2x.webp 2x" />
+                    srcSet="/img/catalog/coconut@1x.webp 1x, /img/catalog/coconut@2x.webp 2x" />
                   <source type="image/jpeg" media="(min-width: 1200px)"
-                    srcSet="img/catalog/coconut@1x.jpg 1x, img/catalog/coconut@2x.jpg 2x" />
+                    srcSet="/img/catalog/coconut@1x.jpg 1x, /img/catalog/coconut@2x.jpg 2x" />
                   <source type="image/webp" media="(min-width: 768px)"
-                    srcSet="img/catalog/coconut-lap@1x.webp 1x, img/catalog/coconut-lap@2x.webp 2x" />
+                    srcSet="/img/catalog/coconut-lap@1x.webp 1x, /img/catalog/coconut-lap@2x.webp 2x" />
                   <source type="image/jpeg" media="(min-width: 768px)"
-                    srcSet="img/catalog/coconut-lap@1x.jpg 1x, img/catalog/coconut-lap@2x.jpg 2x" />
+                    srcSet="/img/catalog/coconut-lap@1x.jpg 1x, /img/catalog/coconut-lap@2x.jpg 2x" />
                   <source type="image/webp"
-                    srcSet="img/catalog/coconut-mob@1x.webp 1x, img/catalog/coconut-mob@2x.webp 2x" />
-                  <source type="image/jpeg" srcSet="img/catalog/coconut-mob@1x.jpg 1x, img/catalog/coconut-mob@2x.jpg 2x" />
-                  <img className="product__image" src="img/catalog/coconut@1x.jpg" width="270" height="350"
+                    srcSet="/img/catalog/coconut-mob@1x.webp 1x, /img/catalog/coconut-mob@2x.webp 2x" />
+                  <source type="image/jpeg" srcSet="/img/catalog/coconut-mob@1x.jpg 1x, /img/catalog/coconut-mob@2x.jpg 2x" />
+                  <img className="product__image" src="/img/catalog/coconut@1x.jpg" width="270" height="350"
                     alt="Coconut - масло для тела" />
                 </picture>
                 <div className="product__wrapper">
