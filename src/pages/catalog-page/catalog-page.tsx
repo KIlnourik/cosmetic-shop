@@ -1,6 +1,15 @@
-import { Helmet } from "react-helmet-async";
+import { Helmet } from 'react-helmet-async';
+import CatalogFilter from '../../components/catalog-filter/catalog-filter';
+import { Product } from '../../types/product';
+import { Filter } from '../../types/types';
 
-function CatalogPage(): JSX.Element {
+type Props = {
+  products: Product[];
+  filters: Filter[];
+}
+
+
+function CatalogPage({ products, filters }: Props): JSX.Element {
   return (
     <>
       <Helmet>
@@ -8,121 +17,7 @@ function CatalogPage(): JSX.Element {
       </Helmet>
       <main className="main main_top-spaced catalog-main">
         <section className="catalog">
-          <div className="catalog-head">
-            <div className="catalog-head__top">
-              <div className="catalog-head__wrapper wrapper">
-                <h1 className="catalog-head__title">Каталог</h1>
-                <button className="catalog-head__button-close" aria-label="Закрыть фильтр" type="button"></button>
-                <button className="catalog-head__button-open" type="button">Фильтр</button>
-              </div>
-            </div>
-            <div className="catalog-head__filter">
-              <div className="wrapper">
-                <form className="filter" action="https://echo.htmlacademy.ru" method="GET">
-                  <div className="filter__inner">
-                    <div className="filter__block accordion filter__block_face-care">
-                      <div className="filter__block-head">
-                        <div className="filter__subtitle">Уход для лица</div>
-                        <button className="filter__accordion-btn accordion__toggler" type="button" aria-label="Раскрыть фильтр"><span className="accordion__toggler-icon"></span></button>
-                      </div>
-                      <div className="accordion__content">
-                        <ul className="filter__list accordion__inner">
-                          <li className="filter__item">
-                            <input className="visually-hidden" type="checkbox" id="filter-face-care-0" name="face-care" value="cream" defaultChecked />
-                            <label className="filter__checkbox-label" htmlFor="filter-face-care-0">Крема</label>
-                          </li>
-                          <li className="filter__item">
-                            <input className="visually-hidden" type="checkbox" id="filter-face-care-1" name="face-care" value="serum" defaultChecked />
-                            <label className="filter__checkbox-label" htmlFor="filter-face-care-1">Сыворотки</label>
-                          </li>
-                          <li className="filter__item">
-                            <input className="visually-hidden" type="checkbox" id="filter-face-care-2" name="face-care" value="mask" defaultChecked />
-                            <label className="filter__checkbox-label" htmlFor="filter-face-care-2">Маски</label>
-                          </li>
-                          <li className="filter__item">
-                            <input className="visually-hidden" type="checkbox" id="filter-face-care-3" name="face-care" value="foam" />
-                            <label className="filter__checkbox-label" htmlFor="filter-face-care-3">Пенки</label>
-                          </li>
-                          <li className="filter__item">
-                            <input className="visually-hidden" type="checkbox" id="filter-face-care-4" name="face-care" value="tonic" />
-                            <label className="filter__checkbox-label" htmlFor="filter-face-care-4">Тоники</label>
-                          </li>
-                          <li className="filter__item">
-                            <input className="visually-hidden" type="checkbox" id="filter-face-care-5" name="face-care" value="powder" defaultChecked />
-                            <label className="filter__checkbox-label" htmlFor="filter-face-care-5">Пудры</label>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div className="filter__block accordion filter__block_body-care">
-                      <div className="filter__block-head">
-                        <div className="filter__subtitle">Уход для тела</div>
-                        <button className="filter__accordion-btn accordion__toggler" type="button" aria-label="Раскрыть фильтр"><span className="accordion__toggler-icon"></span></button>
-                      </div>
-                      <div className="accordion__content">
-                        <ul className="filter__list accordion__inner">
-                          <li className="filter__item">
-                            <input className="visually-hidden" type="checkbox" id="filter-body-care-0" name="body-care" value="cream" />
-                            <label className="filter__checkbox-label" htmlFor="filter-body-care-0">Крема</label>
-                          </li>
-                          <li className="filter__item">
-                            <input className="visually-hidden" type="checkbox" id="filter-body-care-1" name="body-care" value="oil" defaultChecked />
-                            <label className="filter__checkbox-label" htmlFor="filter-body-care-1">Масла</label>
-                          </li>
-                          <li className="filter__item">
-                            <input className="visually-hidden" type="checkbox" id="filter-body-care-2" name="body-care" value="scrub" />
-                            <label className="filter__checkbox-label" htmlFor="filter-body-care-2">Скрабы</label>
-                          </li>
-                          <li className="filter__item">
-                            <input className="visually-hidden" type="checkbox" id="filter-body-care-3" name="body-care" value="soap" defaultChecked />
-                            <label className="filter__checkbox-label" htmlFor="filter-body-care-3">Мыло</label>
-                          </li>
-                          <li className="filter__item">
-                            <input className="visually-hidden" type="checkbox" id="filter-body-care-4" name="body-care" value="bomb" defaultChecked />
-                            <label className="filter__checkbox-label" htmlFor="filter-body-care-4">Бомбочки для ванны</label>
-                          </li>
-                          <li className="filter__item">
-                            <input className="visually-hidden" type="checkbox" id="filter-body-care-5" name="body-care" value="salt" />
-                            <label className="filter__checkbox-label" htmlFor="filter-body-care-5">Соль для ванны</label>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div className="filter__block accordion filter__block_skin-type">
-                      <div className="filter__block-head">
-                        <div className="filter__subtitle">Тип кожи</div>
-                        <button className="filter__accordion-btn accordion__toggler" type="button" aria-label="Раскрыть фильтр"><span className="accordion__toggler-icon"></span></button>
-                      </div>
-                      <div className="accordion__content">
-                        <ul className="filter__list accordion__inner">
-                          <li className="filter__item">
-                            <input className="visually-hidden" type="checkbox" id="filter-skin-type-0" name="skin-type" value="normal" />
-                            <label className="filter__checkbox-label" htmlFor="filter-skin-type-0">Нормальная</label>
-                          </li>
-                          <li className="filter__item">
-                            <input className="visually-hidden" type="checkbox" id="filter-skin-type-1" name="skin-type" value="dry" defaultChecked />
-                            <label className="filter__checkbox-label" htmlFor="filter-skin-type-1">Сухая</label>
-                          </li>
-                          <li className="filter__item">
-                            <input className="visually-hidden" type="checkbox" id="filter-skin-type-2" name="skin-type" value="oily" />
-                            <label className="filter__checkbox-label" htmlFor="filter-skin-type-2">Жирная</label>
-                          </li>
-                          <li className="filter__item">
-                            <input className="visually-hidden" type="checkbox" id="filter-skin-type-3" name="skin-type" value="combined" defaultChecked />
-                            <label className="filter__checkbox-label" htmlFor="filter-skin-type-3">Комбинированная</label>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div className="filter__buttons">
-                      <button className="filter__button" id="filter-submit" type="submit">Применить</button>
-                      <button className="filter__button" id="filter-reset" type="reset">Сбросить</button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
+          <CatalogFilter filters={filters} />
           <div className="catalog__wrapper wrapper">
             <ul className="catalog__list">
               <li className="catalog__item product">

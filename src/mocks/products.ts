@@ -1,7 +1,10 @@
 import { faker } from '@faker-js/faker';
 import { Product, Price } from '../types/product';
-import { FACE_CARE_TYPES, BODY_CARE_TYPES, SKIN_TYPES, NAMES, MEASURES } from '../const';
+import { NAMES, MEASURES } from '../const';
 
+const FACE_CARE_TYPES = ['крема','сыворотки','маски','пенки','тоники','пудры'];
+const BODY_CARE_TYPES = ['крема','масла','скрабы','мыло','бомбочка для ванны','соль для ванны'];
+const SKIN_TYPES = ['нормальная','сухая','жирная','комбинированная'];
 const TYPES = [FACE_CARE_TYPES, BODY_CARE_TYPES];
 
 const getRandomItems = <T>(item: T, length: number): T[] => {
