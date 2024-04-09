@@ -7,6 +7,7 @@ import CatalogPage from '../../pages/catalog-page/catalog-page';
 import ProductPage from '../../pages/product-page/product-page';
 import { products } from '../../mocks/products';
 import { CatalogFilters } from '../../const';
+import NotFoundPage from '../../pages/not-found-page/not-found-page';
 
 function App(): JSX.Element {
   return (
@@ -16,8 +17,9 @@ function App(): JSX.Element {
           <Route path={AppRoute.Root} element={<Layout />}>
             <Route index element={<MainPage />} />
             <Route path={AppRoute.Catalog} element={<CatalogPage products={products}
-            filters={CatalogFilters}/>} />
-            <Route path={AppRoute.Product} element={<ProductPage />} />
+              filters={CatalogFilters} />} />
+            <Route path={AppRoute.Product} element={<ProductPage products={products} />} />
+            <Route path={AppRoute.NotFound} element={<NotFoundPage />} />
           </Route>
         </Routes>
       </BrowserRouter>

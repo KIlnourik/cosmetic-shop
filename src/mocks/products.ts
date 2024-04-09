@@ -2,8 +2,8 @@ import { faker } from '@faker-js/faker';
 import { Product, Price } from '../types/product';
 import { NAMES, MEASURES } from '../const';
 
-const FACE_CARE_TYPES = ['крема','сыворотки','маски','пенки','тоники','пудры'];
-const BODY_CARE_TYPES = ['крема','масла','скрабы','мыло','бомбочка для ванны','соль для ванны'];
+const FACE_CARE_TYPES = ['крем','сыворотка','маска','пенка','тоник','пудра'];
+const BODY_CARE_TYPES = ['крем','масло','скраб','мыло','бомбочка для ванны','соль для ванны'];
 const SKIN_TYPES = ['нормальная','сухая','жирная','комбинированная'];
 const TYPES = [FACE_CARE_TYPES, BODY_CARE_TYPES];
 
@@ -42,9 +42,10 @@ const createProduct = (): Product => {
     id: faker.number.int({min: 1, max: 100000}),
     name: productName,
     type: TYPES[faker.number.int({ min: 0, max: TYPES.length - 1 })][faker.number.int({ min: 0, max: FACE_CARE_TYPES.length - 1 })],
-    skin_type: skinTypes,
+    skinType: skinTypes,
     description: faker.lorem.sentences(),
     compound: faker.lorem.sentences(),
+    howToUse: faker.lorem.sentences(),
     prices: createPrices(faker.number.int({ min: 1, max: 2 })),
     isBestSeller: faker.datatype.boolean(),
     previewImage: `/img/catalog/${productName}`,

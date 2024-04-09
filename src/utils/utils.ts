@@ -39,3 +39,14 @@ export const destroyAccordion = (element: HTMLElement | null) => {
     }
   }
 };
+
+export const getProductTitle = (...rest: string[]): string => {
+  const result: string[] = [];
+  rest.forEach((item) => {
+    const firstLetter = item.slice(0, 1).toUpperCase();
+    const restString = item.slice(1);
+    result.push(`${firstLetter}${restString}`);
+  })
+
+  return result.join(' ');
+};
