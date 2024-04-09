@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { FILTER_HIDDEN_CLASS, FilterType } from '../../const';
-import CatalogFilterBlock from '../catalog-filter-block/catalog-filter-block';
+import CatalogFilterBlock from './catalog-filter-block/catalog-filter-block';
 import { Filter } from '../../types/types';
 
 type Props = {
@@ -58,7 +58,7 @@ function CatalogFilter({ filters }: Props): JSX.Element {
           <form className="filter" action="https://echo.htmlacademy.ru" method="GET">
             <div className="filter__inner">
               {filters.map((filter, index) => (
-                <CatalogFilterBlock filter={filter} key={index}/>
+                <CatalogFilterBlock filter={filter} key={index} />
               ))}
               <div className="filter__buttons">
                 <button className="filter__button" id="filter-submit" type="submit">Применить</button>

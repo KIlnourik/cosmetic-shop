@@ -62,3 +62,4 @@ export const CatalogFilters: Filter[] = [
 
 export const MOBILE_MAX_WIDTH = 767;
 export const FILTER_HIDDEN_CLASS = 'catalog-head_filter-hidden';
+export const MAX_PRODUCT_CARDS_PER_PAGE = 10;

@@ -4,6 +4,7 @@ export type Price = {
 };
 
 export type Product = {
+  id: number,
   name: string,
   type: string,
   skin_type: string[],

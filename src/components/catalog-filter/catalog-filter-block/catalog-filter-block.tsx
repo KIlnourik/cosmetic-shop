@@ -1,8 +1,8 @@
 import { useRef } from 'react';
-import { initAccordion, destroyAccordion, onAccorderonTogglerClick } from '../../utils/utils';
-import { MOBILE_MAX_WIDTH } from '../../const';
-import CatalogFilterList from './catalog-filter-list/catalog-filter-list';
-import { Filter } from '../../types/types';
+import { initAccordion, destroyAccordion, onAccorderonTogglerClick } from '../../../utils/utils';
+import { MOBILE_MAX_WIDTH } from '../../../const';
+import CatalogFilterList from '../catalog-filter-list/catalog-filter-list';
+import { Filter } from '../../../types/types';
 
 type Props = {
   filter: Filter;
@@ -34,7 +34,7 @@ function CatalogFilterBlock({ filter }: Props): JSX.Element {
         </button>
       </div>
       <div className="accordion__content">
-        <CatalogFilterList filter={filter}/>
+        <CatalogFilterList filter={filter} />
       </div>
     </div>
   );
