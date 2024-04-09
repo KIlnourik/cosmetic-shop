@@ -16,27 +16,27 @@ export enum FilterType {
 }
 
 export const FaceCareTypes = {
-  cream: 'крема',
-  serum: 'сыворотки',
-  mask: 'маски',
-  foam: 'пенки',
-  tonic: 'тоники',
-  powder: 'пудры'
+  cream: 'Крема',
+  serum: 'Сыворотки',
+  mask: 'Маски',
+  foam: 'Пенки',
+  tonic: 'Тоники',
+  powder: 'Пудры'
 };
 
 export const BodyCareTypes = {
-  cream: 'крема',
-  oil: 'масла',
-  scrub: 'скрабы',
-  soap: 'мыло',
-  bomb: 'бомбочка для ванны',
-  salt: 'соль для ванны',
+  cream: 'Крема',
+  oil: 'Масла',
+  scrub: 'Скрабы',
+  soap: 'Мыло',
+  bomb: 'Бомбочка для ванны',
+  salt: 'Соль для ванны',
 };
 export const SkinTypes = {
-  normal: 'нормальная',
-  dry: 'сухая',
-  oily: 'жирная',
-  combined: 'комбинированная'
+  normal: 'Нормальная',
+  dry: 'Сухая',
+  oily: 'Жирная',
+  combined: 'Комбинированная'
 };
 
 export const NAMES = ['clean', 'coconut', 'earth', 'high', 'lavender', 'lotos', 'milk', 'paradise', 'rest', 'rose', 'sun', 'violet'];

@@ -1,31 +1,23 @@
+import { Filter } from '../../../types/types';
+import CatalogFilterItem from '../catalog-filter-item/catalog-filter-item';
 
-function CatalogFilterList(): JSX.Element {
+type Props = {
+  filter: Filter;
+}
+
+function CatalogFilterList({ filter }: Props): JSX.Element {
+  const filterType = filter.name;
+  const filterItems = filter.items;
+
   return (
     <ul className="filter__list accordion__inner">
-      <li className="filter__item">
-        <input className="visually-hidden" type="checkbox" id="filter-face-care-0" name="face-care" value="cream" defaultChecked />
-        <label className="filter__checkbox-label" htmlFor="filter-face-care-0">Крема</label>
-      </li>
-      <li className="filter__item">
-        <input className="visually-hidden" type="checkbox" id="filter-face-care-1" name="face-care" value="serum" defaultChecked />
-        <label className="filter__checkbox-label" htmlFor="filter-face-care-1">Сыворотки</label>
-      </li>
-      <li className="filter__item">
-        <input className="visually-hidden" type="checkbox" id="filter-face-care-2" name="face-care" value="mask" defaultChecked />
-        <label className="filter__checkbox-label" htmlFor="filter-face-care-2">Маски</label>
-      </li>
-      <li className="filter__item">
-        <input className="visually-hidden" type="checkbox" id="filter-face-care-3" name="face-care" value="foam" />
-        <label className="filter__checkbox-label" htmlFor="filter-face-care-3">Пенки</label>
-      </li>
-      <li className="filter__item">
-        <input className="visually-hidden" type="checkbox" id="filter-face-care-4" name="face-care" value="tonic" />
-        <label className="filter__checkbox-label" htmlFor="filter-face-care-4">Тоники</label>
-      </li>
-      <li className="filter__item">
-        <input className="visually-hidden" type="checkbox" id="filter-face-care-5" name="face-care" value="powder" defaultChecked />
-        <label className="filter__checkbox-label" htmlFor="filter-face-care-5">Пудры</label>
-      </li>
+      {Object.entries(filterItems).map(([key, value], index) => (
+        <CatalogFilterItem key={`${filterType}${index}`}
+          filterType={filterType}
+          id={index}
+          filterItemValue={key}
+          filterItemTitle={value} />
+      ))}
     </ul>
   );
 }
