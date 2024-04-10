@@ -1,19 +1,48 @@
-import { ChangeEvent, MouseEvent, SyntheticEvent, useState } from 'react';
+import { MouseEvent, useEffect, useRef, useState } from 'react';
 import { Price, Product } from '../../types/product';
 import { getProductTitle } from '../../utils/utils';
 import ProductImage from '../product-image/product-image';
+import { AccordeonToggleClass } from '../../const';
 
 type Props = {
-  product: Product
+  product: Product,
+  volume?: string,
 };
 
-function ProductCardFull({ product }: Props): JSX.Element {
+function ProductCardFull({ product, volume }: Props): JSX.Element {
+  const [compoundOpen, setCompoundOpen] = useState<boolean>(false);
+  const [howToUseOpen, setHowToUseOpen] = useState<boolean>(false);
+
+  const handleCompounOpenBtnClick = () => {
+    setCompoundOpen(!compoundOpen);
+  };
+
+  const handleHowToUseBtnClick = () => {
+    setHowToUseOpen(!howToUseOpen);
+  };
+
   const [price, setPrice] = useState<string | undefined>(undefined);
 
-  const handleVolumeChange = (evt: ChangeEvent, items: Price[]): void => {
-    const chosenVolume = items.find((item) => item.value === evt.target.ariaValueNow);
+  const handleVolumeClick = (evt: MouseEvent, items: Price[]): void => {
+    const { value } = evt.target as HTMLInputElement;
+    const chosenVolume = items.find((item) => item.value === value);
     setPrice(chosenVolume?.price.toString());
   };
+
+  useEffect(() => {
+    if (volume) {
+      document.querySelectorAll('.card__input-radio').forEach((el) => {
+        const { value } = el as HTMLInputElement;
+        (value === volume) && el.setAttribute('checked', 'checked');
+      })
+      product.prices.map((item) => item.value === volume && setPrice(item.price.toString()));
+    } else {
+      document.querySelectorAll('.card__input-radio').forEach((el) => {
+        el.setAttribute('checked', 'checked');
+      })
+      product.prices.map((item) => setPrice(item.price.toString()));
+    }
+  }, [volume]);
 
   return (
     <section className="card">
@@ -27,19 +56,21 @@ function ProductCardFull({ product }: Props): JSX.Element {
             <p>{product.description}</p>
           </div>
           <ul className="card__info">
-            <li className="card__accordion accordion">
+            <li className={`card__accordion accordion accordion_inited ${compoundOpen ? AccordeonToggleClass.Open : AccordeonToggleClass.Close}`}>
               <div className="card__accordion-head">
                 <h2 className="card__accordion-title">Состав</h2>
-                <button className="card__accordion-toggler accordion__toggler" type="button" aria-label="Открыть"><span className="accordion__toggler-icon"></span></button>
+                <button className="card__accordion-toggler accordion__toggler" type="button" aria-label="Открыть" onClick={handleCompounOpenBtnClick}>
+                  <span className="accordion__toggler-icon"></span>
+                  </button>
               </div>
               <div className="card__accordion-content accordion__content">
                 <p className="card__accordion-text accordion__inner">{product.compound}</p>
               </div>
             </li>
-            <li className="card__accordion accordion">
+            <li className={`card__accordion accordion accordion_inited ${howToUseOpen ? AccordeonToggleClass.Open : AccordeonToggleClass.Close}`} >
               <div className="card__accordion-head">
                 <h2 className="card__accordion-title">Способ применения</h2>
-                <button className="card__accordion-toggler accordion__toggler" type="button" aria-label="Открыть">
+                <button className="card__accordion-toggler accordion__toggler" type="button" aria-label="Открыть" onClick={handleHowToUseBtnClick}>
                   <span className="accordion__toggler-icon"></span>
                 </button>
               </div>
@@ -55,8 +86,7 @@ function ProductCardFull({ product }: Props): JSX.Element {
                 {
                   product.prices.map((item, index) => (
                     <li className="card__option-item" key={index}>
-                      <input className="card__input-radio visually-hidden" id={item.value} type="radio" name="volume" value={item.value} onChange={(evt) => handleVolumeChange(evt, product.prices)}
-                        defaultChecked />
+                      <input className="card__input-radio visually-hidden" id={item.value} type="radio" name="volume" value={item.value} onClick={(evt) => handleVolumeClick(evt, product.prices)} />
                       <label className="card__radio" htmlFor={item.value}>{item.value}</label>
                     </li>
                   ))

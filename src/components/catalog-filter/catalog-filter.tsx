@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { FILTER_HIDDEN_CLASS, FilterType } from '../../const';
+import { FILTER_HIDDEN_CLASS } from '../../const';
 import CatalogFilterBlock from './catalog-filter-block/catalog-filter-block';
 import { Filter } from '../../types/types';
 

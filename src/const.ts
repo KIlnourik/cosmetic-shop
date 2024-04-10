@@ -15,6 +15,11 @@ export enum FilterType {
   SkinType = 'skin-type',
 }
 
+export enum AccordeonToggleClass {
+  Open = 'accordion_opened',
+  Close = 'accordion_closed',
+}
+
 export const FaceCareTypes = {
   cream: 'Крема',
   serum: 'Сыворотки',
