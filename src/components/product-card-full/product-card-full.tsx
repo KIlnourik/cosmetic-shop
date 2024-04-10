@@ -1,5 +1,5 @@
-import { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
-import { Price, Product } from '../../types/product';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { Product } from '../../types/product';
 import { getProductTitle } from '../../utils/utils';
 import ProductImage from '../product-image/product-image';
 import { AccordeonToggleClass } from '../../const';
@@ -35,6 +35,7 @@ function ProductCardFull({ product, volume }: Props): JSX.Element {
     } else {
       product.prices.map((item) => setPrice(item.price.toString()));
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [volume]);
 
   return (
