@@ -1,4 +1,4 @@
-import { MouseEvent, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
 import { Price, Product } from '../../types/product';
 import { getProductTitle } from '../../utils/utils';
 import ProductImage from '../product-image/product-image';
@@ -23,23 +23,16 @@ function ProductCardFull({ product, volume }: Props): JSX.Element {
 
   const [price, setPrice] = useState<string | undefined>(undefined);
 
-  const handleVolumeClick = (evt: MouseEvent, items: Price[]): void => {
+  const handleVolumeChange = (evt: ChangeEvent): void => {
     const { value } = evt.target as HTMLInputElement;
-    const chosenVolume = items.find((item) => item.value === value);
+    const chosenVolume = product.prices.find((item) => item.value === value);
     setPrice(chosenVolume?.price.toString());
   };
 
   useEffect(() => {
     if (volume) {
-      document.querySelectorAll('.card__input-radio').forEach((el) => {
-        const { value } = el as HTMLInputElement;
-        (value === volume) && el.setAttribute('checked', 'checked');
-      })
       product.prices.map((item) => item.value === volume && setPrice(item.price.toString()));
     } else {
-      document.querySelectorAll('.card__input-radio').forEach((el) => {
-        el.setAttribute('checked', 'checked');
-      })
       product.prices.map((item) => setPrice(item.price.toString()));
     }
   }, [volume]);
@@ -61,7 +54,7 @@ function ProductCardFull({ product, volume }: Props): JSX.Element {
                 <h2 className="card__accordion-title">Состав</h2>
                 <button className="card__accordion-toggler accordion__toggler" type="button" aria-label="Открыть" onClick={handleCompounOpenBtnClick}>
                   <span className="accordion__toggler-icon"></span>
-                  </button>
+                </button>
               </div>
               <div className="card__accordion-content accordion__content">
                 <p className="card__accordion-text accordion__inner">{product.compound}</p>
@@ -86,7 +79,8 @@ function ProductCardFull({ product, volume }: Props): JSX.Element {
                 {
                   product.prices.map((item, index) => (
                     <li className="card__option-item" key={index}>
-                      <input className="card__input-radio visually-hidden" id={item.value} type="radio" name="volume" value={item.value} onClick={(evt) => handleVolumeClick(evt, product.prices)} />
+                      <input className="card__input-radio visually-hidden" id={item.value} type="radio" name="volume" value={item.value}
+                        onChange={handleVolumeChange} checked={item.value === volume || product.prices.length === 1} />
                       <label className="card__radio" htmlFor={item.value}>{item.value}</label>
                     </li>
                   ))

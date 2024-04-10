@@ -3147,5 +3147,4 @@ picture {
 
 .accordion_opened .accordion__inner {
   opacity: 1;
-  transition-delay: 0.25s;
 }
