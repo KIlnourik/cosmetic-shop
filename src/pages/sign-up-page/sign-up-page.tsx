@@ -1,8 +1,10 @@
-import SignUp from '../../components/sign-in/sign-in';
+import SignUp from '../../components/sign-up/sign-up';
 
 function SignUpPage(): JSX.Element {
   return (
-    <SignUp />
+    <main className="main main_top-spaced">
+      <SignUp />
+    </main>
   );
 }
 

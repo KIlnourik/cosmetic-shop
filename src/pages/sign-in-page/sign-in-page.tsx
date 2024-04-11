@@ -2,7 +2,9 @@ import SignIn from '../../components/sign-in/sign-in';
 
 function SignInPage(): JSX.Element {
   return (
-    <SignIn />
+    <main className="main main_top-spaced">
+      <SignIn />
+    </main>
   );
 }
 
