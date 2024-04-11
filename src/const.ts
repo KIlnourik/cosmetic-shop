@@ -2,7 +2,8 @@ import { Filter } from './types/types';
 
 export enum AppRoute {
   Root = '/',
-  Login = '/login',
+  SignIn = '/signin',
+  SignUp = '/signup',
   Catalog = '/catalog',
   Product = '/product/:id',
   Cart = '/cart',

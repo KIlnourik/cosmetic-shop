@@ -11,6 +11,10 @@
     "test": "vitest --passWithNoTests"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@mui/icons-material": "^5.15.15",
+    "@mui/material": "^5.15.15",
     "@reduxjs/toolkit": "1.9.5",
     "axios": "0.27.2",
     "classnames": "2.3.2",

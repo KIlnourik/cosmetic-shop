@@ -3,13 +3,13 @@ import { Product } from '../../types/product';
 import { getProductTitle } from '../../utils/utils';
 import ProductImage from '../product-image/product-image';
 import { AccordeonToggleClass } from '../../const';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 type Props = {
   product: Product,
-  volume?: string,
 };
 
-function ProductCardFull({ product, volume }: Props): JSX.Element {
+function ProductCardFull({ product }: Props): JSX.Element {
   const [compoundOpen, setCompoundOpen] = useState<boolean>(false);
   const [howToUseOpen, setHowToUseOpen] = useState<boolean>(false);
 
@@ -22,21 +22,29 @@ function ProductCardFull({ product, volume }: Props): JSX.Element {
   };
 
   const [price, setPrice] = useState<string | undefined>(undefined);
+  const navigate = useNavigate();
+  const { pathname, search } = useLocation();
+  const [volume, setVolume] = useState<string | undefined>(undefined);
 
   const handleVolumeChange = (evt: ChangeEvent): void => {
     const { value } = evt.target as HTMLInputElement;
     const chosenVolume = product.prices.find((item) => item.value === value);
     setPrice(chosenVolume?.price.toString());
+    navigate(`${pathname}?vol=${value}`)
   };
 
   useEffect(() => {
+    if (search) {
+      setVolume(search.split('=')[1]);
+    }
+
     if (volume) {
       product.prices.map((item) => item.value === volume && setPrice(item.price.toString()));
     } else {
       product.prices.map((item) => setPrice(item.price.toString()));
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [volume]);
+  }, [volume, search]);
 
   return (
     <section className="card">
