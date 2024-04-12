@@ -5,6 +5,7 @@ import CatalogHistory from '../../components/catalog-history/catalog-history';
 import ProductCardFull from '../../components/product-card-full/product-card-full';
 import NotFoundPage from '../not-found-page/not-found-page';
 import { getProductTitle } from '../../utils/utils';
+import { CatalogListType } from '../../const';
 
 type Props = {
   products: Product[];
@@ -27,7 +28,7 @@ function ProductPage({ products }: Props): JSX.Element {
       </Helmet>
       <main className="main main_top-spaced">
         <ProductCardFull product={chosenProduct} />
-        <CatalogHistory products={products} />
+        <CatalogHistory products={products} type={CatalogListType.Similar}/>
       </main>
     </>
   );

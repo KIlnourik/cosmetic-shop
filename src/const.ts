@@ -2,10 +2,10 @@ import { Filter } from './types/types';
 
 export enum AppRoute {
   Root = '/',
-  SignIn = '/signin',
-  SignUp = '/signup',
-  Catalog = '/catalog',
-  Product = '/product/:id',
+  Login = '/login',
+  Register = '/register',
+  Catalog = '/products',
+  Product = '/products/:id',
   Cart = '/cart',
   NotFound = '*',
 }
@@ -19,6 +19,11 @@ export enum FilterType {
 export enum AccordeonToggleClass {
   Open = 'accordion_opened',
   Close = 'accordion_closed',
+}
+
+export enum CatalogListType {
+  History = 'Вы недавно смотрели',
+  Similar = 'Вам также может понравиться',
 }
 
 export const FaceCareTypes = {

@@ -9,7 +9,6 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Link as RouterLink } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { Helmet } from 'react-helmet-async';
 
@@ -17,7 +16,7 @@ import { Helmet } from 'react-helmet-async';
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
-export default function SignIn() {
+export default function Login() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -86,10 +85,8 @@ export default function SignIn() {
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href="#" variant="body2" underline="none">
-                    <RouterLink to={AppRoute.SignUp}>
-                      {"Нет аккаунта? Зарегистрируйтесь"}
-                    </RouterLink>
+                  <Link href={AppRoute.Register} variant="body2" underline="none">
+                    {"Нет аккаунта? Зарегистрируйтесь"}
                   </Link>
                 </Grid>
               </Grid>

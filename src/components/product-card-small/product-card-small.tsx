@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Product } from '../../types/product';
 import ProductImage from '../product-image/product-image';
+import { AppRoute } from '../../const';
 
 type Props = {
   product: Product;
@@ -12,7 +13,7 @@ function ProductCardSmall({ product, className }: Props): JSX.Element {
     <>
       {product.prices.map((item, index) => (
         <li className={`${className} product`} key={`${index}${item.price}${item.value}`}>
-          <Link className="product__link" to={`/product/${product.id}${product.prices.length > 1 ? `?vol=${item.value}` : ''}`}>
+          <Link className="product__link" to={`${AppRoute.Catalog}/${product.id}${product.prices.length > 1 ? `?vol=${item.value}` : ''}`}>
             <ProductImage path={product.previewImage} productName={product.name} productType={product.type} className={'product'} />
               <div className="product__wrapper">
                 <div className="product__text">

@@ -43,7 +43,7 @@
 *,
 ::after,
 ::before {
-  box-sizing: inherit;
+  box-sizing: border-box;
 }
 
 html {
@@ -80,6 +80,10 @@ picture {
   min-height: 100vh;
   box-sizing: border-box;
   position: relative;
+}
+
+#root main {
+  align-content: center;
 }
 
 .visually-hidden {

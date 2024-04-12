@@ -4,13 +4,14 @@ import ProductCardSmall from "../product-card-small/product-card-small";
 
 type Props = {
   products: Product[];
+  type: string;
 }
 
-function CatalogHistory({ products }: Props): JSX.Element {
+function CatalogHistory({ products, type }: Props): JSX.Element {
   return (
     <section className="catalog-history">
       <div className="catalog-history__wrapper">
-        <h2>Вы недавно смотрели</h2>
+        <h2>{type}</h2>
         <ul className="catalog-history__list">
           {products.map((product, index) => (
             <ProductCardSmall

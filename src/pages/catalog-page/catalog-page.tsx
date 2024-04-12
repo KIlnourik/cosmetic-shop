@@ -6,6 +6,7 @@ import CatalogList from '../../components/catalog-list/catalog-list';
 import CatalogHistory from '../../components/catalog-history/catalog-history';
 import FollowBlock from '../../components/follow-block/follow-block';
 import Contacts from '../../components/contacts/contacts';
+import { CatalogListType } from '../../const';
 
 type Props = {
   products: Product[];
@@ -23,7 +24,7 @@ function CatalogPage({ products, filters }: Props): JSX.Element {
           <CatalogFilter filters={filters} />
           <CatalogList products={products} />
         </section>
-        <CatalogHistory products={products} />
+        <CatalogHistory products={products} type={CatalogListType.History}/>
         <FollowBlock />
         <Contacts />
       </main>
