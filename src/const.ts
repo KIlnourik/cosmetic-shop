@@ -10,6 +10,20 @@ export enum AppRoute {
   NotFound = '*',
 }
 
+export enum APIRoute {
+  Products = '/products',
+  Users = '/users',
+  Auth = '/auth',
+  Register = '/register',
+  Cart = '/cart',
+}
+
+export enum AuthStatus {
+  Auth = 'AUTH',
+  NoAuth = 'NO_AUTH',
+  Unknown = 'UNKNOWN',
+}
+
 export enum FilterType {
   FaceCare = 'face-care',
   BodyCare = 'body-care',

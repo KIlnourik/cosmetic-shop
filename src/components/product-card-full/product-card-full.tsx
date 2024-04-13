@@ -28,7 +28,7 @@ function ProductCardFull({ product }: Props): JSX.Element {
 
   const handleVolumeChange = (evt: ChangeEvent): void => {
     const { value } = evt.target as HTMLInputElement;
-    const chosenVolume = product.prices.find((item) => item.value === value);
+    const chosenVolume = product.volumes.find((item) => item.volume === value);
     setPrice(chosenVolume?.price.toString());
     navigate(`${pathname}?vol=${value}`)
   };
@@ -39,9 +39,9 @@ function ProductCardFull({ product }: Props): JSX.Element {
     }
 
     if (volume) {
-      product.prices.map((item) => item.value === volume && setPrice(item.price.toString()));
+      product.volumes.map((item) => item.volume === volume && setPrice(item.price.toString()));
     } else {
-      product.prices.map((item) => setPrice(item.price.toString()));
+      product.volumes.map((item) => setPrice(item.price.toString()));
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [volume, search]);
@@ -86,11 +86,11 @@ function ProductCardFull({ product }: Props): JSX.Element {
               <p className="card__option-title">Объем:</p>
               <ul className="card__option-list">
                 {
-                  product.prices.map((item, index) => (
+                  product.volumes.map((item, index) => (
                     <li className="card__option-item" key={index}>
-                      <input className="card__input-radio visually-hidden" id={item.value} type="radio" name="volume" value={item.value}
-                        onChange={handleVolumeChange} checked={item.value === volume || product.prices.length === 1} />
-                      <label className="card__radio" htmlFor={item.value}>{item.value}</label>
+                      <input className="card__input-radio visually-hidden" id={item.volume} type="radio" name="volume" value={item.volume}
+                        onChange={handleVolumeChange} checked={item.volume === volume || product.volumes.length === 1} />
+                      <label className="card__radio" htmlFor={item.volume}>{item.volume}</label>
                     </li>
                   ))
                 }

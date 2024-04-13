@@ -1,6 +1,6 @@
-export type Price = {
+export type Volume = {
   price: number,
-  value: string,
+  volume: string,
 };
 
 export type Product = {
@@ -11,7 +11,7 @@ export type Product = {
   description: string,
   compound: string,
   howToUse: string,
-  prices: Price[],
+  volumes: Volume[],
   isBestSeller: boolean,
   previewImage: string,
   image: string,

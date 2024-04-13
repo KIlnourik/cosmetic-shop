@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { Product, Price } from '../types/product';
+import { Product, Volume } from '../types/product';
 import { NAMES, MEASURES } from '../const';
 
 const FACE_CARE_TYPES = ['крем','сыворотка','маска','пенка','тоник','пудра'];
@@ -15,17 +15,17 @@ const getRandomItems = <T>(item: T, length: number): T[] => {
   return items;
 };
 
-const createRandomPrice = (): Price => {
+const createRandomVolume = (): Volume => {
   return {
-    price: faker.number.int({ min: 100, max: 1000 }),
-    value: `${faker.number.int({ min: 1, max: 50 }) * 10}${MEASURES[faker.number.int({ min: 0, max: MEASURES.length - 1 })]}`,
+    price: faker.number.int({ min: 10, max: 100 }) * 10,
+    volume: `${faker.number.int({ min: 1, max: 50 }) * 10}${MEASURES[faker.number.int({ min: 0, max: MEASURES.length - 1 })]}`,
   }
 };
 
-const createPrices = (length: number): Price[] => {
-  const prices: Price[] = [];
+const createPrices = (length: number): Volume[] => {
+  const prices: Volume[] = [];
   for (let i = 0; i < length; i++) {
-    prices.push(createRandomPrice());
+    prices.push(createRandomVolume());
   }
   return prices;
 };
@@ -46,7 +46,7 @@ const createProduct = (): Product => {
     description: faker.lorem.sentences(),
     compound: faker.lorem.sentences(),
     howToUse: faker.lorem.sentences(),
-    prices: createPrices(faker.number.int({ min: 1, max: 2 })),
+    volumes: createPrices(faker.number.int({ min: 1, max: 2 })),
     isBestSeller: faker.datatype.boolean(),
     previewImage: `/img/catalog/${productName}`,
     image: `/img/catalog/${productName}`,
@@ -61,4 +61,4 @@ const createProducts = (length: number): Product[] => {
   return products;
 };
 
-export const products: Product[] = createProducts(faker.number.int({min: 0, max: 10}));
+export const products: Product[] = createProducts(faker.number.int({min: 0, max: 40}));

@@ -11,9 +11,9 @@ type Props = {
 function ProductCardSmall({ product, className }: Props): JSX.Element {
   return (
     <>
-      {product.prices.map((item, index) => (
-        <li className={`${className} product`} key={`${index}${item.price}${item.value}`}>
-          <Link className="product__link" to={`${AppRoute.Catalog}/${product.id}${product.prices.length > 1 ? `?vol=${item.value}` : ''}`}>
+      {product.volumes.map((item, index) => (
+        <li className={`${className} product`} key={`${index}${item.price}${item.volume}`}>
+          <Link className="product__link" to={`${AppRoute.Catalog}/${product.id}${product.volumes.length > 1 ? `?vol=${item.volume}` : ''}`}>
             <ProductImage path={product.previewImage} productName={product.name} productType={product.type} className={'product'} />
               <div className="product__wrapper">
                 <div className="product__text">
@@ -22,7 +22,7 @@ function ProductCardSmall({ product, className }: Props): JSX.Element {
                 </div>
                 <div className="product__text">
                   <div className="product__description">{product.type}</div>
-                  <div className="product__description">{item.value}</div>
+                  <div className="product__description">{item.volume}</div>
                 </div>
               </div>
           </Link>

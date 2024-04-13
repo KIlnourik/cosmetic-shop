@@ -71,11 +71,11 @@ function Header(): JSX.Element {
 
   useEffect(() => {
     if (menuRef.current && headerRef.current) {
-      window.addEventListener(`scroll`, () => {
+      window.addEventListener('scroll', () => {
         if (isScrolled()) {
-          headerRef.current?.classList.add(`header_colored`);
+          headerRef.current?.classList.add('header_colored');
         } else {
-          headerRef.current?.classList.remove(`header_colored`);
+          headerRef.current?.classList.remove('header_colored');
         }
       });
       closeHeaderMenu();
@@ -130,19 +130,19 @@ function Header(): JSX.Element {
       </nav>
       <ul className="header__actions user-actions">
         <li className="user-actions__item">
-          <a className="user-actions__link user-actions__user" href="#"
+          <Link className="user-actions__link user-actions__user" to="#"
             aria-label="Пользователь">
             <svg height="21" width="16">
               <use xlinkHref="#user-icon"></use>
             </svg>
-          </a>
+          </Link>
         </li>
         <li className="user-actions__item">
-          <a className="user-actions__link user-actions__cart" href="#" aria-label="Корзина">
+          <Link className="user-actions__link user-actions__cart" to="#" aria-label="Корзина">
             <svg height="21" width="18">
               <use xlinkHref="#cart-icon"></use>
             </svg>
-          </a>
+          </Link>
         </li>
       </ul>
     </header>
