@@ -2975,14 +2975,15 @@ picture {
   background: 0 0;
   margin: 0;
   padding: 7px 26px 10px;
-  display: inline-block;
-  vertical-align: top;
+  display: inline-flex;
   box-sizing: border-box;
   border: 1px solid #b3bac1;
   border-radius: 2px;
   text-decoration: none;
   color: #122947;
   text-align: center;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   outline: 0;
 }

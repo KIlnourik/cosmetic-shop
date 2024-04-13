@@ -11,14 +11,17 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { AppRoute } from '../../const';
 import { Helmet } from 'react-helmet-async';
+import { FormEvent } from 'react';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
-export default function Register() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
+function Register(): JSX.Element {
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    const data = new FormData(evt.currentTarget);
+
+    // TODO исправить на отправку на сервер
     console.log({
       email: data.get('email'),
       password: data.get('password'),
@@ -117,3 +120,5 @@ export default function Register() {
     </>
   );
 }
+
+export default Register;
