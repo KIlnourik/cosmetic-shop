@@ -1,8 +1,10 @@
-import Cart from "../../components/cart/cart";
+import Cart from '../../components/cart/cart';
 
 function CartPage(): JSX.Element {
   return (
-    <Cart />
+    <main className="main main_top-spaced catalog-main" >
+      <Cart />
+    </main>
   );
 }
 

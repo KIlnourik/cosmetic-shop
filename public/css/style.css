@@ -82,9 +82,9 @@ picture {
   position: relative;
 }
 
-#root main {
+/* #root main {
   align-content: center;
-}
+} */
 
 .visually-hidden {
   position: absolute;
@@ -166,24 +166,31 @@ picture {
   left: 0;
   right: 0;
   z-index: 30;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid #dbdce0;
+}
+
+.header__wrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
   min-width: 320px;
+  max-width: 1200px;
   padding: 40px 98px;
-  border-bottom: 1px solid #dbdce0;
-  transition: 0.3s;
 }
 
 @media (max-width: 1199px) {
-  .header {
+  .header__wrapper {
     padding: 40px 45px;
   }
 }
 
 @media (max-width: 767px) {
-  .header {
+  .header__wrapper {
     height: 75px;
     padding: 0 15px;
   }
