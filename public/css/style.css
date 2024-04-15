@@ -773,6 +773,8 @@ picture {
   align-items: center;
   padding-left: 98px;
   overflow: hidden;
+  max-width: 100px;
+  min-width: 100%;
 }
 
 @media (max-width: 1199px) {
@@ -882,8 +884,8 @@ picture {
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
-  height: 312px;
   width: 230px;
+  height: 312px;
 }
 
 @media (max-width: 767px) {
