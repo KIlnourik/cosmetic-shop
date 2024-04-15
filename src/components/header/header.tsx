@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import Logo from '../logo/logo';
 import { useEffect, useRef } from 'react';
+import { Badge, ThemeProvider, createTheme } from '@mui/material';
 
 
 function Header(): JSX.Element {
@@ -69,6 +70,15 @@ function Header(): JSX.Element {
     }
   };
 
+  const headerTheme = createTheme({
+    palette: {
+      info: {
+        main: '#f4f1ed',
+      }
+    }
+  })
+
+
   useEffect(() => {
     if (menuRef.current && headerRef.current) {
       window.addEventListener('scroll', () => {
@@ -86,69 +96,76 @@ function Header(): JSX.Element {
 
 
   return (
-    <header className="header header_transparent" ref={headerRef}>
-      <div className="header__wrapper">
-        <button className="header__menu-button" aria-label="Меню" ref={buttonRef}></button>
-        <Logo />
-        <nav className="header__navigation navigation" ref={menuRef}>
-          <div className="navigation__overlay" ref={overlayRef}></div>
-          <div className="navigation__content">
-            <ul className="navigation__list">
-              <li className="navigation__item">
-                <Link className="navigation__link" to={AppRoute.Catalog}>Каталог</Link>
-              </li>
-              <li className="navigation__item">
-                <Link className="navigation__link" to="#">О нас</Link>
-              </li>
-              <li className="navigation__item">
-                <Link className="navigation__link" to="#">Контакты</Link>
-              </li>
-            </ul>
-            <ul className="navigation__contacts social social_for-menu">
-              <li className="social__item social__item_minor-spaced">
-                <a className="social__link" href="#" aria-label="Facebook">
-                  <svg height="18" width="11">
-                    <use xlinkHref="#facebook-icon"></use>
+    <ThemeProvider theme={headerTheme} >
+      <header className="header header_transparent" ref={headerRef}>
+        <div className="header__wrapper">
+          <button className="header__menu-button" aria-label="Меню" ref={buttonRef}></button>
+          <Logo />
+          <nav className="header__navigation navigation" ref={menuRef}>
+            <div className="navigation__overlay" ref={overlayRef}></div>
+            <div className="navigation__content">
+              <ul className="navigation__list">
+                <li className="navigation__item">
+                  <Link className="navigation__link" to={AppRoute.Catalog}>Каталог</Link>
+                </li>
+                <li className="navigation__item">
+                  <Link className="navigation__link" to="#">О нас</Link>
+                </li>
+                <li className="navigation__item">
+                  <Link className="navigation__link" to="#">Контакты</Link>
+                </li>
+              </ul>
+              <ul className="navigation__contacts social social_for-menu">
+                <li className="social__item social__item_minor-spaced">
+                  <a className="social__link" href="#" aria-label="Facebook">
+                    <svg height="18" width="11">
+                      <use xlinkHref="#facebook-icon"></use>
+                    </svg>
+                  </a>
+                </li>
+                <li className="social__item social__item_minor-spaced">
+                  <a className="social__link" href="#" aria-label="Instagram">
+                    <svg height="20" width="20">
+                      <use xlinkHref="#instagram-icon"></use>
+                    </svg>
+                  </a>
+                </li>
+                <li className="social__item social__item_minor-spaced">
+                  <a className="social__link" href="#" aria-label="Twitter">
+                    <svg height="17" width="20">
+                      <use xlinkHref="#twitter-icon"></use>
+                    </svg>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+          <ul className="header__actions user-actions">
+            <li className="user-actions__item">
+              <Link className="user-actions__link user-actions__user" to="#"
+                aria-label="Пользователь">
+                <svg height="21" width="16">
+                  <use xlinkHref="#user-icon"></use>
+                </svg>
+              </Link>
+            </li>
+            <li className="user-actions__item">
+              <Badge
+                color='info'
+                badgeContent={2}
+              >
+                <Link className="user-actions__link user-actions__cart" to={AppRoute.Cart} aria-label="Корзина">
+                  <svg height="21" width="18">
+                    <use xlinkHref="#cart-icon"></use>
                   </svg>
-                </a>
-              </li>
-              <li className="social__item social__item_minor-spaced">
-                <a className="social__link" href="#" aria-label="Instagram">
-                  <svg height="20" width="20">
-                    <use xlinkHref="#instagram-icon"></use>
-                  </svg>
-                </a>
-              </li>
-              <li className="social__item social__item_minor-spaced">
-                <a className="social__link" href="#" aria-label="Twitter">
-                  <svg height="17" width="20">
-                    <use xlinkHref="#twitter-icon"></use>
-                  </svg>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </nav>
-        <ul className="header__actions user-actions">
-          <li className="user-actions__item">
-            <Link className="user-actions__link user-actions__user" to="#"
-              aria-label="Пользователь">
-              <svg height="21" width="16">
-                <use xlinkHref="#user-icon"></use>
-              </svg>
-            </Link>
-          </li>
-          <li className="user-actions__item">
-            <Link className="user-actions__link user-actions__cart" to={AppRoute.Cart} aria-label="Корзина">
-              <svg height="21" width="18">
-                <use xlinkHref="#cart-icon"></use>
-              </svg>
-            </Link>
-          </li>
-        </ul>
+                </Link>
+              </Badge>
+            </li>
+          </ul>
 
-      </div>
-    </header>
+        </div>
+      </header>
+    </ThemeProvider>
   );
 }
 

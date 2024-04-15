@@ -13,6 +13,7 @@ import RegisterPage from '../../pages/register-page/register-page';
 import CartPage from '../../pages/cart-page/cart-page';
 
 function App(): JSX.Element {
+
   return (
     <HelmetProvider>
       <BrowserRouter>

@@ -2,51 +2,70 @@ import { faker } from '@faker-js/faker';
 import { Product, Volume } from '../types/product';
 import { NAMES, MEASURES } from '../const';
 
-const FACE_CARE_TYPES = ['крем','сыворотка','маска','пенка','тоник','пудра'];
-const BODY_CARE_TYPES = ['крем','масло','скраб','мыло','бомбочка для ванны','соль для ванны'];
-const SKIN_TYPES = ['нормальная','сухая','жирная','комбинированная'];
+const FACE_CARE_TYPES = ['крем', 'сыворотка', 'маска', 'пенка', 'тоник', 'пудра'];
+const BODY_CARE_TYPES = ['крем', 'масло', 'скраб', 'мыло', 'бомбочка для ванны', 'соль для ванны'];
+const SKIN_TYPES = ['нормальная', 'сухая', 'жирная', 'комбинированная'];
 const TYPES = [FACE_CARE_TYPES, BODY_CARE_TYPES];
 
-const getRandomItems = <T>(item: T, length: number): T[] => {
-  const items = [];
+const createRandomPrices = (length: number): number[] => {
+  const result = [];
   for (let i = 0; i < length; i++) {
-    items.push(item);
+    result.push(faker.number.int({ min: 10, max: 100 }) * 10);
+  }
+  return result.sort((a, b) => a - b);
+};
+
+const createRandomVolumes = (length: number): string[] => {
+  const result = [];
+  for (let i = 0; i < length; i++) {
+    result.push(faker.number.int({ min: 1, max: 50 }) * 10);
+  }
+  const measure = MEASURES[faker.number.int({ min: 0, max: MEASURES.length - 1 })];
+  const sortedFormattedResult = result.sort((a, b) => a - b).map((item) => `${item} ${measure}`);
+
+  return sortedFormattedResult;
+};
+
+const createVolumes = (length: number): Volume[] => {
+  const volumes: Volume[] = [];
+  const randomVolumes = createRandomVolumes(length);
+  const randomPrices = createRandomPrices(length);
+  for (let i = 0; i < length; i++) {
+    volumes.push(
+      {
+        price: randomPrices[i],
+        volume: randomVolumes[i],
+      }
+    );
+  }
+  return volumes;
+};
+
+const skinTypes = (length: number): string[] => {
+  const items: string[] = [];
+  for (let i = 0; i < length; i++) {
+    const index: number = faker.number.int({ min: 1, max: SKIN_TYPES.length - 1 });
+    const item: string = SKIN_TYPES[index];
+
+    if (!items.includes(item)) {
+      items.push(item);
+    }
   }
   return items;
-};
-
-const createRandomVolume = (): Volume => {
-  return {
-    price: faker.number.int({ min: 10, max: 100 }) * 10,
-    volume: `${faker.number.int({ min: 1, max: 50 }) * 10}${MEASURES[faker.number.int({ min: 0, max: MEASURES.length - 1 })]}`,
-  }
-};
-
-const createPrices = (length: number): Volume[] => {
-  const prices: Volume[] = [];
-  for (let i = 0; i < length; i++) {
-    prices.push(createRandomVolume());
-  }
-  return prices;
-};
-
+}
 
 const createProduct = (): Product => {
-  const skinTypes = getRandomItems(
-    SKIN_TYPES[faker.number.int({ min: 0, max: SKIN_TYPES.length - 1 })],
-    faker.number.int({ min: 0, max: 4 }));
-
   const productName = NAMES[faker.number.int({ min: 0, max: NAMES.length - 1 })];
 
   return {
-    id: faker.number.int({min: 1, max: 100000}),
+    id: faker.number.int({ min: 1, max: 100000 }),
     name: productName,
     type: TYPES[faker.number.int({ min: 0, max: TYPES.length - 1 })][faker.number.int({ min: 0, max: FACE_CARE_TYPES.length - 1 })],
-    skinType: skinTypes,
+    skinType: skinTypes(faker.number.int({ min: 1, max: SKIN_TYPES.length - 1 })),
     description: faker.lorem.sentences(),
     compound: faker.lorem.sentences(),
     howToUse: faker.lorem.sentences(),
-    volumes: createPrices(faker.number.int({ min: 1, max: 2 })),
+    volumes: createVolumes(faker.number.int({ min: 1, max: 2 })),
     isBestSeller: faker.datatype.boolean(),
     previewImage: `/img/catalog/${productName}`,
     image: `/img/catalog/${productName}`,
@@ -58,7 +77,8 @@ const createProducts = (length: number): Product[] => {
   for (let i = 0; i < length; i++) {
     products.push(createProduct());
   }
+
   return products;
 };
 
-export const products: Product[] = createProducts(faker.number.int({min: 0, max: 40}));
+export const products: Product[] = createProducts(40);

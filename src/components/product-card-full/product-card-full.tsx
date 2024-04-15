@@ -10,15 +10,15 @@ type Props = {
 };
 
 function ProductCardFull({ product }: Props): JSX.Element {
-  const [compoundOpen, setCompoundOpen] = useState<boolean>(false);
-  const [howToUseOpen, setHowToUseOpen] = useState<boolean>(false);
+  const [isCompoundOpen, setCompoundOpen] = useState<boolean>(false);
+  const [isHowToUseOpen, setHowToUseOpen] = useState<boolean>(false);
 
   const handleCompounOpenBtnClick = () => {
-    setCompoundOpen(!compoundOpen);
+    setCompoundOpen(!isCompoundOpen);
   };
 
   const handleHowToUseBtnClick = () => {
-    setHowToUseOpen(!howToUseOpen);
+    setHowToUseOpen(!isHowToUseOpen);
   };
 
   const [price, setPrice] = useState<string | undefined>(undefined);
@@ -35,7 +35,7 @@ function ProductCardFull({ product }: Props): JSX.Element {
 
   useEffect(() => {
     if (search) {
-      setVolume(search.split('=')[1]);
+      setVolume(search.split('=')[1].replace('%20', ' '));
     }
 
     if (volume) {
@@ -58,7 +58,7 @@ function ProductCardFull({ product }: Props): JSX.Element {
             <p>{product.description}</p>
           </div>
           <ul className="card__info">
-            <li className={`card__accordion accordion accordion_inited ${compoundOpen ? AccordeonToggleClass.Open : AccordeonToggleClass.Close}`}>
+            <li className={`card__accordion accordion accordion_inited ${isCompoundOpen ? AccordeonToggleClass.Open : AccordeonToggleClass.Close}`}>
               <div className="card__accordion-head">
                 <h2 className="card__accordion-title">Состав</h2>
                 <button className="card__accordion-toggler accordion__toggler" type="button" aria-label="Открыть" onClick={handleCompounOpenBtnClick}>
@@ -69,7 +69,7 @@ function ProductCardFull({ product }: Props): JSX.Element {
                 <p className="card__accordion-text accordion__inner">{product.compound}</p>
               </div>
             </li>
-            <li className={`card__accordion accordion accordion_inited ${howToUseOpen ? AccordeonToggleClass.Open : AccordeonToggleClass.Close}`} >
+            <li className={`card__accordion accordion accordion_inited ${isHowToUseOpen ? AccordeonToggleClass.Open : AccordeonToggleClass.Close}`} >
               <div className="card__accordion-head">
                 <h2 className="card__accordion-title">Способ применения</h2>
                 <button className="card__accordion-toggler accordion__toggler" type="button" aria-label="Открыть" onClick={handleHowToUseBtnClick}>
