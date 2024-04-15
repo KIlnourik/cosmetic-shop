@@ -1,4 +1,4 @@
-import { Route, BrowserRouter, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { AppRoute } from '../../const';
 import Layout from '../layout/layout';
@@ -16,25 +16,23 @@ function App(): JSX.Element {
 
   return (
     <HelmetProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path={AppRoute.Root} element={<Layout />}>
-            <Route index element={<MainPage />} />
-            <Route
-              path={AppRoute.Catalog}
-              element={
-                <CatalogPage
-                  products={products}
-                  filters={CatalogFilters}
-                />} />
-            <Route path={AppRoute.Product} element={<ProductPage products={products} />} />
-            <Route path={AppRoute.Login} element={<LoginPage />} />
-            <Route path={AppRoute.Register} element={<RegisterPage />} />
-            <Route path={AppRoute.Cart} element={<CartPage />} />
-            <Route path={AppRoute.NotFound} element={<NotFoundPage />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <Routes>
+        <Route path={AppRoute.Root} element={<Layout />}>
+          <Route index element={<MainPage />} />
+          <Route
+            path={AppRoute.Catalog}
+            element={
+              <CatalogPage
+                products={products}
+                filters={CatalogFilters}
+              />} />
+          <Route path={AppRoute.Product} element={<ProductPage products={products} />} />
+          <Route path={AppRoute.Login} element={<LoginPage />} />
+          <Route path={AppRoute.Register} element={<RegisterPage />} />
+          <Route path={AppRoute.Cart} element={<CartPage />} />
+          <Route path={AppRoute.NotFound} element={<NotFoundPage />} />
+        </Route>
+      </Routes>
     </HelmetProvider>
   );
 }

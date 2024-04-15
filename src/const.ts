@@ -10,12 +10,20 @@ export enum AppRoute {
   NotFound = '*',
 }
 
+export enum NameSpace {
+  Product = 'Product',
+  Cart = 'Cart',
+  Coupon = 'Coupon',
+  Order = 'Order'
+}
+
 export enum APIRoute {
   Products = '/products',
   Users = '/users',
   Auth = '/auth',
   Register = '/register',
-  Cart = '/cart',
+  Orders = '/orders',
+  Coupons = '/coupons',
 }
 
 export enum AuthStatus {
@@ -88,3 +96,7 @@ export const CatalogFilters: Filter[] = [
 export const MOBILE_MAX_WIDTH = 767;
 export const FILTER_HIDDEN_CLASS = 'catalog-head_filter-hidden';
 export const MAX_PRODUCT_CARDS_PER_PAGE = 10;
+
+export const API_URL = 'https://3cc41ccb27963c31.mokky.dev';
+export const REQUEST_TIMEOUT = 5000;
+
