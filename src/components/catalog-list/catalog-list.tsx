@@ -1,18 +1,25 @@
-import { Product } from '../../types/product';
+import { useAppSelector } from '../../hooks';
+import { getAllProducts, getAllProductsLoadingStatus } from '../../store/product-process/selector';
 import Pagination from '../pagination/pagination';
 import ProductCardSmall from '../product-card-small/product-card-small';
+import Spinner from '../spinner/spinner';
 
-type Props = {
-  products: Product[];
-}
+function CatalogList(): JSX.Element {
 
-function CatalogList({ products }: Props): JSX.Element {
+  const products = useAppSelector(getAllProducts);
+  const isProductsLoading = useAppSelector(getAllProductsLoadingStatus);
+
   return (
     <div className="catalog__wrapper wrapper">
       <ul className="catalog__list">
-        {products.map((product, index) => (
-          <ProductCardSmall product={product} className={'catalog__item'} key={`${index}${product.name}${product.id}`} />
-        ))}
+        {
+          products &&
+          products.map((product, index) => (
+            <ProductCardSmall product={product} className={'catalog__item'} key={`${index}${product.name}${product.id}`} />
+          ))}
+        {
+          isProductsLoading && <Spinner />
+        }
       </ul>
       <Pagination />
     </div>

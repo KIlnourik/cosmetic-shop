@@ -1,8 +1,8 @@
-import { Filter } from '../../../types/types';
+import { CareType, SkinType } from '../../../types/types';
 import CatalogFilterItem from '../catalog-filter-item/catalog-filter-item';
 
 type Props = {
-  filter: Filter;
+  filter: CareType | SkinType;
 }
 
 function CatalogFilterList({ filter }: Props): JSX.Element {

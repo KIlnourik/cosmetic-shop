@@ -2,13 +2,13 @@ import { useRef } from 'react';
 import { initAccordion, destroyAccordion, onAccorderonTogglerClick } from '../../../utils/utils';
 import { MOBILE_MAX_WIDTH } from '../../../const';
 import CatalogFilterList from '../catalog-filter-list/catalog-filter-list';
-import { Filter } from '../../../types/types';
+import { CareType, SkinType } from '../../../types/types';
 
 type Props = {
-  filter: Filter;
+  filterType: CareType | SkinType;
 }
 
-function CatalogFilterBlock({ filter }: Props): JSX.Element {
+function CatalogFilterBlock({ filterType }: Props): JSX.Element {
   const filterBlockRef = useRef<HTMLDivElement | null>(null);
 
   const setMobileFilterAccordions = () => {
@@ -26,15 +26,15 @@ function CatalogFilterBlock({ filter }: Props): JSX.Element {
   setMobileFilterAccordions();
 
   return (
-    <div className={`filter__block accordion filter__block_${filter.name}`} ref={filterBlockRef}>
+    <div className={`filter__block accordion filter__block_${filterType.name}`} ref={filterBlockRef}>
       <div className="filter__block-head">
-        <div className="filter__subtitle">{filter.title}</div>
+        <div className="filter__subtitle">{filterType.title}</div>
         <button className="filter__accordion-btn accordion__toggler" type="button" aria-label="Раскрыть фильтр" onClick={onAccorderonTogglerClick}>
           <span className="accordion__toggler-icon"></span>
         </button>
       </div>
       <div className="accordion__content">
-        <CatalogFilterList filter={filter} />
+        <CatalogFilterList filter={filterType} />
       </div>
     </div>
   );

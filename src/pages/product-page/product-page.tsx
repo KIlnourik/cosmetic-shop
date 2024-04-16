@@ -1,36 +1,59 @@
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
-import { Product } from '../../types/product';
-import CatalogHistory from '../../components/catalog-history/catalog-history';
+import SideCatalog from '../../components/side-catalog/side-catalog';
 import ProductCardFull from '../../components/product-card-full/product-card-full';
 import NotFoundPage from '../not-found-page/not-found-page';
 import { getProductTitle } from '../../utils/utils';
 import { CatalogListType } from '../../const';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useEffect } from 'react';
+import { fetchAllProductsAction, fetchProductAction } from '../../store/api-actions';
+import { getAllProducts, getAllProductsLoadingStatus, getProduct, getProductLoadingStatus } from '../../store/product-process/selector';
+import Spinner from '../../components/spinner/spinner';
 
-type Props = {
-  products: Product[];
-};
 
-function ProductPage({ products }: Props): JSX.Element {
-
+function ProductPage(): JSX.Element {
   const { id } = useParams();
+  const dispatch = useAppDispatch();
+  const product = useAppSelector(getProduct);
+  const isProductLoading = useAppSelector(getProductLoadingStatus)
 
-  const chosenProduct = products.find((product) => Number(id) === product.id);
+  const products = useAppSelector(getAllProducts);
+  const isProductsLoading = useAppSelector(getAllProductsLoadingStatus);
 
-  if (!chosenProduct) {
-    return <NotFoundPage />
-  }
+  useEffect(() => {
+    id && dispatch(fetchProductAction(id?.toString()));
+
+    dispatch(fetchAllProductsAction);
+  }, [dispatch, id]);
+
+  if (!id && !product) return <NotFoundPage />
 
   return (
     <>
-      <Helmet>
-        <title>{getProductTitle(chosenProduct.type, chosenProduct.name)}</title>
-      </Helmet>
-      <main className="main main_top-spaced">
-        <ProductCardFull product={chosenProduct} />
-        <CatalogHistory products={products} type={CatalogListType.Similar}/>
-      </main>
+      <>
+        {isProductLoading && <Spinner />}
+      </>
+      <>
+        {product &&
+          <>
+            <Helmet>
+              <title>{getProductTitle(product.type, product.name)}</title>
+            </Helmet>
+            <main className="main main_top-spaced">
+              <ProductCardFull product={product} />
+
+              {products &&
+                <SideCatalog products={products} type={CatalogListType.Similar} />
+              }
+
+              {isProductsLoading && <Spinner />}
+            </main>
+          </>
+        }
+      </>
     </>
+
   );
 }
 

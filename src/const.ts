@@ -1,4 +1,4 @@
-import { Filter } from './types/types';
+import { CareType } from './types/types';
 
 export enum AppRoute {
   Root = '/',
@@ -65,17 +65,22 @@ export const BodyCareTypes = {
   bomb: 'Бомбочка для ванны',
   salt: 'Соль для ванны',
 };
-export const SkinTypes = {
-  normal: 'Нормальная',
-  dry: 'Сухая',
-  oily: 'Жирная',
-  combined: 'Комбинированная'
+export const SkinTypes =
+{
+  name: 'skin-type',
+  title: 'Тип кожи',
+  items: {
+    normal: 'Нормальная',
+    dry: 'Сухая',
+    oily: 'Жирная',
+    combined: 'Комбинированная'
+  },
 };
 
 export const NAMES = ['clean', 'coconut', 'earth', 'high', 'lavender', 'lotos', 'milk', 'paradise', 'rest', 'rose', 'sun', 'violet'];
 export const MEASURES = ['ml', 'mg'];
 
-export const CatalogFilters: Filter[] = [
+export const CareTypes: CareType[] = [
   {
     name: 'face-care',
     title: 'Уход для лица',
@@ -86,11 +91,6 @@ export const CatalogFilters: Filter[] = [
     title: 'Уход для тела',
     items: BodyCareTypes,
   },
-  {
-    name: 'skin-type',
-    title: 'Тип кожи',
-    items: SkinTypes,
-  },
 ];
 
 export const MOBILE_MAX_WIDTH = 767;
@@ -100,3 +100,4 @@ export const MAX_PRODUCT_CARDS_PER_PAGE = 10;
 export const API_URL = 'https://3cc41ccb27963c31.mokky.dev';
 export const REQUEST_TIMEOUT = 5000;
 
+export const SIDE_CATALOG_ITEMS_LIMIT = 4;

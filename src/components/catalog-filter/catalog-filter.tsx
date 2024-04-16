@@ -1,13 +1,8 @@
 import { useRef, useState } from 'react';
-import { FILTER_HIDDEN_CLASS } from '../../const';
+import { CareTypes, FILTER_HIDDEN_CLASS, SkinTypes } from '../../const';
 import CatalogFilterBlock from './catalog-filter-block/catalog-filter-block';
-import { Filter } from '../../types/types';
 
-type Props = {
-  filters: Filter[];
-}
-
-function CatalogFilter({ filters }: Props): JSX.Element {
+function CatalogFilter(): JSX.Element {
 
   const closeBtnRef = useRef<HTMLButtonElement | null>(null);
   const openBtnRef = useRef<HTMLButtonElement | null>(null);
@@ -57,9 +52,10 @@ function CatalogFilter({ filters }: Props): JSX.Element {
         <div className="wrapper">
           <form className="filter" action="https://echo.htmlacademy.ru" method="GET">
             <div className="filter__inner">
-              {filters.map((filter, index) => (
-                <CatalogFilterBlock filter={filter} key={index} />
+              {CareTypes.map((filterType, index) => (
+                <CatalogFilterBlock filterType={filterType} key={index} />
               ))}
+              <CatalogFilterBlock filterType={SkinTypes} />
               <div className="filter__buttons">
                 <button className="filter__button" id="filter-submit" type="submit">Применить</button>
                 <button className="filter__button" id="filter-reset" type="reset">Сбросить</button>

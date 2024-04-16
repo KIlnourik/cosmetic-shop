@@ -1,6 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { Product, Volume } from '../types/product';
-import { NAMES, MEASURES } from '../const';
+import { NAMES, MEASURES, CareTypes } from '../const';
+import { CareType } from '../types/types';
 
 const FACE_CARE_TYPES = ['крем', 'сыворотка', 'маска', 'пенка', 'тоник', 'пудра'];
 const BODY_CARE_TYPES = ['крем', 'масло', 'скраб', 'мыло', 'бомбочка для ванны', 'соль для ванны'];
@@ -54,21 +55,29 @@ const skinTypes = (length: number): string[] => {
   return items;
 }
 
+const createSPF = (type: CareType) => {
+  if (type.name in CareTypes) { return faker.datatype.boolean() }
+  return false;
+};
+
 const createProduct = (): Product => {
-  const productName = NAMES[faker.number.int({ min: 0, max: NAMES.length - 1 })];
+  const name = NAMES[faker.number.int({ min: 0, max: NAMES.length - 1 })];
+  const careType = CareTypes[faker.number.int({ min: 0, max: CareTypes.length - 1 })];
 
   return {
     id: faker.number.int({ min: 1, max: 100000 }),
-    name: productName,
+    name,
     type: TYPES[faker.number.int({ min: 0, max: TYPES.length - 1 })][faker.number.int({ min: 0, max: FACE_CARE_TYPES.length - 1 })],
+    careType,
     skinType: skinTypes(faker.number.int({ min: 1, max: SKIN_TYPES.length - 1 })),
     description: faker.lorem.sentences(),
     compound: faker.lorem.sentences(),
     howToUse: faker.lorem.sentences(),
     volumes: createVolumes(faker.number.int({ min: 1, max: 2 })),
     isBestSeller: faker.datatype.boolean(),
-    previewImage: `/img/catalog/${productName}`,
-    image: `/img/catalog/${productName}`,
+    isSPF: createSPF(careType),
+    previewImage: `/img/catalog/${name}`,
+    image: `/img/catalog/${name}`,
   }
 };
 

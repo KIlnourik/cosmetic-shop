@@ -7,7 +7,7 @@ type Props = {
   type: string;
 }
 
-function CatalogHistory({ products, type }: Props): JSX.Element {
+function SideCatalog({ products, type }: Props): JSX.Element {
   return (
     <section className="catalog-history">
       <div className="catalog-history__wrapper">
@@ -27,4 +27,4 @@ function CatalogHistory({ products, type }: Props): JSX.Element {
   )
 }
 
-export default CatalogHistory;
+export default SideCatalog;
