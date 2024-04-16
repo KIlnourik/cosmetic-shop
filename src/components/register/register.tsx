@@ -34,7 +34,9 @@ function Register(): JSX.Element {
         <title>Регистрация</title>
       </Helmet>
       <ThemeProvider theme={defaultTheme}>
-        <Container component="main" maxWidth="xs">
+        <Container className="main main_top-spaced" component="main" maxWidth="xs" sx={{
+          alignContent: 'center',
+        }}>
           <CssBaseline />
           <Box
             sx={{

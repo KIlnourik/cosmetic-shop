@@ -35,14 +35,16 @@ function Login(): JSX.Element {
         <title>Авторизация</title>
       </Helmet>
       <ThemeProvider theme={defaultTheme}>
-        <Container component="main" maxWidth="xs">
+        <Container className="main main_top-spaced" component="main" maxWidth="xs" sx={{
+          alignContent: "center",
+        }}>
           <CssBaseline />
           <Box
             sx={{
               marginTop: 8,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
             }}
           >
             <Typography component="h1" variant="h5">

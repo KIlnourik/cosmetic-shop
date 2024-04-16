@@ -14,8 +14,6 @@ function Bestsellers(): JSX.Element {
           Смотреть все
         </Link>
       </div>
-
-      {/* <div className="best-sellers__slider slider swiper-container"> */}
       <Swiper
         init
         className='best-sellers__slider slider swiper-container'
@@ -144,7 +142,6 @@ function Bestsellers(): JSX.Element {
           </div>
         </div>
       </Swiper>
-      {/* </div> */}
       <a className="best-sellers__link best-sellers__link_mobile button" href="#" aria-label="Смотреть все">Смотреть все</a>
     </section >
   )
