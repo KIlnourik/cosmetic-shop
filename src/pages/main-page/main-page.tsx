@@ -3,8 +3,22 @@ import { Link } from 'react-router-dom';
 import FollowBlock from '../../components/follow-block/follow-block';
 import Contacts from '../../components/contacts/contacts';
 import Bestsellers from '../../components/bestsellers/bestsellers';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getAllProducts, getAllProductsLoadingStatus } from '../../store/product-process/selector';
+import { useEffect } from 'react';
+import { fetchAllProductsAction } from '../../store/api-actions';
 
 function MainPage(): JSX.Element {
+
+  const dispatch = useAppDispatch();
+  const products = useAppSelector(getAllProducts);
+  const isProductsLoading = useAppSelector(getAllProductsLoadingStatus);
+
+
+  useEffect(() => {
+    dispatch(fetchAllProductsAction());
+  }, [dispatch]);
+
   return (
     <>
       <Helmet>
@@ -57,7 +71,7 @@ function MainPage(): JSX.Element {
             </Link>
           </div>
         </section>
-        <Bestsellers />
+        <Bestsellers/>
         <section className="main__block banner">
           <div className="banner__content">
             <h2 className="banner__title">Встречайте весну вместе с нами</h2>
