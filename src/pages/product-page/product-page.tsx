@@ -27,7 +27,7 @@ function ProductPage(): JSX.Element {
     dispatch(fetchAllProductsAction);
   }, [dispatch, id]);
 
-  if (!id && !product) return <NotFoundPage />
+  if (!id && !isProductLoading) {return <NotFoundPage />}
 
   return (
     <>

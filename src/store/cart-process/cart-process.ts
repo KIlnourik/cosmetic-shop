@@ -7,7 +7,7 @@ const initialState: CartProcess = {
   cartProducts: []
 };
 
-const sortProducts = (a:Product, b:Product) => {
+const sortProducts = (a: Product, b: Product) => {
   if (a.id > b.id) {
     return 1;
   }
@@ -22,20 +22,18 @@ export const cartProcess = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action: PayloadAction<Product>) => {
-      state.cartProducts.push(action.payload);
-      state.cartProducts.sort(sortProducts);
+      state.cartProducts.concat(action.payload).sort(sortProducts);
     },
     removeProduct: (state, action: PayloadAction<Product>) => {
       state.cartProducts = [...state.cartProducts].filter((product) => product.id !== action.payload.id);
     },
     decreaseProducts: (state, action: PayloadAction<Product>) => {
       const index = state.cartProducts.findIndex((product) => product.id === action.payload.id);
-      state.cartProducts.splice(index, 1);
+      state.cartProducts = [...state.cartProducts].splice(index, 1);
     },
     setProductsCount: (state, action: PayloadAction<Product[]>) => {
       state.cartProducts = [...state.cartProducts].filter((product) => product.id !== action.payload[0].id);
-      state.cartProducts.push(...action.payload);
-      state.cartProducts.sort(sortProducts);
+      state.cartProducts.concat(...action.payload).sort(sortProducts);
     },
     resetCart: (state) => {
       state.cartProducts = [];

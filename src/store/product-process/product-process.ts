@@ -18,7 +18,7 @@ const initialState: ProductProcess = {
   isSimilarProductsLoading: false,
 };
 
-export const cameraProcess = createSlice({
+export const productProcess = createSlice({
   name: NameSpace.Product,
   initialState,
   reducers: {},
