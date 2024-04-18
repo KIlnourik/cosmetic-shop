@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 
 const StatusCodeMapping: Record<number, boolean> = {
   [StatusCodes.BAD_REQUEST]: true,
-  // [StatusCodes.NOT_FOUND]: true,
+  [StatusCodes.NOT_FOUND]: true,
   [StatusCodes.INTERNAL_SERVER_ERROR]: true,
 };
 
@@ -23,6 +23,7 @@ export const createAPI = (): AxiosInstance => {
       if (error.response && shouldDisplayResponseError(error.response)) {
         toast.error(error.message);
         toast.error(error.response.data.messages[0]);
+
       }
       throw error;
     }
@@ -38,6 +39,16 @@ export const createAPI = (): AxiosInstance => {
       throw error;
     }
   );
+
+  // api.interceptors.response.use(
+  //   (response) => response,
+  //   (error: AxiosError) => {
+  //     if (error.response?.status === StatusCodes.NOT_FOUND ) {
+  //       console.log('WUZUUUP!')
+  //     }
+  //     throw new Response();
+  //   }
+  // );
 
   return api;
 };

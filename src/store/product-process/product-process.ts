@@ -13,9 +13,8 @@ const initialState: ProductProcess = {
   product: undefined,
   isProductsLoading: false,
   isAllProductsLoading: false,
-  isPromoLoading: false,
   isProductLoading: false,
-  isSimilarProductsLoading: false,
+  isError: false
 };
 
 export const productProcess = createSlice({
@@ -31,6 +30,10 @@ export const productProcess = createSlice({
         state.products = action.payload;
         state.isProductsLoading = false;
       })
+      .addCase(fetchProductsAction.rejected, (state, action) => {
+        state.isError = true
+        state.isProductsLoading = false;
+      })
       .addCase(fetchProductAction.pending, (state) => {
         state.isProductLoading = true;
       })
@@ -38,11 +41,19 @@ export const productProcess = createSlice({
         state.product = action.payload;
         state.isProductLoading = false;
       })
+      .addCase(fetchProductAction.rejected, (state, action) => {
+        state.isError = true
+        state.isProductLoading = false;
+      })
       .addCase(fetchAllProductsAction.pending, (state) => {
         state.isAllProductsLoading = true;
       })
       .addCase(fetchAllProductsAction.fulfilled, (state, action) => {
         state.allProducts = action.payload;
+        state.isAllProductsLoading = false;
+      })
+      .addCase(fetchAllProductsAction.rejected, (state, action) => {
+        state.isError = true
         state.isAllProductsLoading = false;
       });
   }

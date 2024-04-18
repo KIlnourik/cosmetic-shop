@@ -7,12 +7,11 @@ export type AppDispatch = typeof store.dispatch;
 export type ProductProcess = {
   products: Product[];
   allProducts: Product[];
-  product: Product| undefined;
+  product?: Product;
   isProductsLoading: boolean;
   isAllProductsLoading: boolean;
-  isPromoLoading: boolean;
   isProductLoading: boolean;
-  isSimilarProductsLoading: boolean;
+  isError: boolean
 }
 
 export type CartProcess = {

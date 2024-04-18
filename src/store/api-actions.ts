@@ -38,7 +38,6 @@ export const fetchProductAction = createAsyncThunk<Product, string, {
   'data/fetchProduct',
   async (productId, { extra: api }) => {
     const { data } = await api.get<Product>(`${APIRoute.Products}/${productId}`);
-    console.log(data);
     return data;
   }
 );

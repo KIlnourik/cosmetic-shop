@@ -16,18 +16,21 @@ function ProductPage(): JSX.Element {
   const { id } = useParams();
   const dispatch = useAppDispatch();
   const product = useAppSelector(getProduct);
-  const isProductLoading = useAppSelector(getProductLoadingStatus)
+  const isProductLoading = useAppSelector(getProductLoadingStatus);
 
   const products = useAppSelector(getAllProducts);
-  const isProductsLoading = useAppSelector(getAllProductsLoadingStatus);
+  const isAllProductsLoading = useAppSelector(getAllProductsLoadingStatus);
 
   useEffect(() => {
-    id && dispatch(fetchProductAction(id?.toString()));
+    id && dispatch(fetchProductAction(id.toString()));
 
     dispatch(fetchAllProductsAction);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, id]);
 
-  if (!id && !isProductLoading) {return <NotFoundPage />}
+  if (!id && !isProductLoading || !product && !isProductLoading) {
+    return <NotFoundPage />
+  }
 
   return (
     <>
@@ -42,12 +45,10 @@ function ProductPage(): JSX.Element {
             </Helmet>
             <main className="main main_top-spaced">
               <ProductCardFull product={product} />
-
+              {isAllProductsLoading && <Spinner />}
               {products &&
                 <SideCatalog products={products} type={CatalogListType.Similar} />
               }
-
-              {isProductsLoading && <Spinner />}
             </main>
           </>
         }

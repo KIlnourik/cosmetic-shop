@@ -8,3 +8,4 @@ export const getProduct = (state: State): Product | undefined => state[NameSpace
 export const getProductLoadingStatus = (state: State): boolean => state[NameSpace.Product].isProductLoading;
 export const getAllProducts = (state: State): Product[] => state[NameSpace.Product].allProducts;
 export const getAllProductsLoadingStatus = (state: State): boolean => state[NameSpace.Product].isAllProductsLoading;
+export const getErrorStatus = (state: State): boolean => state[NameSpace.Product].isError;
