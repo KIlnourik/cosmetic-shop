@@ -1,9 +1,13 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import { Product } from '../../types/product';
 import { getProductTitle } from '../../utils/utils';
 import ProductImage from '../product-image/product-image';
 import { AccordeonToggleClass } from '../../const';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { fetchAllProductsAction } from '../../store/api-actions';
+import { getAllProducts, getAllProductsLoadingStatus } from '../../store/product-process/selector';
+import Spinner from '../spinner/spinner';
 
 type Props = {
   product: Product,
@@ -21,30 +25,34 @@ function ProductCardFull({ product }: Props): JSX.Element {
     setHowToUseOpen(!isHowToUseOpen);
   };
 
-  const [price, setPrice] = useState<string | undefined>(undefined);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { pathname, search } = useLocation();
-  const [volume, setVolume] = useState<string | undefined>(undefined);
+
+
+  const getSimilarProds = (prods: Product[]): Product[] =>
+    prods.filter(
+      (item) => product.name === item.name
+        && product.type === item.type
+        && product.volume.split(' ')[1] === item.volume.split(' ')[1]);
+
+  const allProducts = useAppSelector(getAllProducts);
+  const isAllProductsLoading = useAppSelector(getAllProductsLoadingStatus);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const similarProducts = useMemo(() => getSimilarProds(allProducts), [allProducts]);
 
   const handleVolumeChange = (evt: ChangeEvent): void => {
     const { value } = evt.target as HTMLInputElement;
-    const chosenVolume = product.volumes.find((item) => item.volume === value);
-    setPrice(chosenVolume?.price.toString());
-    navigate(`${pathname}?vol=${value}`)
+    const checkedProd = similarProducts.find(item => item.volume === value);
+    navigate(`/products/${checkedProd?.id}`);
   };
 
-  useEffect(() => {
-    if (search) {
-      setVolume(search.split('=')[1].replace('%20', ' '));
-    }
+  const productSortingByVolume = (prodA: Product, prodB: Product) => (
+    Number(prodA.volume.split(' ')[0]) - Number(prodB.volume.split(' ')[0])
+  );
 
-    if (volume) {
-      product.volumes.map((item) => item.volume === volume && setPrice(item.price.toString()));
-    } else {
-      product.volumes.map((item) => setPrice(item.price.toString()));
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [volume, search]);
+  useEffect(() => {
+    dispatch(fetchAllProductsAction());
+  }, [dispatch]);
 
   return (
     <section className="card">
@@ -85,18 +93,19 @@ function ProductCardFull({ product }: Props): JSX.Element {
             <div className="card__option">
               <p className="card__option-title">Объем:</p>
               <ul className="card__option-list">
-                {
-                  product.volumes.map((item, index) => (
+                {isAllProductsLoading && <Spinner />}
+                {similarProducts &&
+                  similarProducts.sort(productSortingByVolume).map((item, index) => (
                     <li className="card__option-item" key={index}>
-                      <input className="card__input-radio visually-hidden" id={item.volume} type="radio" name="volume" value={item.volume}
-                        onChange={handleVolumeChange} checked={item.volume === volume || product.volumes.length === 1} />
+                      <input className="card__input-radio visually-hidden" id={item.volume} type="radio" name="volume" value={item.volume} checked={product.volume === item.volume} onChange={handleVolumeChange}
+                      />
                       <label className="card__radio" htmlFor={item.volume}>{item.volume}</label>
                     </li>
                   ))
                 }
               </ul>
             </div>
-            <div className="card__price"><span>{price} ₽</span>
+            <div className="card__price"><span>{product.price} ₽</span>
               <button className="card__button" id="card-submit" type="submit">Добавить в корзину</button>
             </div>
           </form>

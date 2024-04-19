@@ -1,17 +1,19 @@
+import { Product } from "../../types/product";
 import CatalogList from "../catalog-list/catalog-list";
 
 type Props = {
   catalogType?: string;
+  currentProduct?: Product,
 }
 
-function CatalogListLayout({ catalogType }: Props): JSX.Element {
+function CatalogListLayout({ catalogType, currentProduct }: Props): JSX.Element {
 
   if (catalogType) {
     return (
       <section className="catalog-history">
         <div className="catalog-history__wrapper">
           <h2>{catalogType}</h2>
-          <CatalogList catalogType={catalogType}/>
+          <CatalogList catalogType={catalogType} currentProduct={currentProduct}/>
         </div>
       </section>)
   }

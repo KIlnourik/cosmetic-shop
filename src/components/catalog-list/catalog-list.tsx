@@ -9,9 +9,10 @@ import { Product } from '../../types/product';
 
 type Props = {
   catalogType?: string;
+  currentProduct?: Product;
 }
 
-function CatalogList({ catalogType }: Props): JSX.Element {
+function CatalogList({ catalogType, currentProduct }: Props): JSX.Element {
   const products = useAppSelector(getAllProducts);
   const isProductsLoading = useAppSelector(getAllProductsLoadingStatus);
 
@@ -22,19 +23,32 @@ function CatalogList({ catalogType }: Props): JSX.Element {
   const [itemsPerPage, setItemsPerPage] = useState(
     (!catalogType ? CATALOG_PER_PAGE_COUNT : SIDE_CATALOG_PER_PAGE_COUNT)
   );
+  const [similarProducts, setSimilarProducts] = useState<Product[]>([]);
+
+  const getSimilarProds = (prods: Product[]): Product[] =>
+    prods.filter(
+      (item) => currentProduct?.type === item.type);
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     (!catalogType)
       ? setItemsPerPage(CATALOG_PER_PAGE_COUNT)
       : setItemsPerPage(SIDE_CATALOG_PER_PAGE_COUNT);
 
-    if (products) {
-      setPageCount(Math.ceil(products.length / itemsPerPage));
-      setCurrentProducts(products.slice(offset, offset + itemsPerPage));
+    if (currentProduct) {
+      setSimilarProducts(getSimilarProds(products));
     }
 
-    console.log(currentProducts);
-  }, [products, offset, itemsPerPage, catalogType])
+    if (products) {
+      (!currentProduct)
+        ? (setPageCount(Math.ceil(products.length / itemsPerPage)),
+          setCurrentProducts(products.slice(offset, offset + itemsPerPage)))
+        : (setPageCount(Math.ceil(similarProducts.length / itemsPerPage)),
+          setCurrentProducts(similarProducts.slice(offset, offset + itemsPerPage)));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [products, offset, itemsPerPage, catalogType, currentProduct, similarProducts])
 
   const handlePrevBtnClick = (currentPage: number): void => {
     setPage(currentPage - 1);
@@ -53,7 +67,8 @@ function CatalogList({ catalogType }: Props): JSX.Element {
           currentProducts &&
           currentProducts.map((product, index) => (
             <ProductCardSmall product={product} className={`catalog${catalogType ? '-history' : ''}__item`} key={`${index}${product.name}${product.id}`} />
-          ))}
+          ))
+        }
         {
           isProductsLoading && <Spinner />
         }

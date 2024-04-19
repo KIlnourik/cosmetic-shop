@@ -1,9 +1,4 @@
-import { CareType } from "./types";
-
-export type Volume = {
-  price: number,
-  volume: string,
-};
+import { CareType } from './types';
 
 export type Product = {
   id: number,
@@ -14,7 +9,8 @@ export type Product = {
   description: string,
   compound: string,
   howToUse: string,
-  volumes: Volume[],
+  price: number,
+  volume: string,
   isBestSeller: boolean,
   isSPF: boolean,
   previewImage: string,

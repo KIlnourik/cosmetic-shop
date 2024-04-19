@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { Product, Volume } from '../types/product';
+import { Product } from '../types/product';
 import { NAMES, MEASURES, CareTypes } from '../const';
 import { CareType } from '../types/types';
 
@@ -7,40 +7,6 @@ const FACE_CARE_TYPES = ['крем', 'сыворотка', 'маска', 'пен
 const BODY_CARE_TYPES = ['крем', 'масло', 'скраб', 'мыло', 'бомбочка для ванны', 'соль для ванны'];
 const SKIN_TYPES = ['нормальная', 'сухая', 'жирная', 'комбинированная'];
 const TYPES = [FACE_CARE_TYPES, BODY_CARE_TYPES];
-
-const createRandomPrices = (length: number): number[] => {
-  const result = [];
-  for (let i = 0; i < length; i++) {
-    result.push(faker.number.int({ min: 10, max: 100 }) * 10);
-  }
-  return result.sort((a, b) => a - b);
-};
-
-const createRandomVolumes = (length: number): string[] => {
-  const result = [];
-  for (let i = 0; i < length; i++) {
-    result.push(faker.number.int({ min: 1, max: 50 }) * 10);
-  }
-  const measure = MEASURES[faker.number.int({ min: 0, max: MEASURES.length - 1 })];
-  const sortedFormattedResult = result.sort((a, b) => a - b).map((item) => `${item} ${measure}`);
-
-  return sortedFormattedResult;
-};
-
-const createVolumes = (length: number): Volume[] => {
-  const volumes: Volume[] = [];
-  const randomVolumes = createRandomVolumes(length);
-  const randomPrices = createRandomPrices(length);
-  for (let i = 0; i < length; i++) {
-    volumes.push(
-      {
-        price: randomPrices[i],
-        volume: randomVolumes[i],
-      }
-    );
-  }
-  return volumes;
-};
 
 const skinTypes = (length: number): string[] => {
   const items: string[] = [];
@@ -73,7 +39,8 @@ const createProduct = (): Product => {
     description: faker.lorem.sentences(),
     compound: faker.lorem.sentences(),
     howToUse: faker.lorem.sentences(),
-    volumes: createVolumes(faker.number.int({ min: 1, max: 2 })),
+    price: faker.number.int({ min: 10, max: 100 }) * 10,
+    volume: `${faker.number.int({ min: 1, max: 50 }) * 10} ${MEASURES[faker.number.int({ min: 0, max: MEASURES.length - 1 })]}`,
     isBestSeller: faker.datatype.boolean(),
     isSPF: createSPF(careType),
     previewImage: `/img/catalog/${name}`,
@@ -90,4 +57,4 @@ const createProducts = (length: number): Product[] => {
   return products;
 };
 
-export const products: Product[] = createProducts(40);
+export const products: Product[] = createProducts(100);

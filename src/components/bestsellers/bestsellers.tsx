@@ -50,23 +50,21 @@ function Bestsellers(): JSX.Element {
           <div className="slider__wrapper">
             {
               bestsellersProducts.map((product, index) => (
-                product.volumes.map((item, id) => (
-                  <SwiperSlide key={`${product.id}${index}${id}`}>
-                    {
-                      <div className="slider__item product-card" key={id}>
-                        <picture>
-                          <source type="image/webp" srcSet={`${product.previewImage}@1x.webp 1x, ${product.previewImage}@2x.webp 2x`} />
-                          <source type="image/jpeg" srcSet={`${product.previewImage}@1x.jpg 1x, ${product.previewImage}@2x.jpg 2x`} />
-                          <img
-                            className="product-card__image" src={`${product.previewImage}@1x.jpg`} alt="High - крем для лица" height="312" width="230" />
-                        </picture>
-                        <h3 className="product-card__title">{getProductTitle(product.name)}</h3>
-                        <p className="product-card__description">{product.type}</p>
-                        <Link className="product-card__link" to={`${AppRoute.Catalog}/${product.id}${product.volumes.length > 1 ? `?vol=${item.volume}` : ''}`} aria-label="Подробнее">Подробнее</Link>
-                      </div>
-                    }
-                  </SwiperSlide>
-                ))
+                <SwiperSlide key={`${product.id}${index}`}>
+                  {
+                    <div className="slider__item product-card">
+                      <picture>
+                        <source type="image/webp" srcSet={`${product.previewImage}@1x.webp 1x, ${product.previewImage}@2x.webp 2x`} />
+                        <source type="image/jpeg" srcSet={`${product.previewImage}@1x.jpg 1x, ${product.previewImage}@2x.jpg 2x`} />
+                        <img
+                          className="product-card__image" src={`${product.previewImage}@1x.jpg`} alt="High - крем для лица" height="312" width="230" />
+                      </picture>
+                      <h3 className="product-card__title">{getProductTitle(product.name)}</h3>
+                      <p className="product-card__description">{product.type}</p>
+                      <Link className="product-card__link" to={`${AppRoute.Catalog}/${product.id}`} aria-label="Подробнее">Подробнее</Link>
+                    </div>
+                  }
+                </SwiperSlide>
               ))
             }
           </div>

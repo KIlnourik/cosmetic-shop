@@ -10,25 +10,23 @@ type Props = {
 
 function ProductCardSmall({ product, className }: Props): JSX.Element {
   return (
-    <>
-      {product.volumes.map((item, index) => (
-        <li className={`${className} product`} key={`${index}${item.price}${item.volume}`}>
-          <Link className="product__link" to={`${AppRoute.Catalog}/${product.id}${product.volumes.length > 1 ? `?vol=${item.volume}` : ''}`}>
-            <ProductImage path={product.previewImage} productName={product.name} productType={product.type} className={'product'} />
-              <div className="product__wrapper">
-                <div className="product__text">
-                  <h3 className="product__title">{product.name}</h3>
-                  <span className="product__price">{item.price} ₽</span>
-                </div>
-                <div className="product__text">
-                  <div className="product__description">{product.type}</div>
-                  <div className="product__description">{item.volume}</div>
-                </div>
-              </div>
-          </Link>
-        </li>
-      ))}
-    </>
+
+    <li className={`${className} product`}>
+      <Link className="product__link" to={`${AppRoute.Catalog}/${product.id}`}>
+        <ProductImage path={product.previewImage} productName={product.name} productType={product.type} className={'product'} />
+        <div className="product__wrapper">
+          <div className="product__text">
+            <h3 className="product__title">{product.name}</h3>
+            <span className="product__price">{product.price} ₽</span>
+          </div>
+          <div className="product__text">
+            <div className="product__description">{product.type}</div>
+            <div className="product__description">{product.volume}</div>
+          </div>
+        </div>
+      </Link>
+    </li>
+
 
   );
 }
