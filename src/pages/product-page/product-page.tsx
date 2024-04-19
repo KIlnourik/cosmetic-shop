@@ -47,7 +47,7 @@ function ProductPage(): JSX.Element {
               <ProductCardFull product={product} />
               {isAllProductsLoading && <Spinner />}
               {products &&
-                <CatalogListLayout catalogType={SideCatalogType.Similar} currentProduct={product}/>
+                <CatalogListLayout catalogType={SideCatalogType.Similar} currentProduct={product} />
               }
             </main>
           </>

@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { Product } from '../../types/product';
 import { getProductTitle } from '../../utils/utils';
 import ProductImage from '../product-image/product-image';
@@ -28,7 +28,6 @@ function ProductCardFull({ product }: Props): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-
   const getSimilarProds = (prods: Product[]): Product[] =>
     prods.filter(
       (item) => product.name === item.name
@@ -37,12 +36,11 @@ function ProductCardFull({ product }: Props): JSX.Element {
 
   const allProducts = useAppSelector(getAllProducts);
   const isAllProductsLoading = useAppSelector(getAllProductsLoadingStatus);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const similarProducts = useMemo(() => getSimilarProds(allProducts), [allProducts]);
+  const similarProducts = getSimilarProds(allProducts);
 
   const handleVolumeChange = (evt: ChangeEvent): void => {
     const { value } = evt.target as HTMLInputElement;
-    const checkedProd = similarProducts.find(item => item.volume === value);
+    const checkedProd = similarProducts?.find(item => item.volume === value);
     navigate(`/products/${checkedProd?.id}`);
   };
 
@@ -58,7 +56,12 @@ function ProductCardFull({ product }: Props): JSX.Element {
     <section className="card">
       <div className="card__wrapper">
         <div className="card__image-wrapper">
-          <ProductImage path={product.image} productName={product.name} productType={product.type} className={'card'} />
+          <ProductImage
+            path={product.image}
+            productName={product.name}
+            productType={product.type}
+            className={'card'}
+          />
         </div>
         <div className="card__content">
           <h1 className="card__content-title">{getProductTitle(product.name)}<small>{product.type}</small></h1>

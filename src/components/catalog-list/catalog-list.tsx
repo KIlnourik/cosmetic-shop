@@ -25,19 +25,14 @@ function CatalogList({ catalogType, currentProduct }: Props): JSX.Element {
   );
   const [similarProducts, setSimilarProducts] = useState<Product[]>([]);
 
-  const getSimilarProds = (prods: Product[]): Product[] =>
-    prods.filter(
-      (item) => currentProduct?.type === item.type);
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-
   useEffect(() => {
     (!catalogType)
       ? setItemsPerPage(CATALOG_PER_PAGE_COUNT)
       : setItemsPerPage(SIDE_CATALOG_PER_PAGE_COUNT);
 
     if (currentProduct) {
-      setSimilarProducts(getSimilarProds(products));
+      setSimilarProducts(products.filter(
+        (item) => currentProduct?.type === item.type));
     }
 
     if (products) {
@@ -47,17 +42,22 @@ function CatalogList({ catalogType, currentProduct }: Props): JSX.Element {
         : (setPageCount(Math.ceil(similarProducts.length / itemsPerPage)),
           setCurrentProducts(similarProducts.slice(offset, offset + itemsPerPage)));
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [products, offset, itemsPerPage, catalogType, currentProduct, similarProducts])
+  }, [products, offset, itemsPerPage])
 
   const handlePrevBtnClick = (currentPage: number): void => {
-    setPage(currentPage - 1);
-    setOffset((currentPage - 1) * itemsPerPage);
+    if (currentPage >= 1 && currentPage <= pageCount) {
+      setPage(currentPage - 1);
+      setOffset((currentPage - 2) * itemsPerPage);
+    }
   };
 
   const handleNextBtnClick = (currentPage: number): void => {
-    setPage(currentPage + 1);
-    setOffset(currentPage * itemsPerPage);
+    if (currentPage >= 1 && currentPage <= pageCount) {
+      setPage(currentPage + 1);
+      setOffset(currentPage * itemsPerPage);
+    }
   }
 
   return (
