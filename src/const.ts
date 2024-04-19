@@ -43,7 +43,7 @@ export enum AccordeonToggleClass {
   Close = 'accordion_closed',
 }
 
-export enum CatalogListType {
+export enum SideCatalogType {
   History = 'Вы недавно смотрели',
   Similar = 'Вам также может понравиться',
 }
@@ -100,4 +100,5 @@ export const MAX_PRODUCT_CARDS_PER_PAGE = 10;
 export const API_URL = 'https://3cc41ccb27963c31.mokky.dev';
 export const REQUEST_TIMEOUT = 5000;
 
-export const SIDE_CATALOG_ITEMS_LIMIT = 4;
+export const SIDE_CATALOG_PER_PAGE_COUNT = 4;
+export const CATALOG_PER_PAGE_COUNT = 12;
