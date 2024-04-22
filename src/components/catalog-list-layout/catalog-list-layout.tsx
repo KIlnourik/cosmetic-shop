@@ -1,3 +1,6 @@
+import { SideCatalogType } from "../../const";
+import { useAppSelector } from "../../hooks";
+import { getViewedProducts } from "../../store/viewed-products-process/selector";
 import { Product } from "../../types/product";
 import CatalogList from "../catalog-list/catalog-list";
 
@@ -8,7 +11,13 @@ type Props = {
 
 function CatalogListLayout({ catalogType, currentProduct }: Props): JSX.Element {
 
-  if (catalogType) {
+  const viewedProducts = useAppSelector(getViewedProducts);
+
+  if (catalogType === SideCatalogType.History && !viewedProducts.length) {
+    return <></>
+  }
+
+  if (catalogType || (catalogType === SideCatalogType.History && viewedProducts.length)) {
     return (
       <section className="catalog-history">
         <div className="catalog-history__wrapper">

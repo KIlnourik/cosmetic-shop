@@ -4,8 +4,9 @@ import { getAllProducts, getAllProductsLoadingStatus } from '../../store/product
 import Pagination from '../pagination/pagination';
 import ProductCardSmall from '../product-card-small/product-card-small';
 import Spinner from '../spinner/spinner';
-import { CATALOG_PER_PAGE_COUNT, SIDE_CATALOG_PER_PAGE_COUNT } from '../../const';
+import { CATALOG_PER_PAGE_COUNT, SIDE_CATALOG_PER_PAGE_COUNT, SideCatalogType } from '../../const';
 import { Product } from '../../types/product';
+import { getViewedProducts } from '../../store/viewed-products-process/selector';
 
 type Props = {
   catalogType?: string;
@@ -25,6 +26,8 @@ function CatalogList({ catalogType, currentProduct }: Props): JSX.Element {
   );
   const [similarProducts, setSimilarProducts] = useState<Product[]>([]);
 
+  const viewedProducts = useAppSelector(getViewedProducts);
+
   useEffect(() => {
     (!catalogType)
       ? setItemsPerPage(CATALOG_PER_PAGE_COUNT)
@@ -43,6 +46,10 @@ function CatalogList({ catalogType, currentProduct }: Props): JSX.Element {
           setCurrentProducts(similarProducts.slice(offset, offset + itemsPerPage)));
     }
 
+    (catalogType === SideCatalogType.History && viewedProducts.length)
+      && (setPageCount(Math.ceil(viewedProducts.length / itemsPerPage)),
+        setCurrentProducts(viewedProducts.slice(offset, offset + itemsPerPage)))
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [products, offset, itemsPerPage])
 
@@ -54,7 +61,7 @@ function CatalogList({ catalogType, currentProduct }: Props): JSX.Element {
   };
 
   const handleNextBtnClick = (currentPage: number): void => {
-    if (currentPage >= 1 && currentPage <= pageCount) {
+    if (currentPage >= 1 && currentPage < pageCount) {
       setPage(currentPage + 1);
       setOffset(currentPage * itemsPerPage);
     }

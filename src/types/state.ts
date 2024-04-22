@@ -32,3 +32,7 @@ export type CouponProcess = {
 export type OrderProcess = {
   orderStatus?: boolean;
 }
+
+export type ViewedProductsProcess = {
+  viewedProducts: Product[]
+}

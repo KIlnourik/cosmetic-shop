@@ -1,4 +1,5 @@
 import { MouseEvent } from 'react';
+import { Product } from '../types/product';
 
 export const toggleAccordion = (element: HTMLElement) => {
   element.classList.toggle(`accordion_closed`);
@@ -49,4 +50,14 @@ export const getProductTitle = (...rest: string[]): string => {
   })
 
   return result.join(' ');
+};
+
+export const sortProducts = (a: Product, b: Product) => {
+  if (a.id > b.id) {
+    return 1;
+  }
+  if (a.id < b.id) {
+    return -1;
+  }
+  return 0;
 };

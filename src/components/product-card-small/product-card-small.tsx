@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom';
 import { Product } from '../../types/product';
 import ProductImage from '../product-image/product-image';
 import { AppRoute } from '../../const';
+import { useAppDispatch } from '../../hooks';
+import { addToViewedProducts } from '../../store/viewed-products-process/viewed-products-process';
 
 type Props = {
   product: Product;
@@ -9,11 +11,25 @@ type Props = {
 };
 
 function ProductCardSmall({ product, className }: Props): JSX.Element {
-  return (
 
-    <li className={`${className} product`}>
-      <Link className="product__link" to={`${AppRoute.Catalog}/${product.id}`}>
-        <ProductImage path={product.previewImage} productName={product.name} productType={product.type} className={'product'} />
+  const dispatch = useAppDispatch();
+
+  const handleProductClick = (product: Product): void => {
+    dispatch(addToViewedProducts(product));
+  };
+
+  return (
+    <li className={`${className} product`} onClick={() => handleProductClick(product)}>
+      <Link
+        className="product__link"
+        to={`${AppRoute.Catalog}/${product.id}`}
+        onClick={() => handleProductClick(product)}
+      >
+        <ProductImage
+          path={product.previewImage}
+          productName={product.name}
+          productType={product.type}
+          className={'product'} />
         <div className="product__wrapper">
           <div className="product__text">
             <h3 className="product__title">{product.name}</h3>
@@ -26,8 +42,6 @@ function ProductCardSmall({ product, className }: Props): JSX.Element {
         </div>
       </Link>
     </li>
-
-
   );
 }
 

@@ -30,7 +30,7 @@ export const productProcess = createSlice({
         state.products = action.payload;
         state.isProductsLoading = false;
       })
-      .addCase(fetchProductsAction.rejected, (state, action) => {
+      .addCase(fetchProductsAction.rejected, (state) => {
         state.isError = true
         state.isProductsLoading = false;
       })
@@ -41,7 +41,7 @@ export const productProcess = createSlice({
         state.product = action.payload;
         state.isProductLoading = false;
       })
-      .addCase(fetchProductAction.rejected, (state, action) => {
+      .addCase(fetchProductAction.rejected, (state) => {
         state.isError = true
         state.isProductLoading = false;
       })
@@ -52,7 +52,7 @@ export const productProcess = createSlice({
         state.allProducts = action.payload;
         state.isAllProductsLoading = false;
       })
-      .addCase(fetchAllProductsAction.rejected, (state, action) => {
+      .addCase(fetchAllProductsAction.rejected, (state) => {
         state.isError = true
         state.isAllProductsLoading = false;
       });

@@ -15,6 +15,10 @@ function Pagination({
 
   const currentPage = page;
 
+  if (pageCount <= 1) {
+    return <></>;
+  }
+
   return (
     <div className="pagination">
       <div className="pagination__numbers">

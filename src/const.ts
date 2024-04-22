@@ -14,7 +14,8 @@ export enum NameSpace {
   Product = 'Product',
   Cart = 'Cart',
   Coupon = 'Coupon',
-  Order = 'Order'
+  Order = 'Order',
+  ViewedProducts = 'ViewedProducts'
 }
 
 export enum APIRoute {
