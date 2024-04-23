@@ -7,12 +7,19 @@ import { Product } from '../../types/product';
 import Spinner from '../spinner/spinner';
 import { getProductTitle } from '../../utils/utils';
 import { getAllProducts, getAllProductsLoadingStatus } from '../../store/product-process/selector';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { addToViewedProducts } from '../../store/viewed-products-process/viewed-products-process';
 
 function Bestsellers(): JSX.Element {
 
   const products = useAppSelector(getAllProducts);
   const isProductsLoading = useAppSelector(getAllProductsLoadingStatus);
+
+  const dispatch = useAppDispatch();
+
+  const handleProductClick = (product: Product): void => {
+    dispatch(addToViewedProducts(product));
+  };
 
   const getBestsellersProducts = (products: Product[]): Product[] => products.filter((product) => product.isBestSeller);
   const bestsellersProducts: Product[] = getBestsellersProducts(products);
@@ -61,7 +68,7 @@ function Bestsellers(): JSX.Element {
                       </picture>
                       <h3 className="product-card__title">{getProductTitle(product.name)}</h3>
                       <p className="product-card__description">{product.type}</p>
-                      <Link className="product-card__link" to={`${AppRoute.Catalog}/${product.id}`} aria-label="Подробнее">Подробнее</Link>
+                      <Link className="product-card__link" to={`${AppRoute.Catalog}/${product.id}`} aria-label="Подробнее" onClick={() => handleProductClick(product)}>Подробнее</Link>
                     </div>
                   }
                 </SwiperSlide>

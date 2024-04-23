@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchAllProductsAction } from '../../store/api-actions';
 import { getAllProducts, getAllProductsLoadingStatus } from '../../store/product-process/selector';
 import Spinner from '../spinner/spinner';
+import { addToViewedProducts } from '../../store/viewed-products-process/viewed-products-process';
 
 type Props = {
   product: Product,
@@ -42,6 +43,7 @@ function ProductCardFull({ product }: Props): JSX.Element {
     const { value } = evt.target as HTMLInputElement;
     const checkedProd = similarProducts?.find(item => item.volume === value);
     navigate(`/products/${checkedProd?.id}`);
+    dispatch(addToViewedProducts(product));
   };
 
   const productSortingByVolume = (prodA: Product, prodB: Product) => (
