@@ -15,7 +15,6 @@ export const viewedProductsProcess = createSlice({
       state.viewedProducts.push(action.payload);
       const arr = Array.from(new Set(state.viewedProducts.map((prod) => JSON.stringify(prod))));
       state.viewedProducts = arr.map((prod) => JSON.parse(prod));
-      console.log(state.viewedProducts);
     },
     resetViewedProducts: (state) => {
       state.viewedProducts = [];

@@ -3,6 +3,8 @@ import { AppRoute } from '../../const';
 import Logo from '../logo/logo';
 import { useEffect, useRef } from 'react';
 import { Badge, ThemeProvider, createTheme } from '@mui/material';
+import { useAppSelector } from '../../hooks';
+import { getCartProducts } from '../../store/cart-process/selector';
 
 
 function Header(): JSX.Element {
@@ -70,14 +72,7 @@ function Header(): JSX.Element {
     }
   };
 
-  const headerTheme = createTheme({
-    palette: {
-      info: {
-        main: '#f4f1ed',
-      }
-    }
-  })
-
+  const cartProducts = useAppSelector(getCartProducts);
 
   useEffect(() => {
     if (menuRef.current && headerRef.current) {
@@ -94,6 +89,13 @@ function Header(): JSX.Element {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [headerRef, menuRef]);
 
+  const headerTheme = createTheme({
+    palette: {
+      info: {
+        main: '#f4f1ed',
+      }
+    }
+  })
 
   return (
     <ThemeProvider theme={headerTheme} >
@@ -152,7 +154,7 @@ function Header(): JSX.Element {
             <li className="user-actions__item">
               <Badge
                 color='info'
-                badgeContent={2}
+                badgeContent={cartProducts.length}
               >
                 <Link className="user-actions__link user-actions__cart" to={AppRoute.Cart} aria-label="Корзина">
                   <svg height="21" width="18">
