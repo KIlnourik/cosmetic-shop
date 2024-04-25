@@ -34,27 +34,22 @@ function ProductPage(): JSX.Element {
 
   return (
     <>
-      <>
-        {isProductLoading && <Spinner />}
-      </>
-      <>
-        {product &&
-          <>
-            <Helmet>
-              <title>{getProductTitle(product.type, product.name)}</title>
-            </Helmet>
-            <main className="main main_top-spaced">
-              <ProductCardFull product={product} />
-              {isAllProductsLoading && <Spinner />}
-              {products &&
-                <CatalogListLayout catalogType={SideCatalogType.Similar} currentProduct={product} />
-              }
-            </main>
-          </>
-        }
-      </>
+      {(!product && isProductLoading) && <Spinner />}
+      {(product && !isProductLoading) &&
+        <>
+          <Helmet>
+            <title>{getProductTitle(product.type, product.name)}</title>
+          </Helmet>
+          <main className="main main_top-spaced">
+            <ProductCardFull product={product} />
+            {(!products.length && isAllProductsLoading) && <Spinner />}
+            {(products.length && !isAllProductsLoading) &&
+              <CatalogListLayout catalogType={SideCatalogType.Similar} currentProduct={product} />
+            }
+          </main>
+        </>
+      }
     </>
-
   );
 }
 

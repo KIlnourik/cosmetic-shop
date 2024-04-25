@@ -5,7 +5,7 @@ import { Product } from '../../types/product';
 import { sortProducts } from '../../utils/utils';
 
 const initialState: CartProcess = {
-  cartProducts: []
+  cartProducts: [],
 };
 
 export const cartProcess = createSlice({
@@ -21,11 +21,11 @@ export const cartProcess = createSlice({
     },
     decreaseProducts: (state, action: PayloadAction<Product>) => {
       const index = state.cartProducts.findIndex(product => product.id === action.payload.id);
-      state.cartProducts = [...state.cartProducts].splice(index, 1);
+      state.cartProducts.splice(index, 1);
     },
-    setProductsCount: (state, action: PayloadAction<Product[]>) => {
-      state.cartProducts = [...state.cartProducts].filter(product => product.id !== action.payload[0].id);
-      state.cartProducts.push(...action.payload);
+    setProductsCount: (state, action: PayloadAction<Product>) => {
+      state.cartProducts = [...state.cartProducts].filter(product => product.id !== action.payload.id);
+      state.cartProducts.push(action.payload);
       state.cartProducts.sort(sortProducts);
     },
     resetCart: (state) => {
@@ -34,4 +34,10 @@ export const cartProcess = createSlice({
   },
 });
 
-export const { addToCart, removeProduct, decreaseProducts, setProductsCount, resetCart } = cartProcess.actions;
+export const {
+  addToCart,
+  removeProduct,
+  decreaseProducts,
+  setProductsCount,
+  resetCart
+} = cartProcess.actions;

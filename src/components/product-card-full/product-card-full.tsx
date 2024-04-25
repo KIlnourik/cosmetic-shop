@@ -6,22 +6,30 @@ import { AccordeonToggleClass } from '../../const';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchAllProductsAction } from '../../store/api-actions';
-import { getAllProducts, getAllProductsLoadingStatus } from '../../store/product-process/selector';
-import Spinner from '../spinner/spinner';
+import { getAllProducts } from '../../store/product-process/selector';
 import { addToViewedProducts } from '../../store/viewed-products-process/viewed-products-process';
 import { addToCart } from '../../store/cart-process/cart-process';
 import { getCartProducts } from '../../store/cart-process/selector';
-import { Badge, ThemeProvider, createTheme } from '@mui/material';
+import { Badge, BadgeProps, ThemeProvider, createTheme, styled } from '@mui/material';
 import { ShoppingCart } from '@mui/icons-material';
 
 type Props = {
   product: Product,
 };
 
+const getSameCartProducts = (cartProducts: Product[], product: Product): Product[] => cartProducts.filter(prod => prod.id === product.id)
+
+const getSimilarProds = (prods: Product[], product: Product): Product[] =>
+  prods.filter(
+    (item) => product.name === item.name
+      && product.type === item.type
+      && product.volume.split(' ')[1] === item.volume.split(' ')[1]);
+
 function ProductCardFull({ product }: Props): JSX.Element {
   const [isCompoundOpen, setCompoundOpen] = useState<boolean>(false);
   const [isHowToUseOpen, setHowToUseOpen] = useState<boolean>(false);
   const [isInCart, setInCart] = useState<boolean>(false);
+  const [productCartCount, setProductCartCount] = useState(0);
 
   const handleCompounOpenBtnClick = (): void => {
     setCompoundOpen(!isCompoundOpen);
@@ -34,15 +42,8 @@ function ProductCardFull({ product }: Props): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const getSimilarProds = (prods: Product[]): Product[] =>
-    prods.filter(
-      (item) => product.name === item.name
-        && product.type === item.type
-        && product.volume.split(' ')[1] === item.volume.split(' ')[1]);
-
   const allProducts = useAppSelector(getAllProducts);
-  const isAllProductsLoading = useAppSelector(getAllProductsLoadingStatus);
-  const similarProducts = getSimilarProds(allProducts);
+  const similarProducts = getSimilarProds(allProducts, product);
 
   const handleVolumeChange = (evt: ChangeEvent): void => {
     const { value } = evt.target as HTMLInputElement;
@@ -60,14 +61,28 @@ function ProductCardFull({ product }: Props): JSX.Element {
   };
 
   const cartProducts = useAppSelector(getCartProducts);
+  const sameCartProducts = getSameCartProducts(cartProducts, product);
 
   useEffect(() => {
     dispatch(fetchAllProductsAction());
 
-    cartProducts.forEach((prod) => {
-      (prod.id === product.id) && setInCart(true);
-    })
-  }, [dispatch, cartProducts]);
+    sameCartProducts.length && setInCart(true);
+
+    isInCart && setProductCartCount(sameCartProducts.length);
+
+  }, [dispatch, cartProducts, product, isInCart, sameCartProducts]);
+
+  const StyledBadge = styled(Badge)<BadgeProps>(() => ({
+    '& .MuiBadge-badge': {
+      right: -40,
+      top: 2,
+      border: '10px solid #f4f1ed',
+      borderRadius: '50%',
+      font: 'normal 500 16px / 140% "Mplus", "Arial", sans-serif',
+      height: 30,
+      padding: 0,
+    },
+  }));
 
   const cardTheme = createTheme({
     palette: {
@@ -137,13 +152,16 @@ function ProductCardFull({ product }: Props): JSX.Element {
                 {
                   isInCart
                     ?
-                    <Badge >
-                      < button className="card__button" id="card-submit" type="button" onClick={() => handleCartBtnClick(product)}>
+                    <StyledBadge
+                      color='info'
+                      badgeContent={productCartCount}>
+                      <button className="card__button" id="card-submit" type="button" onClick={() => handleCartBtnClick(product)}>
                         В корзине
                         <ShoppingCart />
                       </button>
-                    </Badge>
-                    : <button className="card__button" id="card-submit" type="button" onClick={() => handleCartBtnClick(product)}>Добавить в корзину</button>
+                    </StyledBadge>
+                    :
+                    <button className="card__button" id="card-submit" type="button" onClick={() => handleCartBtnClick(product)}>Добавить в корзину</button>
                 }
               </div>
             </form>

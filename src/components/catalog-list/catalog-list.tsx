@@ -38,7 +38,7 @@ function CatalogList({ catalogType, currentProduct }: Props): JSX.Element {
         (item) => currentProduct?.type === item.type));
     }
 
-    if (products) {
+    if (products.length) {
       (!currentProduct)
         ? (setPageCount(Math.ceil(products.length / itemsPerPage)),
           setCurrentProducts(products.slice(offset, offset + itemsPerPage)))
@@ -71,14 +71,12 @@ function CatalogList({ catalogType, currentProduct }: Props): JSX.Element {
     <>
       <ul className={`catalog${catalogType ? '-history' : ''}__list`}>
         {
-          currentProducts &&
+          (currentProducts && !isProductsLoading) &&
           currentProducts.map((product, index) => (
             <ProductCardSmall product={product} className={`catalog${catalogType ? '-history' : ''}__item`} key={`${index}${product.name}${product.id}`} />
           ))
         }
-        {
-          isProductsLoading && <Spinner />
-        }
+        {(!currentProducts.length && isProductsLoading) && <Spinner />}
       </ul>
       <Pagination
         page={page}

@@ -49,6 +49,11 @@ export enum SideCatalogType {
   Similar = 'Вам также может понравиться',
 }
 
+export enum ProductCount {
+  MinCount = 1,
+  MaxCount = 99
+}
+
 export const FaceCareTypes = {
   cream: 'Крема',
   serum: 'Сыворотки',
