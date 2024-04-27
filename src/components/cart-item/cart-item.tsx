@@ -1,6 +1,5 @@
 import { Divider, Grid, IconButton, Input, ListItem, Typography } from '@mui/material';
-import { ForwardedRef, forwardRef, useEffect, useRef, useState } from 'react';
-import { Unstable_NumberInput as BaseNumberInput, NumberInputProps } from '@mui/base';
+import { useEffect, useRef, useState } from 'react';
 import { Add, DeleteOutline, Remove } from '@mui/icons-material';
 import { styled } from '@mui/system';
 import { Product } from '../../types/product';
@@ -92,35 +91,6 @@ const StyledButton = styled('button')(
 `,
 );
 
-const NumberInput = forwardRef((
-  props: NumberInputProps,
-  ref: ForwardedRef<HTMLInputElement>,
-) => {
-  return (
-    <BaseNumberInput
-      slots={{
-        root: StyledInputRoot,
-        input: StyledInput,
-        incrementButton: StyledButton,
-        decrementButton: StyledButton,
-      }}
-      slotProps={{
-        input: {
-          ref: ref,
-        },
-        incrementButton: {
-          children: <Add fontSize="small" />,
-          className: 'increment',
-        },
-        decrementButton: {
-          children: <Remove fontSize="small" />,
-        },
-      }}
-      {...props}
-    />
-  );
-});
-
 const getProductCount = (cartProducts: Product[], product: Product) =>
   cartProducts.filter(prod => prod.id === product.id).length;
 
@@ -141,12 +111,12 @@ function CartItem({ product }: Props): JSX.Element {
         inputRef.current.value = ProductCount.MaxCount.toString();
         setTotalPrice(product.price * inputRef.current.valueAsNumber);
       }
-      dispatch(setProductsCount(product));
+      dispatch(setProductsCount(Array(inputRef.current?.valueAsNumber).fill(product) as Product[]));
     }
     if (inputRef.current?.value === '') {
       inputRef.current.value = productCount.toString();
       setTotalPrice(product.price * inputRef.current.valueAsNumber);
-      dispatch(setProductsCount(product));
+      dispatch(setProductsCount(Array(inputRef.current?.valueAsNumber).fill(product) as Product[]));
     }
   };
 
@@ -199,7 +169,7 @@ function CartItem({ product }: Props): JSX.Element {
                 input: StyledInput
               }}
               inputRef={inputRef}
-              onChange={handleInputChange} />
+              onInput={handleInputChange} />
             <IconButton onClick={handlePlusBtnClick}>
               <Add fontSize="small" />
             </IconButton>

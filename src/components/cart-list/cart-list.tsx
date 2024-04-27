@@ -3,6 +3,7 @@ import { useAppSelector } from '../../hooks';
 import { getCartProducts } from '../../store/cart-process/selector';
 import { useEffect, useState } from 'react';
 import { Product } from '../../types/product';
+import { Divider, List } from '@mui/material';
 
 const getUniqueProducts = (products: Product[]) => {
   const uniqueProductsList = Array.from(new Set(products.map((product) => JSON.stringify(product))));
@@ -18,13 +19,24 @@ function CartList(): JSX.Element {
   }, [cartProducts]);
 
   return (
-    <>
+    <List
+      component={'ul'}
+      sx={{
+        width: '100%',
+        height: '100%',
+        maxWidth: 1200,
+        mt: 5,
+        flexGrow: 1,
+         display: 'block'
+      }}
+    >
+      <Divider />
       {
         uniqueProducts.map((product, index) => (
           <CartItem product={product} key={`${index}${product.id}`} />
         ))
       }
-    </>
+    </List>
   );
 }
 

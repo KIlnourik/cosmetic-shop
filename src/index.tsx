@@ -14,7 +14,7 @@ import Spinner from './components/spinner/spinner';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
-store.dispatch(fetchAllProductsAction);
+store.dispatch(fetchAllProductsAction());
 
 root.render(
   <React.StrictMode>

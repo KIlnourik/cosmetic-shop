@@ -23,9 +23,9 @@ export const cartProcess = createSlice({
       const index = state.cartProducts.findIndex(product => product.id === action.payload.id);
       state.cartProducts.splice(index, 1);
     },
-    setProductsCount: (state, action: PayloadAction<Product>) => {
-      state.cartProducts = [...state.cartProducts].filter(product => product.id !== action.payload.id);
-      state.cartProducts.push(action.payload);
+    setProductsCount: (state, action: PayloadAction<Product[]>) => {
+      state.cartProducts = [...state.cartProducts].filter((product) => product.id !== action.payload[0].id);
+      state.cartProducts.push(...action.payload);
       state.cartProducts.sort(sortProducts);
     },
     resetCart: (state) => {
