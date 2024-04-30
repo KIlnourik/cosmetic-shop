@@ -40,9 +40,9 @@ function CartSummary(): JSX.Element {
     }
   };
 
-  const handleOrder = () => {
+  // const handleOrder = () => {
 
-  };
+  // };
 
   return (
     <Grid container sx={{

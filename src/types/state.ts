@@ -14,8 +14,13 @@ export type ProductProcess = {
   isError: boolean
 }
 
+export type CartProduct = {
+  product: Product,
+  count: number,
+}
+
 export type CartProcess = {
-  cartProducts: Product[];
+  cartProducts: CartProduct[];
 }
 
 export type Coupon = {
@@ -27,7 +32,6 @@ export type CouponProcess = {
   coupons: Coupon[];
   coupon?: Coupon;
   isCouponsLoading: boolean;
-  isValidCoupon?: boolean;
 }
 
 export type OrderProcess = {

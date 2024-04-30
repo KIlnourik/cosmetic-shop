@@ -5,12 +5,13 @@ import { styled } from '@mui/system';
 import { Product } from '../../types/product';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getCartProducts } from '../../store/cart-process/selector';
-import { addToCart, decreaseProducts, removeProduct, setProductsCount } from '../../store/cart-process/cart-process';
+import { decreaseProducts, increaseProducts, removeProduct, setProductsCount } from '../../store/cart-process/cart-process';
 import { getProductTitle } from '../../utils/utils';
 import { ProductCount } from '../../const';
+import { CartProduct } from '../../types/state';
 
 type Props = {
-  product: Product;
+  cartProduct: CartProduct;
 }
 
 const StyledInputRoot = styled('div')(
@@ -91,56 +92,53 @@ const StyledButton = styled('button')(
 `,
 );
 
-const getProductCount = (cartProducts: Product[], product: Product) =>
-  cartProducts.filter(prod => prod.id === product.id).length;
-
-function CartItem({ product }: Props): JSX.Element {
+function CartItem({ cartProduct }: Props): JSX.Element {
   const dispatch = useAppDispatch();
   const cartProducts = useAppSelector(getCartProducts);
-  const [productCount, setProductCount] = useState(getProductCount(cartProducts, product));
-  const [totalPrice, setTotalPrice] = useState(product.price);
+  const [productCount, setProductCount] = useState(cartProduct.count);
+  const [totalPrice, setTotalPrice] = useState(cartProduct.product.price);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleInputChange = () => {
     if (inputRef.current?.value) {
       if (inputRef.current?.valueAsNumber < ProductCount.MinCount) {
         inputRef.current.value = ProductCount.MinCount.toString();
-        setTotalPrice(product.price * inputRef.current.valueAsNumber);
+        setTotalPrice(cartProduct.product.price * inputRef.current.valueAsNumber);
       }
       if (inputRef.current?.valueAsNumber > ProductCount.MaxCount) {
         inputRef.current.value = ProductCount.MaxCount.toString();
-        setTotalPrice(product.price * inputRef.current.valueAsNumber);
+        setTotalPrice(cartProduct.product.price * inputRef.current.valueAsNumber);
       }
-      dispatch(setProductsCount(Array(inputRef.current?.valueAsNumber).fill(product) as Product[]));
+      dispatch(setProductsCount({ productId: cartProduct.product.id, count: inputRef.current?.value }));
     }
     if (inputRef.current?.value === '') {
       inputRef.current.value = productCount.toString();
-      setTotalPrice(product.price * inputRef.current.valueAsNumber);
-      dispatch(setProductsCount(Array(inputRef.current?.valueAsNumber).fill(product) as Product[]));
+      setTotalPrice(cartProduct.product.price * inputRef.current.valueAsNumber);
+      dispatch(setProductsCount({ productId: cartProduct.product.id, count: inputRef.current?.value }));
     }
   };
 
   const handlePlusBtnClick = () => {
-    dispatch(addToCart(product));
+    dispatch(increaseProducts(cartProduct));
   };
 
   const handleMinusBtnClick = () => {
-    dispatch(decreaseProducts(product));
+    dispatch(decreaseProducts(cartProduct));
   };
 
   const handleRemoveBtnClick = () => {
-    dispatch(removeProduct(product));
+    dispatch(removeProduct(cartProduct));
   };
 
   useEffect(() => {
-    setProductCount(getProductCount(cartProducts, product));
+    setProductCount(cartProduct.count);
 
     if (inputRef.current !== null) {
       inputRef.current.value = productCount.toString();
-      setTotalPrice(productCount * product.price);
+      setTotalPrice(productCount * cartProduct.product.price);
     }
 
-  }, [cartProducts, dispatch, product, productCount]);
+  }, [cartProducts, dispatch, productCount]);
 
   return (
     <>
@@ -150,7 +148,7 @@ function CartItem({ product }: Props): JSX.Element {
         }} >
           <Grid item xs={12} sm={5} md={5}>
             <Typography component='p' variant='h5'>
-              {getProductTitle(product.type, product.name)}
+              {getProductTitle(cartProduct.product.type, cartProduct.product.name)}
             </Typography>
           </Grid>
           <Grid item xs={8} sm={4} sx={{

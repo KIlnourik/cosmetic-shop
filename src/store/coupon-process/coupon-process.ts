@@ -7,7 +7,6 @@ const initialState: CouponProcess = {
   coupons: [],
   coupon: undefined,
   isCouponsLoading: false,
-  isValidCoupon: undefined,
 };
 
 export const couponProcess = createSlice({
@@ -17,7 +16,6 @@ export const couponProcess = createSlice({
     resetCoupon: (state) => {
       state.coupon = undefined;
       state.isCouponsLoading = false;
-      state.isValidCoupon = undefined;
     }
   },
   extraReducers(builder) {

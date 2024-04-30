@@ -1,5 +1,4 @@
-import { Product } from '../../types/product';
-import { State } from '../../types/state';
+import { CartProduct, State } from '../../types/state';
 import { NameSpace } from '../../const';
 
-export const getCartProducts = (state: State): Product[] => state[NameSpace.Cart].cartProducts;
+export const getCartProducts = (state: State): CartProduct[] => state[NameSpace.Cart].cartProducts;

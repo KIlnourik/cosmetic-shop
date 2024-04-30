@@ -1,8 +1,10 @@
 export type OrderPost = {
   products: [
-    productId: number,
-    count: number,
+    {
+      productId: number,
+      count: number,
+    }
   ],
-  coupon: string | null;
+  coupon: string | null,
   totalPrice: number,
 }
