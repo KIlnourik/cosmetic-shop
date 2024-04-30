@@ -1,26 +1,48 @@
 import { Box, Button, Divider, Grid, Link, TextField, Typography } from '@mui/material';
 import { Product } from '../../types/product';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getCartProducts } from '../../store/cart-process/selector';
+import { getCoupons } from '../../store/coupon-process/selector';
+import { Coupon } from '../../types/state';
 
 const getSummaryValue = (products: Product[]) => products.reduce((accum, product) =>
   accum + product.price, 0);
 
-const getProductsIds = (products: Product[]) => {
-  const items: number[] = [];
-  products.forEach((product) => items.push(product.id));
-  return Array.from(new Set(items));
-};
+const getValidCoupon = (coupon: string, coupons: Coupon[]) => {
+  const [validCoupon] = coupons.filter(item => item.coupon === coupon);
+  return validCoupon;
+}
 
 function CartSummary(): JSX.Element {
-  const dispatch = useAppDispatch();
   const cartProducts = useAppSelector(getCartProducts);
+  const coupons = useAppSelector(getCoupons);
+  const [discount, setDiscount] = useState(0);
   const [orderPrice, setOrderPrice] = useState(0);
+  const [validCoupon, setValidCoupon] = useState<Coupon | null>(null);
+  const couponRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     setOrderPrice(getSummaryValue(cartProducts));
-  }, [cartProducts])
+
+    if (validCoupon && validCoupon?.discountValue) {
+      setDiscount(validCoupon.discountValue * orderPrice)
+    } else {
+      setDiscount(0);
+    }
+  }, [cartProducts, orderPrice, validCoupon, validCoupon?.discountValue])
+
+  const handleCoupon = () => {
+    if (couponRef.current?.value) {
+      setValidCoupon(getValidCoupon(couponRef.current.value, coupons));
+    } else {
+      setValidCoupon(null);
+    }
+  };
+
+  const handleOrder = () => {
+
+  };
 
   return (
     <Grid container sx={{
@@ -47,6 +69,8 @@ function CartSummary(): JSX.Element {
           </Typography>
           <TextField
             label='Промокод'
+            inputRef={couponRef}
+            error={!validCoupon}
             sx={{
               minWidth: '100%',
               backgroundColor: '#fff',
@@ -56,7 +80,10 @@ function CartSummary(): JSX.Element {
             }} />
           <Button sx={{
             mt: 3
-          }}>Применить</Button>
+          }}
+            onClick={handleCoupon}>
+            Применить
+          </Button>
         </Box>
       </Grid>
       <Divider />
@@ -90,7 +117,7 @@ function CartSummary(): JSX.Element {
               fontWeight: 600,
               ml: '1.2rem'
             }}>
-              Цена Р
+              {discount} &#x20bd;
             </Typography>
           </Box>
           <Box id='total-price' sx={{
@@ -110,7 +137,7 @@ function CartSummary(): JSX.Element {
               fontWeight: 600,
               ml: '1.2rem'
             }}>
-              {orderPrice} &#x20bd;
+              {orderPrice - discount} &#x20bd;
             </Typography>
           </Box>
         </Box>

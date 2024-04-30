@@ -1,12 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../const';
 import { CouponProcess } from '../../types/state';
-import { validateCouponAction } from '../api-actions';
+import { fetchCouponsAction } from '../api-actions';
 
 const initialState: CouponProcess = {
-  discountValue: undefined,
+  coupons: [],
+  coupon: undefined,
+  isCouponsLoading: false,
   isValidCoupon: undefined,
-  validCoupon: undefined
 };
 
 export const couponProcess = createSlice({
@@ -14,28 +15,24 @@ export const couponProcess = createSlice({
   initialState,
   reducers: {
     resetCoupon: (state) => {
-      state.discountValue = undefined;
-      state.isValidCoupon = undefined;
+      state.coupon = undefined;
+      state.isCouponsLoading = false;
       state.isValidCoupon = undefined;
     }
   },
   extraReducers(builder) {
     builder
-      .addCase(validateCouponAction.pending, (state) => {
-        state.isValidCoupon = undefined;
+      .addCase(fetchCouponsAction.pending, (state) => {
+        state.isCouponsLoading = true;
       })
-      .addCase(validateCouponAction.fulfilled, (state, action) => {
-        const { discount, coupon } = action.payload;
-        state.discountValue = discount;
-        state.validCoupon = coupon;
-        state.isValidCoupon = true;
+      .addCase(fetchCouponsAction.fulfilled, (state, action) => {
+        state.coupons = action.payload;
+        state.isCouponsLoading = false;
       })
-      .addCase(validateCouponAction.rejected, (state) => {
-        state.discountValue = undefined;
-        state.validCoupon = undefined;
-        state.isValidCoupon = false;
+      .addCase(fetchCouponsAction.rejected, (state) => {
+        state.isCouponsLoading = false;
       });
   },
 });
 
-export const {resetCoupon} = couponProcess.actions;
+export const { resetCoupon } = couponProcess.actions;

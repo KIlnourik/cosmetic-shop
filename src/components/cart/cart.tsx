@@ -67,13 +67,6 @@ function Cart(): JSX.Element {
       <ThemeProvider theme={theme}>
         <Container sx={{
           mt: 5,
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-between',
-          alignContent: 'space-between',
-          alignItems: 'space-between',
-          boxSizing: 'border-box',
-          flexWrap: 'wrap'
         }}>
           <Typography
             component={'h1'}

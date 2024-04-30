@@ -18,15 +18,16 @@ export type CartProcess = {
   cartProducts: Product[];
 }
 
-export type CouponResponse = {
-  discount?: number;
+export type Coupon = {
   coupon?: string;
-};
+  discountValue?: number;
+}
 
 export type CouponProcess = {
-  discountValue?: number;
+  coupons: Coupon[];
+  coupon?: Coupon;
+  isCouponsLoading: boolean;
   isValidCoupon?: boolean;
-  validCoupon?: string;
 }
 
 export type OrderProcess = {

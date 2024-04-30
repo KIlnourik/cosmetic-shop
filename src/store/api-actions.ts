@@ -1,10 +1,9 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { APIRoute } from '../const';
-import { AppDispatch, CouponResponse, State } from '../types/state';
+import { AppDispatch, Coupon, State } from '../types/state';
 import { Product } from '../types/product';
 import { URLSearchParams } from 'url';
-import { CouponPost } from '../types/coupon-post';
 import { OrderPost } from '../types/order-post';
 
 export const fetchProductsAction = createAsyncThunk<Product[], URLSearchParams, {
@@ -42,17 +41,15 @@ export const fetchProductAction = createAsyncThunk<Product, string, {
   }
 );
 
-export const validateCouponAction = createAsyncThunk<CouponResponse, CouponPost, {
+export const fetchCouponsAction = createAsyncThunk<Coupon[], undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'data/couponPost',
-  async (coupon, { extra: api }) => {
-    const response = await api.post<CouponResponse>(APIRoute.Coupons, { ...coupon });
-    const discount = response.data;
-    return { discount, ...coupon } as CouponResponse;
-
+  async (_arg, { extra: api }) => {
+    const { data } = await api.get<Coupon[]>(APIRoute.Coupons);
+    return data;
   }
 );
 
@@ -62,7 +59,7 @@ export const sendOrderAction = createAsyncThunk<void, OrderPost, {
   extra: AxiosInstance;
 }>(
   'data/orderPost',
-  async ({ camerasIds, coupon }, { extra: api }) => {
-    await api.post<number>(APIRoute.Orders, { camerasIds, coupon });
+  async ({ products, coupon, totalPrice }, { extra: api }) => {
+    await api.post<number>(APIRoute.Orders, { products, coupon, totalPrice });
   }
 );

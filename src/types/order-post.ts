@@ -1,4 +1,8 @@
 export type OrderPost = {
-  camerasIds: number[];
+  products: [
+    productId: number,
+    count: number,
+  ],
   coupon: string | null;
+  totalPrice: number,
 }

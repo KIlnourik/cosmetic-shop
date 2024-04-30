@@ -1,6 +1,6 @@
 import { NameSpace } from '../../const';
-import { State } from '../../types/state';
+import { Coupon, State } from '../../types/state';
 
-export const getCouponValidationStatus = (state: State): boolean | undefined => state[NameSpace.Coupon].isValidCoupon;
-export const getDiscountValue = (state: State): number| undefined => state[NameSpace.Coupon].discountValue;
-export const getValidCoupon = (state: State): string | undefined => state[NameSpace.Coupon].validCoupon;
+export const getCoupons = (state: State): Coupon[] => state[NameSpace.Coupon].coupons;
+export const getCoupon = (state: State): Coupon | undefined => state[NameSpace.Coupon].coupon;
+export const getCouponLoadingStatus = (state: State): boolean | undefined => state[NameSpace.Coupon].isCouponsLoading;
