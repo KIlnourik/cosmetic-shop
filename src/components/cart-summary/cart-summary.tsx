@@ -1,13 +1,12 @@
 import { Box, Button, Divider, Grid, Link, TextField, Typography } from '@mui/material';
-import { Product } from '../../types/product';
 import { useEffect, useRef, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getCartProducts } from '../../store/cart-process/selector';
 import { getCoupons } from '../../store/coupon-process/selector';
-import { Coupon } from '../../types/state';
+import { CartProduct, Coupon } from '../../types/state';
 
-const getSummaryValue = (products: Product[]) => products.reduce((accum, product) =>
-  accum + product.price, 0);
+const getSummaryValue = (cartProducts: CartProduct[]) => cartProducts.reduce((accum, product) =>
+  accum + (product.product.price * product.count), 0);
 
 const getValidCoupon = (coupon: string, coupons: Coupon[]) => {
   const [validCoupon] = coupons.filter(item => item.coupon === coupon);

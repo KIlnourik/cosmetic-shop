@@ -1,5 +1,4 @@
 import { MouseEvent } from 'react';
-import { Product } from '../types/product';
 import { CartProduct } from '../types/state';
 
 export const toggleAccordion = (element: HTMLElement) => {
@@ -54,10 +53,10 @@ export const getProductTitle = (...rest: string[]): string => {
 };
 
 export const sortProducts = (a: CartProduct, b: CartProduct) => {
-  if (a.productId > b.productId) {
+  if (a.product.id > b.product.id) {
     return 1;
   }
-  if (a.productId < b.productId) {
+  if (a.product.id < b.product.id) {
     return -1;
   }
   return 0;

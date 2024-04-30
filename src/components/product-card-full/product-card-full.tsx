@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchAllProductsAction } from '../../store/api-actions';
 import { getAllProducts } from '../../store/product-process/selector';
 import { addToViewedProducts } from '../../store/viewed-products-process/viewed-products-process';
-import { addToCart } from '../../store/cart-process/cart-process';
+import { addToCart, increaseProducts } from '../../store/cart-process/cart-process';
 import { getCartProducts } from '../../store/cart-process/selector';
 import { Badge, BadgeProps, ThemeProvider, createTheme, styled } from '@mui/material';
 import { ShoppingCart } from '@mui/icons-material';
@@ -18,7 +18,13 @@ type Props = {
   product: Product,
 };
 
-const getSameCartProducts = (cartProducts: CartProduct[], product: Product): CartProduct[] => cartProducts.filter(prod => prod.product.id === product.id);
+const getCartProductCount = (cartProducts: CartProduct[], currentProduct: Product): CartProduct | null => {
+  const [cartProduct] = cartProducts.filter(prod => prod.product.id === currentProduct.id);
+  if (cartProduct) {
+    return cartProduct;
+  }
+  return null;
+}
 
 const getSimilarProds = (prods: Product[], product: Product): Product[] =>
   prods.filter(
@@ -58,20 +64,20 @@ function ProductCardFull({ product }: Props): JSX.Element {
   );
 
   const handleCartBtnClick = (product: Product): void => {
-    dispatch(addToCart({product, count: 1}));
+    dispatch(addToCart({ product, count: 1 }));
   };
 
   const cartProducts = useAppSelector(getCartProducts);
-  const sameCartProducts = getSameCartProducts(cartProducts, product);
+  const cartProduct = getCartProductCount(cartProducts, product);
 
   useEffect(() => {
     dispatch(fetchAllProductsAction());
 
-    sameCartProducts.length && setInCart(true);
+    cartProduct && setInCart(true);
 
-    isInCart && setProductCartCount(sameCartProducts.length);
+    (isInCart && cartProduct) && setProductCartCount(cartProduct.count);
 
-  }, [dispatch, isInCart]);
+  }, [dispatch, isInCart, cartProduct]);
 
   const StyledBadge = styled(Badge)<BadgeProps>(() => ({
     '& .MuiBadge-badge': {
@@ -151,12 +157,13 @@ function ProductCardFull({ product }: Props): JSX.Element {
               </div>
               <div className="card__price"><span>{product.price} ₽</span>
                 {
-                  isInCart
+                  (isInCart && cartProduct)
                     ?
                     <StyledBadge
                       color='info'
                       badgeContent={productCartCount}>
-                      <button className="card__button" id="card-submit" type="button" >
+                      <button className="card__button" id="card-submit" type="button"
+                      onClick={() => dispatch(increaseProducts(cartProduct))} >
                         В корзине
                         <ShoppingCart />
                       </button>
@@ -169,7 +176,7 @@ function ProductCardFull({ product }: Props): JSX.Element {
           </div>
         </div >
       </section >
-    </ThemeProvider>
+    </ThemeProvider >
   );
 }
 

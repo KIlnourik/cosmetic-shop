@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { NameSpace } from '../../const';
 import { CartProcess, CartProduct } from '../../types/state';
-import { Product } from '../../types/product';
 import { sortProducts } from '../../utils/utils';
 
 const initialState: CartProcess = {
@@ -21,16 +20,20 @@ export const cartProcess = createSlice({
     },
     increaseProducts: (state, action: PayloadAction<CartProduct>) => {
       state.cartProducts.forEach((product) => {
-        (product.product.id === action.payload.product.id) && product.count + 1;
+        if (product.product.id === action.payload.product.id && product.count < 90) {
+          product.count += 1;
+        }
       })
     },
     decreaseProducts: (state, action: PayloadAction<CartProduct>) => {
       state.cartProducts.forEach((product) => {
-        (product.product.id === action.payload.product.id) && product.count - 1;
+        if (product.product.id === action.payload.product.id && product.count > 1) {
+          product.count -= 1;
+        }
       })
     },
     setProductsCount: (state, action) => {
-      const {productId, count} = action.payload;
+      const { productId, count } = action.payload;
       state.cartProducts.forEach((product) => {
         if (product.product.id === productId) {
           product.count = count;

@@ -2,7 +2,6 @@ import { Divider, Grid, IconButton, Input, ListItem, Typography } from '@mui/mat
 import { useEffect, useRef, useState } from 'react';
 import { Add, DeleteOutline, Remove } from '@mui/icons-material';
 import { styled } from '@mui/system';
-import { Product } from '../../types/product';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getCartProducts } from '../../store/cart-process/selector';
 import { decreaseProducts, increaseProducts, removeProduct, setProductsCount } from '../../store/cart-process/cart-process';
@@ -109,12 +108,12 @@ function CartItem({ cartProduct }: Props): JSX.Element {
         inputRef.current.value = ProductCount.MaxCount.toString();
         setTotalPrice(cartProduct.product.price * inputRef.current.valueAsNumber);
       }
-      dispatch(setProductsCount({ productId: cartProduct.product.id, count: inputRef.current?.value }));
+      dispatch(setProductsCount({ productId: cartProduct.product.id, count: inputRef.current?.valueAsNumber }));
     }
     if (inputRef.current?.value === '') {
       inputRef.current.value = productCount.toString();
       setTotalPrice(cartProduct.product.price * inputRef.current.valueAsNumber);
-      dispatch(setProductsCount({ productId: cartProduct.product.id, count: inputRef.current?.value }));
+      dispatch(setProductsCount({ productId: cartProduct.product.id, count: inputRef.current?.valueAsNumber }));
     }
   };
 
