@@ -1,10 +1,12 @@
+import { CartProduct, Coupon } from './state';
+
+export type OrderCartProducts = {
+  productId: number,
+  count: number
+}
+
 export type OrderPost = {
-  products: [
-    {
-      productId: number,
-      count: number,
-    }
-  ],
-  coupon: string | null,
+  products: OrderCartProducts[],
+  coupon: string | null | undefined,
   totalPrice: number,
 }

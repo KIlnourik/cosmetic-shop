@@ -1,24 +1,42 @@
 import { Box, Button, Divider, Grid, Link, TextField, Typography } from '@mui/material';
 import { useEffect, useRef, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getCartProducts } from '../../store/cart-process/selector';
-import { getCoupons } from '../../store/coupon-process/selector';
-import { CartProduct, Coupon } from '../../types/state';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { getCartProducts } from '../../../store/cart-process/selector';
+import { getCoupons } from '../../../store/coupon-process/selector';
+import { CartProduct, Coupon } from '../../../types/state';
+import { sendOrderAction } from '../../../store/api-actions';
+import { OrderCartProducts } from '../../../types/order-post';
+
+
 
 const getSummaryValue = (cartProducts: CartProduct[]) => cartProducts.reduce((accum, product) =>
   accum + (product.product.price * product.count), 0);
 
-const getValidCoupon = (coupon: string, coupons: Coupon[]) => {
+const getValidCoupon = (coupon: string, coupons: Coupon[]): Coupon | null => {
   const [validCoupon] = coupons.filter(item => item.coupon === coupon);
-  return validCoupon;
+  if (validCoupon) return validCoupon;
+  return null;
+};
+
+const getOrderProducts = (cartProducts: CartProduct[]): OrderCartProducts[] => {
+  const result: OrderCartProducts[] = [];
+  cartProducts.map((cartProduct) => (
+    result.push({
+      productId: cartProduct.product.id,
+      count: cartProduct.count
+    })
+  ));
+  return result;
 }
 
 function CartSummary(): JSX.Element {
+  const dispatch = useAppDispatch();
   const cartProducts = useAppSelector(getCartProducts);
   const coupons = useAppSelector(getCoupons);
   const [discount, setDiscount] = useState(0);
   const [orderPrice, setOrderPrice] = useState(0);
-  const [validCoupon, setValidCoupon] = useState<Coupon | null>(null);
+  const [validCoupon, setValidCoupon] = useState<Coupon | undefined | null>(undefined);
+  const [orderCartProducts, setOrderCartProducts] = useState<OrderCartProducts[]>([]);
   const couponRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -29,19 +47,24 @@ function CartSummary(): JSX.Element {
     } else {
       setDiscount(0);
     }
+
+    if (cartProducts) {
+      setOrderCartProducts(getOrderProducts(cartProducts));
+    }
+
   }, [cartProducts, orderPrice, validCoupon, validCoupon?.discountValue])
 
   const handleCoupon = () => {
     if (couponRef.current?.value) {
       setValidCoupon(getValidCoupon(couponRef.current.value, coupons));
     } else {
-      setValidCoupon(null);
+      setValidCoupon(undefined);
     }
   };
 
-  // const handleOrder = () => {
-
-  // };
+  const handleOrder = () => {
+    dispatch(sendOrderAction({ products: orderCartProducts, coupon: validCoupon?.coupon, totalPrice: orderPrice }));
+  };
 
   return (
     <Grid container sx={{
@@ -69,7 +92,8 @@ function CartSummary(): JSX.Element {
           <TextField
             label='Промокод'
             inputRef={couponRef}
-            error={!validCoupon}
+            error={validCoupon === null}
+
             sx={{
               minWidth: '100%',
               backgroundColor: '#fff',
@@ -140,15 +164,15 @@ function CartSummary(): JSX.Element {
             </Typography>
           </Box>
         </Box>
-        <Link href="#" sx={{
-          alignContent: 'center',
-          mt: 5,
-          minWidth: '100%'
-        }}>
-          <Button sx={{
-            minWidth: '100%'
-          }}>Оформить заказ</Button>
-        </Link>
+        <Button
+          onClick={handleOrder}
+          sx={{
+            alignContent: 'center',
+            minWidth: '100%',
+            mt: 5
+          }}>
+          Оформить заказ
+        </Button>
       </Grid>
       <Divider />
     </Grid>

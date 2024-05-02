@@ -1,11 +1,16 @@
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
-import Logo from '../logo/logo';
+import { AppRoute } from '../../../const';
+import Logo from '../../logo/logo';
 import { useEffect, useRef } from 'react';
 import { Badge, ThemeProvider, createTheme } from '@mui/material';
-import { useAppSelector } from '../../hooks';
-import { getCartProducts } from '../../store/cart-process/selector';
+import { useAppSelector } from '../../../hooks';
+import { getCartProducts } from '../../../store/cart-process/selector';
+import { CartProduct } from '../../../types/state';
 
+const getCartProductsTotalCount = (cartProducts: CartProduct[]): number => {
+  const totalCount = cartProducts.reduce((acc, product) => acc + product.count, 0);
+  return totalCount;
+}
 
 function Header(): JSX.Element {
   const headerRef = useRef<HTMLElement | null>(null);
@@ -154,7 +159,7 @@ function Header(): JSX.Element {
             <li className="user-actions__item">
               <Badge
                 color='info'
-                badgeContent={cartProducts.length}
+                badgeContent={getCartProductsTotalCount(cartProducts)}
               >
                 <Link className="user-actions__link user-actions__cart" to={AppRoute.Cart} aria-label="Корзина">
                   <svg height="21" width="18">

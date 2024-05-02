@@ -1,6 +1,6 @@
 import CartItem from '../cart-item/cart-item';
-import { useAppSelector } from '../../hooks';
-import { getCartProducts } from '../../store/cart-process/selector';
+import { useAppSelector } from '../../../hooks';
+import { getCartProducts } from '../../../store/cart-process/selector';
 import { Divider, List } from '@mui/material';
 
 function CartList(): JSX.Element {
@@ -15,7 +15,7 @@ function CartList(): JSX.Element {
         maxWidth: 1200,
         mt: 5,
         flexGrow: 1,
-         display: 'block'
+        display: 'block'
       }}
     >
       <Divider />
