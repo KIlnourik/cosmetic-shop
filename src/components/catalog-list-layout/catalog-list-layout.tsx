@@ -2,7 +2,7 @@ import { SideCatalogType } from "../../const";
 import { useAppSelector } from "../../hooks";
 import { getViewedProducts } from "../../store/viewed-products-process/selector";
 import { Product } from "../../types/product";
-import CatalogList from "../catalog-list/catalog-list";
+import CatalogList from "./catalog-list/catalog-list";
 
 type Props = {
   catalogType?: string;
@@ -22,7 +22,7 @@ function CatalogListLayout({ catalogType, currentProduct }: Props): JSX.Element 
       <section className="catalog-history">
         <div className="catalog-history__wrapper">
           <h2>{catalogType}</h2>
-          <CatalogList catalogType={catalogType} currentProduct={currentProduct}/>
+          <CatalogList catalogType={catalogType} currentProduct={currentProduct} />
         </div>
       </section>)
   }

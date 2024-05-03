@@ -28,7 +28,7 @@ function ProductCardSmall({ product, className }: Props): JSX.Element {
         <ProductImage
           path={product.previewImage}
           productName={product.name}
-          productType={product.type}
+          productType={product.type.title}
           className={'product'} />
         <div className="product__wrapper">
           <div className="product__text">
@@ -36,7 +36,7 @@ function ProductCardSmall({ product, className }: Props): JSX.Element {
             <span className="product__price">{product.price} ₽</span>
           </div>
           <div className="product__text">
-            <div className="product__description">{product.type}</div>
+            <div className="product__description">{product.type.title}</div>
             <div className="product__description">{product.volume}</div>
           </div>
         </div>

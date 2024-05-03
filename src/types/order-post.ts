@@ -1,5 +1,3 @@
-import { CartProduct, Coupon } from './state';
-
 export type OrderCartProducts = {
   productId: number,
   count: number

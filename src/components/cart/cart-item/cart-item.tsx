@@ -113,7 +113,7 @@ function CartItem({ cartProduct }: Props): JSX.Element {
         }} >
           <Grid item xs={12} sm={5} md={5}>
             <Typography component='p' variant='h5'>
-              {getProductTitle(cartProduct.product.type, cartProduct.product.name)}
+              {getProductTitle(cartProduct.product.type.title, cartProduct.product.name)}
             </Typography>
           </Grid>
           <Grid item xs={8} sm={4} sx={{

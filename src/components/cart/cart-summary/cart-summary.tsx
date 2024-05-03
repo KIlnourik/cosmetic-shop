@@ -1,4 +1,4 @@
-import { Box, Button, Divider, Grid, Link, TextField, Typography } from '@mui/material';
+import { Box, Button, Divider, Grid, TextField, Typography } from '@mui/material';
 import { useEffect, useRef, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { getCartProducts } from '../../../store/cart-process/selector';
@@ -6,8 +6,8 @@ import { getCoupons } from '../../../store/coupon-process/selector';
 import { CartProduct, Coupon } from '../../../types/state';
 import { sendOrderAction } from '../../../store/api-actions';
 import { OrderCartProducts } from '../../../types/order-post';
-
-
+import { resetCart } from '../../../store/cart-process/cart-process';
+import { resetCoupon } from '../../../store/coupon-process/coupon-process';
 
 const getSummaryValue = (cartProducts: CartProduct[]) => cartProducts.reduce((accum, product) =>
   accum + (product.product.price * product.count), 0);
@@ -63,7 +63,13 @@ function CartSummary(): JSX.Element {
   };
 
   const handleOrder = () => {
-    dispatch(sendOrderAction({ products: orderCartProducts, coupon: validCoupon?.coupon, totalPrice: orderPrice }));
+    dispatch(sendOrderAction({
+      products: orderCartProducts,
+      coupon: validCoupon?.coupon,
+      totalPrice: orderPrice
+    }));
+    dispatch(resetCart);
+    dispatch(resetCoupon);
   };
 
   return (

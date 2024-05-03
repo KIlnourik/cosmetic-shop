@@ -9,3 +9,13 @@ export type SkinType = {
   title: string,
   items: object,
 };
+
+export type ProductType = {
+  title: string,
+  value: string,
+};
+
+export type ProductCareType = {
+  name: string,
+  title: string,
+}

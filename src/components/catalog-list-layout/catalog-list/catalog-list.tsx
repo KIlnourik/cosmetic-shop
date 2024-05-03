@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import { useAppSelector } from '../../hooks';
-import { getAllProducts, getAllProductsLoadingStatus } from '../../store/product-process/selector';
-import Pagination from '../pagination/pagination';
-import ProductCardSmall from '../product-card-small/product-card-small';
-import Spinner from '../spinner/spinner';
-import { CATALOG_PER_PAGE_COUNT, SIDE_CATALOG_PER_PAGE_COUNT, SideCatalogType } from '../../const';
-import { Product } from '../../types/product';
-import { getViewedProducts } from '../../store/viewed-products-process/selector';
+import { useAppSelector } from '../../../hooks';
+import { getAllProducts, getAllProductsLoadingStatus } from '../../../store/product-process/selector';
+import Pagination from '../../pagination/pagination';
+import ProductCardSmall from '../../product-card-small/product-card-small';
+import Spinner from '../../spinner/spinner';
+import { CATALOG_PER_PAGE_COUNT, SIDE_CATALOG_PER_PAGE_COUNT, SideCatalogType } from '../../../const';
+import { Product } from '../../../types/product';
+import { getViewedProducts } from '../../../store/viewed-products-process/selector';
 
 type Props = {
   catalogType?: string;

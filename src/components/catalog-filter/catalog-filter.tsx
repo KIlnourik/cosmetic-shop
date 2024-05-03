@@ -1,13 +1,16 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { CareTypes, FILTER_HIDDEN_CLASS, SkinTypes } from '../../const';
 import CatalogFilterBlock from './catalog-filter-block/catalog-filter-block';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { fetchProductsAction } from '../../store/api-actions';
+import { getProducts } from '../../store/product-process/selector';
+import { useSearchParams } from 'react-router-dom';
 
 function CatalogFilter(): JSX.Element {
 
   const closeBtnRef = useRef<HTMLButtonElement | null>(null);
   const openBtnRef = useRef<HTMLButtonElement | null>(null);
   const catalogHeadRef = useRef<HTMLDivElement | null>(null);
-
   const [filterOpen, setFilterOpen] = useState<boolean>(false);
 
   const onFilterOutsideClick = (evt: MouseEvent) => {
@@ -38,6 +41,21 @@ function CatalogFilter(): JSX.Element {
     document.removeEventListener('keydown', onEscKeydown);
     document.removeEventListener('click', onFilterOutsideClick);
   };
+
+  const dispatch = useAppDispatch();
+  const filteredProducts = useAppSelector(getProducts);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [skinType, setSkinType] = useState(searchParams.get('skinType') || '');
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams({skinType: 'Нормальная'});
+
+
+    dispatch(fetchProductsAction(queryParams));
+  }, [dispatch])
+
+
+  // console.log(filteredProducts);
 
   return (
     <div className={`catalog-head catalog-head_filter-inited ${filterOpen ? '' : FILTER_HIDDEN_CLASS}`} ref={catalogHeadRef} >

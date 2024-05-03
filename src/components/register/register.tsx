@@ -13,7 +13,6 @@ import { AppRoute } from '../../const';
 import { Helmet } from 'react-helmet-async';
 import { FormEvent } from 'react';
 
-// TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
 function Register(): JSX.Element {

@@ -29,7 +29,7 @@ const getCartProductCount = (cartProducts: CartProduct[], currentProduct: Produc
 const getSimilarProds = (prods: Product[], product: Product): Product[] =>
   prods.filter(
     (item) => product.name === item.name
-      && product.type === item.type
+      && product.type.value === item.type.value
       && product.volume.split(' ')[1] === item.volume.split(' ')[1]);
 
 function ProductCardFull({ product }: Props): JSX.Element {
@@ -107,12 +107,12 @@ function ProductCardFull({ product }: Props): JSX.Element {
             <ProductImage
               path={product.image}
               productName={product.name}
-              productType={product.type}
+              productType={product.type.title}
               className={'card'}
             />
           </div>
           <div className="card__content">
-            <h1 className="card__content-title">{getProductTitle(product.name)}<small>{product.type}</small></h1>
+            <h1 className="card__content-title">{getProductTitle(product.name)}<small>{product.type.title}</small></h1>
             <div className="card__text">
               <p>{product.description}</p>
             </div>

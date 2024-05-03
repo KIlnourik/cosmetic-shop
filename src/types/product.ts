@@ -1,10 +1,10 @@
-import { CareType } from './types';
+import { ProductCareType, ProductType } from './types';
 
 export type Product = {
   id: number,
   name: string,
-  type: string,
-  careType: CareType,
+  type: ProductType,
+  careType: ProductCareType,
   skinType: string[],
   description: string,
   compound: string,
