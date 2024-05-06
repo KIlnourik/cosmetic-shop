@@ -1,11 +1,11 @@
-import { useRef } from 'react';
+import {  useRef } from 'react';
 import { initAccordion, destroyAccordion, onAccorderonTogglerClick } from '../../../utils/utils';
 import { MOBILE_MAX_WIDTH } from '../../../const';
 import CatalogFilterList from '../catalog-filter-list/catalog-filter-list';
-import { CareType, SkinType } from '../../../types/types';
+import { FilterType } from '../../../types/types';
 
 type Props = {
-  filterType: CareType | SkinType;
+  filterType: FilterType;
 }
 
 function CatalogFilterBlock({ filterType }: Props): JSX.Element {

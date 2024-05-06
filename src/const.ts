@@ -1,4 +1,4 @@
-import { CareType } from './types/types';
+import { FilterType } from './types/types';
 
 export enum AppRoute {
   Root = '/',
@@ -33,12 +33,6 @@ export enum AuthStatus {
   Unknown = 'UNKNOWN',
 }
 
-export enum FilterType {
-  FaceCare = 'face-care',
-  BodyCare = 'body-care',
-  SkinType = 'skin-type',
-}
-
 export enum AccordeonToggleClass {
   Open = 'accordion_opened',
   Close = 'accordion_closed',
@@ -71,9 +65,9 @@ export const BodyCareTypes = {
   bomb: 'Бомбочка для ванны',
   salt: 'Соль для ванны',
 };
-export const SkinTypes =
+export const SkinTypes: FilterType =
 {
-  name: 'skin-type',
+  name: 'skin',
   title: 'Тип кожи',
   items: {
     normal: 'Нормальная',
@@ -86,18 +80,27 @@ export const SkinTypes =
 export const NAMES = ['clean', 'coconut', 'earth', 'high', 'lavender', 'lotos', 'milk', 'paradise', 'rest', 'rose', 'sun', 'violet'];
 export const MEASURES = ['ml', 'mg'];
 
-export const CareTypes: CareType[] = [
+export const CareTypes: FilterType[] = [
   {
-    name: 'face-care',
+    name: 'face',
     title: 'Уход для лица',
     items: FaceCareTypes,
   },
   {
-    name: 'body-care',
+    name: 'body',
     title: 'Уход для тела',
     items: BodyCareTypes,
   },
 ];
+
+export const AdditionalFilters: FilterType = {
+  name: 'additional',
+  title: '',
+  items: {
+    isSPF: 'Солнцезащитные крема (с SPF)',
+    bestSellers: 'Бестселлеры'
+  }
+};
 
 export const MOBILE_MAX_WIDTH = 767;
 export const FILTER_HIDDEN_CLASS = 'catalog-head_filter-hidden';

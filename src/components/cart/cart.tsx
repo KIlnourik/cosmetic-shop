@@ -1,4 +1,4 @@
-import { Box, Button, Container, Link, ThemeProvider, Typography, createTheme } from '@mui/material';
+import { Box, Container, Link, ThemeProvider, Typography, createTheme } from '@mui/material';
 import CartList from './cart-list/cart-list';
 import CartSummary from './cart-summary/cart-summary';
 import { useAppSelector } from '../../hooks';
@@ -158,7 +158,7 @@ function Cart(): JSX.Element {
                 sx={{ fontWeight: 500, mt: 10 }}>
                 В корзине еще нет товаров
               </Typography>
-              <Link href={AppRoute.Root}
+              <Link href={AppRoute.Catalog} 
                 sx={{
                   textDecoration: 'none',
                   color: 'inherit',

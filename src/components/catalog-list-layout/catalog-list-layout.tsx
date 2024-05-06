@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { SideCatalogType } from "../../const";
 import { useAppSelector } from "../../hooks";
 import { getViewedProducts } from "../../store/viewed-products-process/selector";
@@ -9,7 +10,7 @@ type Props = {
   currentProduct?: Product,
 }
 
-function CatalogListLayout({ catalogType, currentProduct }: Props): JSX.Element {
+const CatalogListLayout = memo(function CatalogListLayout({ catalogType, currentProduct }: Props): JSX.Element {
 
   const viewedProducts = useAppSelector(getViewedProducts);
 
@@ -32,6 +33,6 @@ function CatalogListLayout({ catalogType, currentProduct }: Props): JSX.Element 
       <CatalogList />
     </div>
   );
-}
+})
 
 export default CatalogListLayout;

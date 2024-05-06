@@ -1,12 +1,12 @@
-import { useEffect, useRef, useState } from 'react';
-import { CareTypes, FILTER_HIDDEN_CLASS, SkinTypes } from '../../const';
+import {  SyntheticEvent, memo, useEffect, useRef, useState } from 'react';
+import { AdditionalFilters, CareTypes, FILTER_HIDDEN_CLASS, SkinTypes } from '../../const';
 import CatalogFilterBlock from './catalog-filter-block/catalog-filter-block';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchProductsAction } from '../../store/api-actions';
 import { getProducts } from '../../store/product-process/selector';
 import { useSearchParams } from 'react-router-dom';
 
-function CatalogFilter(): JSX.Element {
+const CatalogFilter = memo(function CatalogFilter(): JSX.Element {
 
   const closeBtnRef = useRef<HTMLButtonElement | null>(null);
   const openBtnRef = useRef<HTMLButtonElement | null>(null);
@@ -45,17 +45,38 @@ function CatalogFilter(): JSX.Element {
   const dispatch = useAppDispatch();
   const filteredProducts = useAppSelector(getProducts);
   const [searchParams, setSearchParams] = useSearchParams();
-  const [skinType, setSkinType] = useState(searchParams.get('skinType') || '');
+  const [skinType, setSkinType] = useState(searchParams.getAll('skinType[]') || []);
+  const [isSPF, setSPF] = useState(searchParams.get('isSPF') || '');
+  const [isBestseller, setBestseller] = useState(searchParams.get('isBestseller') || '');
+  const [careTypes, setCareTypes] = useState(searchParams.getAll('careType') || []);
+  const [productTypes, setProductTypes] = useState(searchParams.getAll('productType') || []);
 
   useEffect(() => {
-    const queryParams = new URLSearchParams({skinType: 'Нормальная'});
+    // const queryParams = new URLSearchParams({ isBestSeller: 'true'});
+    const queryParams = new URLSearchParams({});
 
+    // queryParams.append('careType', 'face');
+    // queryParams.append('isSPF', 'true');
+    // queryParams.append('skinType[]', 'жирная');
+
+    console.log(queryParams.toString())
 
     dispatch(fetchProductsAction(queryParams));
   }, [dispatch])
 
+  const handleSubmit = (evt: SyntheticEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    const filterForm = evt.target as HTMLFormElement;
+    const formData = new FormData(filterForm);
+    console.log(formData);
+  }
 
   // console.log(filteredProducts);
+  // filteredProducts.forEach((el) => console.log(el.type));
+
+  // const handleInputChange = (filterType, value) => {
+
+  // }
 
   return (
     <div className={`catalog-head catalog-head_filter-inited ${filterOpen ? '' : FILTER_HIDDEN_CLASS}`} ref={catalogHeadRef} >
@@ -68,14 +89,18 @@ function CatalogFilter(): JSX.Element {
       </div>
       <div className="catalog-head__filter">
         <div className="wrapper">
-          <form className="filter" action="https://echo.htmlacademy.ru" method="GET">
+          <form className="filter" action="#" method="#" onSubmit={handleSubmit}>
             <div className="filter__inner">
               {CareTypes.map((filterType, index) => (
                 <CatalogFilterBlock filterType={filterType} key={index} />
               ))}
               <CatalogFilterBlock filterType={SkinTypes} />
+              <CatalogFilterBlock filterType={AdditionalFilters} />
               <div className="filter__buttons">
-                <button className="filter__button" id="filter-submit" type="submit">Применить</button>
+                <button className="filter__button"
+                  id="filter-submit"
+                  type="submit"
+                >Применить</button>
                 <button className="filter__button" id="filter-reset" type="reset">Сбросить</button>
               </div>
             </div>
@@ -84,6 +109,6 @@ function CatalogFilter(): JSX.Element {
       </div>
     </div>
   );
-}
+})
 
 export default CatalogFilter;

@@ -1,3 +1,4 @@
+import { memo } from "react";
 
 type Props = {
   path: string,
@@ -6,7 +7,7 @@ type Props = {
   className: string,
 }
 
-function ProductImage({ path, productName, productType, className }: Props): JSX.Element {
+const ProductImage = memo(function ProductImage({ path, productName, productType, className }: Props): JSX.Element {
   return (
     <picture>
       <source type="image/webp" media="(min-width: 1200px)"
@@ -28,6 +29,6 @@ function ProductImage({ path, productName, productType, className }: Props): JSX
         alt={`${productName} - ${productType}`} />
     </picture>
   )
-}
+})
 
 export default ProductImage;

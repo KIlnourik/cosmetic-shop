@@ -35,7 +35,7 @@ function CatalogList({ catalogType, currentProduct }: Props): JSX.Element {
 
     if (currentProduct) {
       setSimilarProducts(products.filter(
-        (item) => currentProduct?.type === item.type));
+        (item) => currentProduct.productType === item.productType));
     }
 
     if (products.length) {

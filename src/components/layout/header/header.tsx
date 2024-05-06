@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../../const';
 import Logo from '../../logo/logo';
-import { useEffect, useRef } from 'react';
+import { memo, useEffect, useRef } from 'react';
 import { Badge, ThemeProvider, createTheme } from '@mui/material';
 import { useAppSelector } from '../../../hooks';
 import { getCartProducts } from '../../../store/cart-process/selector';
@@ -12,7 +12,7 @@ const getCartProductsTotalCount = (cartProducts: CartProduct[]): number => {
   return totalCount;
 }
 
-function Header(): JSX.Element {
+const Header = memo(function Header(): JSX.Element {
   const headerRef = useRef<HTMLElement | null>(null);
   const menuRef = useRef<HTMLElement | null>(null);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
@@ -174,6 +174,6 @@ function Header(): JSX.Element {
       </header>
     </ThemeProvider>
   );
-}
+})
 
 export default Header;

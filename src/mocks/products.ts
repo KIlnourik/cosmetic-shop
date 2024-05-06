@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { Product } from '../types/product';
 import { NAMES, MEASURES, CareTypes } from '../const';
-import { CareType, ProductCareType, ProductType } from '../types/types';
+import { CareType } from '../types/types';
 
 const FaceCareType = [
   {
@@ -57,7 +57,7 @@ const BodyCareType = [
   },
 ];
 const SKIN_TYPES = ['нормальная', 'сухая', 'жирная', 'комбинированная'];
-const TYPES = [FaceCareType, BodyCareType];
+const CATEGORIES  = [FaceCareType, BodyCareType];
 
 const skinTypes = (length: number): string[] => {
   const items: string[] = [];
@@ -65,35 +65,31 @@ const skinTypes = (length: number): string[] => {
     const index: number = faker.number.int({ min: 1, max: SKIN_TYPES.length - 1 });
     const item: string = SKIN_TYPES[index];
 
-    if (!items.includes(item)) {
-      items.push(item);
-    }
+    if (!items.includes(item)) { items.push(item); }
   }
   return items;
 }
 
-const createSPF = (type: ProductType) => {
-  if (type.value === 'cream') { return faker.datatype.boolean() }
+const createSPF = (productType: string) => {
+  if (productType === 'cream') { return faker.datatype.boolean() }
   return false;
 };
 
-const createCareType = (): ProductCareType => {
+const createCategorie = (): string => {
   const careType: CareType = CareTypes[faker.number.int({ min: 0, max: CareTypes.length - 1 })];
-  return ({
-    name: careType.name,
-    title: careType.title
-  })
+  return careType.name.split('-')[0];
 };
 
 const createProduct = (): Product => {
   const name = NAMES[faker.number.int({ min: 0, max: NAMES.length - 1 })];
-  const type = TYPES[faker.number.int({ min: 0, max: TYPES.length - 1 })][faker.number.int({ min: 0, max: FaceCareType.length - 1 })]
+  const randomType = CATEGORIES[faker.number.int({ min: 0, max: CATEGORIES.length - 1 })][faker.number.int({ min: 0, max: FaceCareType.length - 1 })]
 
   return {
     id: faker.number.int({ min: 1, max: 100000 }),
     name,
-    type,
-    careType: createCareType(),
+    subcategorieRus: randomType.title,
+    subcategorie: randomType.value,
+    categorie: createCategorie(),
     skinType: skinTypes(faker.number.int({ min: 1, max: SKIN_TYPES.length - 1 })),
     description: faker.lorem.sentences(),
     compound: faker.lorem.sentences(),
@@ -101,7 +97,7 @@ const createProduct = (): Product => {
     price: faker.number.int({ min: 10, max: 100 }) * 10,
     volume: `${faker.number.int({ min: 1, max: 50 }) * 10} ${MEASURES[faker.number.int({ min: 0, max: MEASURES.length - 1 })]}`,
     isBestSeller: faker.datatype.boolean(),
-    isSPF: createSPF(type),
+    isSPF: createSPF(randomType.value),
     previewImage: `/img/catalog/${name}`,
     image: `/img/catalog/${name}`,
   }
@@ -112,6 +108,8 @@ const createProducts = (length: number): Product[] => {
   for (let i = 0; i < length; i++) {
     products.push(createProduct());
   }
+
+  // console.log(products);
 
   return products;
 };
