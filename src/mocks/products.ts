@@ -62,7 +62,7 @@ const CATEGORIES  = [FaceCareType, BodyCareType];
 const skinTypes = (length: number): string[] => {
   const items: string[] = [];
   for (let i = 0; i < length; i++) {
-    const index: number = faker.number.int({ min: 1, max: SKIN_TYPES.length - 1 });
+    const index: number = faker.number.int({ min: 0, max: SKIN_TYPES.length - 1 });
     const item: string = SKIN_TYPES[index];
 
     if (!items.includes(item)) { items.push(item); }
@@ -83,13 +83,13 @@ const createCategorie = (): string => {
 const createProduct = (): Product => {
   const name = NAMES[faker.number.int({ min: 0, max: NAMES.length - 1 })];
   const randomType = CATEGORIES[faker.number.int({ min: 0, max: CATEGORIES.length - 1 })][faker.number.int({ min: 0, max: FaceCareType.length - 1 })]
+  const subCategorie = createCategorie();
 
   return {
     id: faker.number.int({ min: 1, max: 100000 }),
     name,
-    subcategorieRus: randomType.title,
-    subcategorie: randomType.value,
-    categorie: createCategorie(),
+    categorieRus: randomType.title,
+    categorie: `${subCategorie}-${randomType.value}`,
     skinType: skinTypes(faker.number.int({ min: 1, max: SKIN_TYPES.length - 1 })),
     description: faker.lorem.sentences(),
     compound: faker.lorem.sentences(),
@@ -108,8 +108,6 @@ const createProducts = (length: number): Product[] => {
   for (let i = 0; i < length; i++) {
     products.push(createProduct());
   }
-
-  // console.log(products);
 
   return products;
 };

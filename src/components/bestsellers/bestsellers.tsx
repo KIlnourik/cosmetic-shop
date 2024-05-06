@@ -67,7 +67,7 @@ function Bestsellers(): JSX.Element {
                           className="product-card__image" src={`${product.previewImage}@1x.jpg`} alt="High - крем для лица" height="312" width="230" />
                       </picture>
                       <h3 className="product-card__title">{getProductTitle(product.name)}</h3>
-                      <p className="product-card__description">{product.subcategorieRus}</p>
+                      <p className="product-card__description">{product.categorieRus}</p>
                       <Link className="product-card__link" to={`${AppRoute.Catalog}/${product.id}`} aria-label="Подробнее" onClick={() => handleProductClick(product)}>Подробнее</Link>
                     </div>
                   }

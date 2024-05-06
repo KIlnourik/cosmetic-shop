@@ -67,7 +67,7 @@ export const BodyCareTypes = {
 };
 export const SkinTypes: FilterType =
 {
-  name: 'skin',
+  name: 'skinType',
   title: 'Тип кожи',
   items: {
     normal: 'Нормальная',
@@ -98,7 +98,7 @@ export const AdditionalFilters: FilterType = {
   title: '',
   items: {
     isSPF: 'Солнцезащитные крема (с SPF)',
-    bestSellers: 'Бестселлеры'
+    isBestseller: 'Бестселлеры'
   }
 };
 

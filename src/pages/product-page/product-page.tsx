@@ -38,7 +38,7 @@ function ProductPage(): JSX.Element {
       {(product && !isProductLoading) &&
         <>
           <Helmet>
-            <title>{getProductTitle(product.subcategorieRus, product.name)}</title>
+            <title>{getProductTitle(product.categorieRus, product.name)}</title>
           </Helmet>
           <main className="main main_top-spaced">
             <ProductCardFull product={product} />

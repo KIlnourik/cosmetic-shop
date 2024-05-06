@@ -1,21 +1,22 @@
-import { SyntheticEvent } from "react";
-import { FilterType } from "../../../types/types";
+
+import { FilterType } from '../../../types/types';
 
 type Props = {
   id: number,
-  filterType: string,
   filterItemValue: string,
   filterItemTitle: string,
   filters: FilterType,
+  params: string | string[] | boolean[],
+  handleInputChange: (value: string, filters: FilterType) => void;
 };
-
 
 function CatalogFilterItem({
   id,
-  filterType,
   filterItemValue,
   filterItemTitle,
-  filters
+  filters,
+  params,
+  handleInputChange
 }: Props): JSX.Element {
 
   const getCheckedStatus = (filterValue: string, filters: FilterType): boolean | undefined => {
@@ -27,21 +28,13 @@ function CatalogFilterItem({
     return undefined;
   }
 
-  const handleChangeInput = (evt: SyntheticEvent) => {
-    const {value} = evt.target as HTMLInputElement;
-    if (value) {
-      console.log(value)
-    }
-  };
-
-
   return (
-    <li className="filter__item">
-      <input className="visually-hidden" type="checkbox" id={`filter-${filterType}-${id}`} name={filterType} value={filterItemValue}
+    <li className='filter__item'>
+      <input className='visually-hidden' type='checkbox' id={`filter-${filters.name}-${id}`} name={filters.name} value={`${filters.name}-${filterItemValue}`}
         checked={getCheckedStatus(filterItemValue, filters)}
-        onChange={handleChangeInput}
+        onChange={() => handleInputChange(`${filters.name}-${filterItemValue}`, filters)}
       />
-      <label className="filter__checkbox-label" htmlFor={`filter-${filterType}-${id}`}>{filterItemTitle}</label>
+      <label className='filter__checkbox-label' htmlFor={`filter-${filters.name}-${id}`}>{filterItemTitle}</label>
     </li>
   );
 }

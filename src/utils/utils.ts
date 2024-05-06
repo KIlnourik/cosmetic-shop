@@ -61,3 +61,13 @@ export const sortProducts = (a: CartProduct, b: CartProduct) => {
   }
   return 0;
 };
+
+export const getFilterItems = (item: string, filters: string[]) => {
+  let items: string[] = [...filters];
+
+  items.includes(item) ?
+    items = items.filter((value) => value !== item) :
+    items.push(item);
+
+  return items;
+};

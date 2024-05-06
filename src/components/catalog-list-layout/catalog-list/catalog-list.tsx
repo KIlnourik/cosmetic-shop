@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import { useAppSelector } from '../../../hooks';
-import { getAllProducts, getAllProductsLoadingStatus } from '../../../store/product-process/selector';
+import { memo, useCallback, useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { getAllProducts, getProducts, getProductsLoadingStatus } from '../../../store/product-process/selector';
 import Pagination from '../../pagination/pagination';
 import ProductCardSmall from '../../product-card-small/product-card-small';
 import Spinner from '../../spinner/spinner';
@@ -13,9 +13,11 @@ type Props = {
   currentProduct?: Product;
 }
 
-function CatalogList({ catalogType, currentProduct }: Props): JSX.Element {
+const CatalogList = memo(function CatalogList({ catalogType, currentProduct }: Props): JSX.Element {
   const products = useAppSelector(getAllProducts);
-  const isProductsLoading = useAppSelector(getAllProductsLoadingStatus);
+  const filteredProducts = useAppSelector(getProducts);
+  const isProductsLoading = useAppSelector(getProductsLoadingStatus);
+  const dispatch = useAppDispatch();
 
   const [offset, setOffset] = useState(0);
   const [page, setPage] = useState(1);
@@ -26,6 +28,9 @@ function CatalogList({ catalogType, currentProduct }: Props): JSX.Element {
   );
   const [similarProducts, setSimilarProducts] = useState<Product[]>([]);
 
+  const getSimilarProducts = useCallback((currentProduct: Product, products: Product[]) => products.filter(
+    (item) => currentProduct.categorie === item.categorie), []);
+
   const viewedProducts = useAppSelector(getViewedProducts);
 
   useEffect(() => {
@@ -34,14 +39,22 @@ function CatalogList({ catalogType, currentProduct }: Props): JSX.Element {
       : setItemsPerPage(SIDE_CATALOG_PER_PAGE_COUNT);
 
     if (currentProduct) {
-      setSimilarProducts(products.filter(
-        (item) => currentProduct.productType === item.productType));
+      setSimilarProducts(getSimilarProducts(currentProduct, products));
     }
 
-    if (products.length) {
+
+
+    if (products.length && !filteredProducts.length) {
       (!currentProduct)
         ? (setPageCount(Math.ceil(products.length / itemsPerPage)),
           setCurrentProducts(products.slice(offset, offset + itemsPerPage)))
+        : (setPageCount(Math.ceil(similarProducts.length / itemsPerPage)),
+          setCurrentProducts(similarProducts.slice(offset, offset + itemsPerPage)));
+    }
+    if (filteredProducts.length) {
+      (!currentProduct)
+        ? (setPageCount(Math.ceil(filteredProducts.length / itemsPerPage)),
+          setCurrentProducts(filteredProducts.slice(offset, offset + itemsPerPage)))
         : (setPageCount(Math.ceil(similarProducts.length / itemsPerPage)),
           setCurrentProducts(similarProducts.slice(offset, offset + itemsPerPage)));
     }
@@ -50,8 +63,7 @@ function CatalogList({ catalogType, currentProduct }: Props): JSX.Element {
       && (setPageCount(Math.ceil(viewedProducts.length / itemsPerPage)),
         setCurrentProducts(viewedProducts.slice(offset, offset + itemsPerPage)))
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [products, offset, itemsPerPage])
+  }, [dispatch, products.length, offset, itemsPerPage, currentProduct, similarProducts.length, filteredProducts.length])
 
   const handlePrevBtnClick = (currentPage: number): void => {
     if (currentPage >= 1 && currentPage <= pageCount) {
@@ -86,6 +98,6 @@ function CatalogList({ catalogType, currentProduct }: Props): JSX.Element {
       />
     </>
   );
-}
+})
 
 export default CatalogList;

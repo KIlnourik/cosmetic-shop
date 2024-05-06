@@ -1,10 +1,11 @@
-import {  SyntheticEvent, memo, useEffect, useRef, useState } from 'react';
+import { SyntheticEvent, memo, useRef, useState } from 'react';
 import { AdditionalFilters, CareTypes, FILTER_HIDDEN_CLASS, SkinTypes } from '../../const';
-import CatalogFilterBlock from './catalog-filter-block/catalog-filter-block';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import CatalogFilterList from './catalog-filter-list/catalog-filter-list';
+import { useAppDispatch } from '../../hooks';
 import { fetchProductsAction } from '../../store/api-actions';
-import { getProducts } from '../../store/product-process/selector';
 import { useSearchParams } from 'react-router-dom';
+import { FilterType } from '../../types/types';
+import { getFilterItems } from '../../utils/utils';
 
 const CatalogFilter = memo(function CatalogFilter(): JSX.Element {
 
@@ -43,40 +44,45 @@ const CatalogFilter = memo(function CatalogFilter(): JSX.Element {
   };
 
   const dispatch = useAppDispatch();
-  const filteredProducts = useAppSelector(getProducts);
+
   const [searchParams, setSearchParams] = useSearchParams();
-  const [skinType, setSkinType] = useState(searchParams.getAll('skinType[]') || []);
-  const [isSPF, setSPF] = useState(searchParams.get('isSPF') || '');
-  const [isBestseller, setBestseller] = useState(searchParams.get('isBestseller') || '');
-  const [careTypes, setCareTypes] = useState(searchParams.getAll('careType') || []);
-  const [productTypes, setProductTypes] = useState(searchParams.getAll('productType') || []);
-
-  useEffect(() => {
-    // const queryParams = new URLSearchParams({ isBestSeller: 'true'});
-    const queryParams = new URLSearchParams({});
-
-    // queryParams.append('careType', 'face');
-    // queryParams.append('isSPF', 'true');
-    // queryParams.append('skinType[]', 'жирная');
-
-    console.log(queryParams.toString())
-
-    dispatch(fetchProductsAction(queryParams));
-  }, [dispatch])
+  const [isSPF, setSPF] = useState(searchParams.has('isSPF'));
+  const [isBestseller, setBestseller] = useState(searchParams.has('isBestseller'));
+  const [skinTypes, setSkinTypes] = useState(searchParams.getAll('skinType[]') || []);
+  const [categories, setCategories] = useState(searchParams.getAll('categorie') || []);
 
   const handleSubmit = (evt: SyntheticEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    const filterForm = evt.target as HTMLFormElement;
-    const formData = new FormData(filterForm);
-    console.log(formData);
-  }
 
-  // console.log(filteredProducts);
-  // filteredProducts.forEach((el) => console.log(el.type));
+    const queryParams = new URLSearchParams({});
+    if (isSPF) queryParams.append('isSPF', 'true');
+    if (isBestseller) queryParams.append('isBestseller', 'true');
+    if (skinTypes.length) skinTypes.map(skinType => queryParams.append('skinType[]', skinType));
+    if (categories.length) categories.map(categorie => queryParams.append('categorie[]', categorie));
+    setSearchParams(queryParams);
+    dispatch(fetchProductsAction(queryParams));
+  };
 
-  // const handleInputChange = (filterType, value) => {
-
-  // }
+  const handleInputChange = (value: string, filterType: FilterType) => {
+    switch (filterType.name) {
+      case 'face':
+        setCategories(getFilterItems(value, categories));
+        break;
+      case 'body':
+        setCategories(getFilterItems(value, categories));
+        break;
+      case 'additional':
+        if (value === 'additional-isSPF') {
+          setSPF(true);
+        }
+        if (value === 'additional-isBestseller') {
+          setBestseller(true);
+        }
+        break;
+      case 'skinType':
+        setSkinTypes(getFilterItems(value, skinTypes));
+    }
+  };
 
   return (
     <div className={`catalog-head catalog-head_filter-inited ${filterOpen ? '' : FILTER_HIDDEN_CLASS}`} ref={catalogHeadRef} >
@@ -92,10 +98,10 @@ const CatalogFilter = memo(function CatalogFilter(): JSX.Element {
           <form className="filter" action="#" method="#" onSubmit={handleSubmit}>
             <div className="filter__inner">
               {CareTypes.map((filterType, index) => (
-                <CatalogFilterBlock filterType={filterType} key={index} />
+                <CatalogFilterList filterType={filterType} params={categories} handleInputChange={handleInputChange} key={index} />
               ))}
-              <CatalogFilterBlock filterType={SkinTypes} />
-              <CatalogFilterBlock filterType={AdditionalFilters} />
+              <CatalogFilterList filterType={SkinTypes} params={skinTypes} handleInputChange={handleInputChange} />
+              <CatalogFilterList filterType={AdditionalFilters} params={[isSPF, isBestseller]} handleInputChange={handleInputChange} />
               <div className="filter__buttons">
                 <button className="filter__button"
                   id="filter-submit"

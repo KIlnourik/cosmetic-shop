@@ -1,8 +1,7 @@
 export type Product = {
   id: number,
   name: string,
-  subcategorieRus: string,
-  subcategorie: string,
+  categorieRus: string,
   categorie: string,
   skinType: string[],
   description: string,
