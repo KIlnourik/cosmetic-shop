@@ -46,8 +46,8 @@ const CatalogFilter = memo(function CatalogFilter(): JSX.Element {
   const dispatch = useAppDispatch();
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const [isSPF, setSPF] = useState(searchParams.has('isSPF'));
-  const [isBestseller, setBestseller] = useState(searchParams.has('isBestseller'));
+  const [isSPF, setSPF] = useState(searchParams.get('isSPF') || '');
+  const [isBestseller, setBestseller] = useState(searchParams.get('isBestseller') || '');
   const [skinTypes, setSkinTypes] = useState(searchParams.getAll('skinType[]') || []);
   const [categories, setCategories] = useState(searchParams.getAll('categorie') || []);
 
@@ -55,11 +55,12 @@ const CatalogFilter = memo(function CatalogFilter(): JSX.Element {
     evt.preventDefault();
 
     const queryParams = new URLSearchParams({});
-    if (isSPF) queryParams.append('isSPF', 'true');
-    if (isBestseller) queryParams.append('isBestseller', 'true');
+    if (isSPF.length) queryParams.append('isSPF', 'true');
+    if (isBestseller.length) queryParams.append('isBestseller', 'true');
     if (skinTypes.length) skinTypes.map(skinType => queryParams.append('skinType[]', skinType));
     if (categories.length) categories.map(categorie => queryParams.append('categorie[]', categorie));
     setSearchParams(queryParams);
+
     dispatch(fetchProductsAction(queryParams));
   };
 
@@ -73,14 +74,16 @@ const CatalogFilter = memo(function CatalogFilter(): JSX.Element {
         break;
       case 'additional':
         if (value === 'additional-isSPF') {
-          setSPF(true);
+          setSPF(value);
         }
         if (value === 'additional-isBestseller') {
-          setBestseller(true);
+          setBestseller(value);
         }
         break;
       case 'skinType':
-        setSkinTypes(getFilterItems(value, skinTypes));
+        Object.entries(SkinTypes.items).map(([key, objValue]) => {
+          if (value.includes(key)) setSkinTypes(getFilterItems(objValue.toLowerCase(), skinTypes));
+        });
     }
   };
 
