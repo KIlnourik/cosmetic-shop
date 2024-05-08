@@ -1,4 +1,4 @@
-import { SyntheticEvent, memo, useRef, useState } from 'react';
+import { SyntheticEvent, useRef, useState } from 'react';
 import { AdditionalFilters, CareTypes, FILTER_HIDDEN_CLASS, SkinTypes } from '../../const';
 import CatalogFilterList from './catalog-filter-list/catalog-filter-list';
 import { FilterType } from '../../types/types';
@@ -16,7 +16,7 @@ type Props = {
   handleResetFilter: (evt: SyntheticEvent) => void,
 };
 
-const CatalogFilter = memo(function CatalogFilter({
+function CatalogFilter({
   isSPF,
   isBestSeller,
   skinTypes,
@@ -106,6 +106,6 @@ const CatalogFilter = memo(function CatalogFilter({
       </div>
     </div>
   );
-})
+}
 
 export default CatalogFilter;

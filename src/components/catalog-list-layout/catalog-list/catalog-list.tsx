@@ -14,7 +14,7 @@ type Props = {
   filteredProducts?: Product[];
 }
 
-const CatalogList = function CatalogList({ catalogType, currentProduct, filteredProducts }: Props): JSX.Element {
+function CatalogList({ catalogType, currentProduct, filteredProducts }: Props): JSX.Element {
   const products = useAppSelector(getAllProducts);
   const isProductsLoading = useAppSelector(getProductsLoadingStatus);
   const dispatch = useAppDispatch();
@@ -52,7 +52,7 @@ const CatalogList = function CatalogList({ catalogType, currentProduct, filtered
       && (setPageCount(Math.ceil(viewedProducts.length / itemsPerPage)),
         setCurrentProducts(viewedProducts.slice(offset, offset + itemsPerPage)))
 
-  }, [dispatch, products.length, offset, itemsPerPage, currentProduct, similarProducts.length, catalogType, filteredProducts, similarProducts, viewedProducts, getSimilarProducts])
+  }, [dispatch, products.length, offset, itemsPerPage, currentProduct, similarProducts.length, catalogType, filteredProducts, similarProducts, viewedProducts, getSimilarProducts, products])
 
   const handlePrevBtnClick = (currentPage: number): void => {
     if (currentPage >= 1 && currentPage <= pageCount) {

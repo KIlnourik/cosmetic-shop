@@ -74,8 +74,6 @@ function CatalogPage(): JSX.Element {
     }
   };
 
-  console.log(skinTypes)
-
   return (
     <>
       <Helmet>
