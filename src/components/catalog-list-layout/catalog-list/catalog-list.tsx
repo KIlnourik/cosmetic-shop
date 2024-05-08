@@ -51,8 +51,7 @@ function CatalogList({ catalogType, currentProduct, filteredProducts }: Props): 
     (catalogType === SideCatalogType.History && viewedProducts.length)
       && (setPageCount(Math.ceil(viewedProducts.length / itemsPerPage)),
         setCurrentProducts(viewedProducts.slice(offset, offset + itemsPerPage)))
-
-  }, [dispatch, products.length, offset, itemsPerPage, currentProduct, similarProducts.length, catalogType, filteredProducts, similarProducts, viewedProducts, getSimilarProducts, products])
+  }, [dispatch, products.length, offset, itemsPerPage, currentProduct, similarProducts.length, catalogType, filteredProducts ])
 
   const handlePrevBtnClick = (currentPage: number): void => {
     if (currentPage >= 1 && currentPage <= pageCount) {
