@@ -1,6 +1,6 @@
-import { memo, useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { getAllProducts, getProducts, getProductsLoadingStatus } from '../../../store/product-process/selector';
+import { getAllProducts, getProductsLoadingStatus } from '../../../store/product-process/selector';
 import Pagination from '../../pagination/pagination';
 import ProductCardSmall from '../../product-card-small/product-card-small';
 import Spinner from '../../spinner/spinner';
@@ -11,11 +11,11 @@ import { getViewedProducts } from '../../../store/viewed-products-process/select
 type Props = {
   catalogType?: string;
   currentProduct?: Product;
+  filteredProducts?: Product[];
 }
 
-const CatalogList = memo(function CatalogList({ catalogType, currentProduct }: Props): JSX.Element {
+const CatalogList = function CatalogList({ catalogType, currentProduct, filteredProducts }: Props): JSX.Element {
   const products = useAppSelector(getAllProducts);
-  const filteredProducts = useAppSelector(getProducts);
   const isProductsLoading = useAppSelector(getProductsLoadingStatus);
   const dispatch = useAppDispatch();
 
@@ -42,28 +42,17 @@ const CatalogList = memo(function CatalogList({ catalogType, currentProduct }: P
       setSimilarProducts(getSimilarProducts(currentProduct, products));
     }
 
-
-
-    if (products.length && !filteredProducts.length) {
-      (!currentProduct)
-        ? (setPageCount(Math.ceil(products.length / itemsPerPage)),
-          setCurrentProducts(products.slice(offset, offset + itemsPerPage)))
-        : (setPageCount(Math.ceil(similarProducts.length / itemsPerPage)),
-          setCurrentProducts(similarProducts.slice(offset, offset + itemsPerPage)));
-    }
-    if (filteredProducts.length) {
-      (!currentProduct)
-        ? (setPageCount(Math.ceil(filteredProducts.length / itemsPerPage)),
-          setCurrentProducts(filteredProducts.slice(offset, offset + itemsPerPage)))
-        : (setPageCount(Math.ceil(similarProducts.length / itemsPerPage)),
-          setCurrentProducts(similarProducts.slice(offset, offset + itemsPerPage)));
-    }
+    (filteredProducts && !currentProduct)
+      ? (setPageCount(Math.ceil(filteredProducts.length / itemsPerPage)),
+        setCurrentProducts(filteredProducts.slice(offset, offset + itemsPerPage)))
+      : (setPageCount(Math.ceil(similarProducts.length / itemsPerPage)),
+        setCurrentProducts(similarProducts.slice(offset, offset + itemsPerPage)));
 
     (catalogType === SideCatalogType.History && viewedProducts.length)
       && (setPageCount(Math.ceil(viewedProducts.length / itemsPerPage)),
         setCurrentProducts(viewedProducts.slice(offset, offset + itemsPerPage)))
 
-  }, [dispatch, products.length, offset, itemsPerPage, currentProduct, similarProducts.length, filteredProducts.length])
+  }, [dispatch, products.length, offset, itemsPerPage, currentProduct, similarProducts.length, catalogType, filteredProducts, similarProducts, viewedProducts, getSimilarProducts])
 
   const handlePrevBtnClick = (currentPage: number): void => {
     if (currentPage >= 1 && currentPage <= pageCount) {
@@ -98,6 +87,6 @@ const CatalogList = memo(function CatalogList({ catalogType, currentProduct }: P
       />
     </>
   );
-})
+}
 
 export default CatalogList;

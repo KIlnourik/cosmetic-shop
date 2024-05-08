@@ -1,13 +1,31 @@
 import { SyntheticEvent, memo, useRef, useState } from 'react';
 import { AdditionalFilters, CareTypes, FILTER_HIDDEN_CLASS, SkinTypes } from '../../const';
 import CatalogFilterList from './catalog-filter-list/catalog-filter-list';
-import { useAppDispatch } from '../../hooks';
-import { fetchProductsAction } from '../../store/api-actions';
-import { useSearchParams } from 'react-router-dom';
 import { FilterType } from '../../types/types';
-import { getFilterItems } from '../../utils/utils';
 
-const CatalogFilter = memo(function CatalogFilter(): JSX.Element {
+
+type Props = {
+  searchParams: URLSearchParams,
+  isSPF: boolean,
+  isBestSeller: boolean,
+  skinTypes: string[],
+  categories: string[]
+  handleInputChange?: (value: string, filters: FilterType) => void,
+  handleSubmit: (evt: SyntheticEvent<HTMLFormElement>) => void,
+  handleAdditionalInputChange: (name: string) => void
+  handleResetFilter: (evt: SyntheticEvent) => void,
+};
+
+const CatalogFilter = memo(function CatalogFilter({
+  isSPF,
+  isBestSeller,
+  skinTypes,
+  categories,
+  handleInputChange,
+  handleSubmit,
+  handleAdditionalInputChange,
+  handleResetFilter
+}: Props): JSX.Element {
 
   const closeBtnRef = useRef<HTMLButtonElement | null>(null);
   const openBtnRef = useRef<HTMLButtonElement | null>(null);
@@ -43,50 +61,6 @@ const CatalogFilter = memo(function CatalogFilter(): JSX.Element {
     document.removeEventListener('click', onFilterOutsideClick);
   };
 
-  const dispatch = useAppDispatch();
-
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [isSPF, setSPF] = useState(searchParams.get('isSPF') || '');
-  const [isBestseller, setBestseller] = useState(searchParams.get('isBestseller') || '');
-  const [skinTypes, setSkinTypes] = useState(searchParams.getAll('skinType[]') || []);
-  const [categories, setCategories] = useState(searchParams.getAll('categorie') || []);
-
-  const handleSubmit = (evt: SyntheticEvent<HTMLFormElement>) => {
-    evt.preventDefault();
-
-    const queryParams = new URLSearchParams({});
-    if (isSPF.length) queryParams.append('isSPF', 'true');
-    if (isBestseller.length) queryParams.append('isBestseller', 'true');
-    if (skinTypes.length) skinTypes.map(skinType => queryParams.append('skinType[]', skinType));
-    if (categories.length) categories.map(categorie => queryParams.append('categorie[]', categorie));
-    setSearchParams(queryParams);
-
-    dispatch(fetchProductsAction(queryParams));
-  };
-
-  const handleInputChange = (value: string, filterType: FilterType) => {
-    switch (filterType.name) {
-      case 'face':
-        setCategories(getFilterItems(value, categories));
-        break;
-      case 'body':
-        setCategories(getFilterItems(value, categories));
-        break;
-      case 'additional':
-        if (value === 'additional-isSPF') {
-          setSPF(value);
-        }
-        if (value === 'additional-isBestseller') {
-          setBestseller(value);
-        }
-        break;
-      case 'skinType':
-        Object.entries(SkinTypes.items).map(([key, objValue]) => {
-          if (value.includes(key)) setSkinTypes(getFilterItems(objValue.toLowerCase(), skinTypes));
-        });
-    }
-  };
-
   return (
     <div className={`catalog-head catalog-head_filter-inited ${filterOpen ? '' : FILTER_HIDDEN_CLASS}`} ref={catalogHeadRef} >
       <div className="catalog-head__top">
@@ -101,16 +75,30 @@ const CatalogFilter = memo(function CatalogFilter(): JSX.Element {
           <form className="filter" action="#" method="#" onSubmit={handleSubmit}>
             <div className="filter__inner">
               {CareTypes.map((filterType, index) => (
-                <CatalogFilterList filterType={filterType} params={categories} handleInputChange={handleInputChange} key={index} />
+                <CatalogFilterList
+                  filterType={filterType}
+                  params={categories}
+                  handleInputChange={handleInputChange}
+                  key={index}
+                />
               ))}
-              <CatalogFilterList filterType={SkinTypes} params={skinTypes} handleInputChange={handleInputChange} />
-              <CatalogFilterList filterType={AdditionalFilters} params={[isSPF, isBestseller]} handleInputChange={handleInputChange} />
+              <CatalogFilterList
+                filterType={SkinTypes}
+                params={skinTypes}
+                handleInputChange={handleInputChange}
+              />
+              <CatalogFilterList
+                filterType={AdditionalFilters}
+                isSPF={isSPF}
+                isBestSeller={isBestSeller}
+                handleAdditionalInputChange={handleAdditionalInputChange}
+              />
               <div className="filter__buttons">
                 <button className="filter__button"
                   id="filter-submit"
                   type="submit"
                 >Применить</button>
-                <button className="filter__button" id="filter-reset" type="reset">Сбросить</button>
+                <button className="filter__button" id="filter-reset" type="reset" onClick={handleResetFilter}>Сбросить</button>
               </div>
             </div>
           </form>

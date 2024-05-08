@@ -95,10 +95,10 @@ export const CareTypes: FilterType[] = [
 
 export const AdditionalFilters: FilterType = {
   name: 'additional',
-  title: '',
+  title: 'Дополнительно',
   items: {
     isSPF: 'Солнцезащитные крема (с SPF)',
-    isBestseller: 'Бестселлеры'
+    isBestSeller: 'Бестселлеры'
   }
 };
 

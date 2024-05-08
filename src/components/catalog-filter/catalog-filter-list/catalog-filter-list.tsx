@@ -6,11 +6,14 @@ import CatalogFilterItem from '../catalog-filter-item/catalog-filter-item';
 
 type Props = {
   filterType: FilterType;
-  params: string | string[] | boolean[],
-  handleInputChange: (value: string, filters: FilterType) => void;
+  params?: string[],
+  isSPF?: boolean,
+  isBestSeller?: boolean,
+  handleInputChange?: (value: string, filters: FilterType) => void;
+  handleAdditionalInputChange?: (name: string) => void
 }
 
-function CatalogFilterList({ filterType, params, handleInputChange }: Props): JSX.Element {
+function CatalogFilterList({ filterType, params,  isSPF, isBestSeller, handleInputChange, handleAdditionalInputChange }: Props): JSX.Element {
   const filterBlockRef = useRef<HTMLDivElement | null>(null);
 
   const setMobileFilterAccordions = () => {
@@ -26,7 +29,7 @@ function CatalogFilterList({ filterType, params, handleInputChange }: Props): JS
   useEffect(() => {
     window.addEventListener(`resize`, setMobileFilterAccordions);
     setMobileFilterAccordions();
-  })
+  });
 
   const filterItems = filterType.items;
 
@@ -40,16 +43,27 @@ function CatalogFilterList({ filterType, params, handleInputChange }: Props): JS
       </div>
       <div className="accordion__content">
         <ul className="filter__list accordion__inner">
-          {Object.entries(filterItems).map(([key, value], index) => (
-            <CatalogFilterItem key={`${filterType.name}${index}`}
-              id={index}
-              filterItemValue={key}
-              filterItemTitle={value}
+          {filterType.name !== 'additional'
+            &&
+            Object.entries(filterItems).map(([key, value], index) => (
+              <CatalogFilterItem key={`${filterType.name}${index}`}
+                id={index}
+                params={params}
+                filterItemValue={key}
+                filterItemTitle={value}
+                filters={filterType}
+                handleInputChange={handleInputChange}
+              />
+            ))}
+          {filterType.name === 'additional'
+            &&
+            <CatalogFilterItem
+              isSPF={isSPF}
+              isBestSeller={isBestSeller}
               filters={filterType}
-              params={params}
-              handleInputChange={handleInputChange}
+              handleAdditionalInputChange={handleAdditionalInputChange}
             />
-          ))}
+          }
         </ul>
       </div>
     </div>

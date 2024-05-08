@@ -1,16 +1,17 @@
-import { memo } from "react";
-import { SideCatalogType } from "../../const";
-import { useAppSelector } from "../../hooks";
-import { getViewedProducts } from "../../store/viewed-products-process/selector";
-import { Product } from "../../types/product";
-import CatalogList from "./catalog-list/catalog-list";
+import { memo } from 'react';
+import { SideCatalogType } from '../../const';
+import { useAppSelector } from '../../hooks';
+import { getViewedProducts } from '../../store/viewed-products-process/selector';
+import { Product } from '../../types/product';
+import CatalogList from './catalog-list/catalog-list';
 
 type Props = {
   catalogType?: string;
   currentProduct?: Product,
+  filteredProducts?: Product[],
 }
 
-const CatalogListLayout = memo(function CatalogListLayout({ catalogType, currentProduct }: Props): JSX.Element {
+function CatalogListLayout({ catalogType, currentProduct, filteredProducts }: Props): JSX.Element {
 
   const viewedProducts = useAppSelector(getViewedProducts);
 
@@ -20,8 +21,8 @@ const CatalogListLayout = memo(function CatalogListLayout({ catalogType, current
 
   if (catalogType || (catalogType === SideCatalogType.History && viewedProducts.length)) {
     return (
-      <section className="catalog-history">
-        <div className="catalog-history__wrapper">
+      <section className='catalog-history'>
+        <div className='catalog-history__wrapper'>
           <h2>{catalogType}</h2>
           <CatalogList catalogType={catalogType} currentProduct={currentProduct} />
         </div>
@@ -29,10 +30,10 @@ const CatalogListLayout = memo(function CatalogListLayout({ catalogType, current
   }
 
   return (
-    <div className="catalog__wrapper wrapper">
-      <CatalogList />
+    <div className='catalog__wrapper wrapper'>
+      <CatalogList filteredProducts={filteredProducts} />
     </div>
   );
-})
+}
 
 export default CatalogListLayout;
