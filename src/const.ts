@@ -65,6 +65,7 @@ export const BodyCareTypes = {
   bomb: 'Бомбочка для ванны',
   salt: 'Соль для ванны',
 };
+
 export const SkinTypes: FilterType =
 {
   name: 'skinType',
