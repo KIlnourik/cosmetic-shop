@@ -3,6 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { APIRoute } from '../const';
 import { AppDispatch, Coupon, State } from '../types/state';
 import { Product } from '../types/product';
+import { AuthData, RegisterData } from '../types/user';
 import { URLSearchParams } from 'url';
 import { OrderPost } from '../types/order-post';
 
@@ -62,4 +63,51 @@ export const sendOrderAction = createAsyncThunk<void, OrderPost, {
   async ({ products, coupon, totalPrice }, { extra: api }) => {
     await api.post<number>(APIRoute.Orders, { products, coupon, totalPrice });
   }
+);
+
+export const registerUserAction = createAsyncThunk<void, RegisterData, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'user/register',
+  async(data, {extra: api}) => {
+    await api.post<RegisterData>(APIRoute.Register, {data});
+  }
+);
+
+export const checkAuthAction = createAsyncThunk<void, undefined, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'user/checkAuth',
+  async (_arg, { dispatch, extra: api }) => {
+    await api.get(APIRoute.Login);
+  },
+);
+
+export const loginAction = createAsyncThunk<void, AuthData, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'user/login',
+  async ({ email, password }, { dispatch, extra: api }) => {
+    const { data: { token } } = await api.post<UserData>(APIRoute.Login, { email, password });
+    saveToken(token);
+    dispatch(redirectToRoute(AppRoute.Root));
+  },
+);
+
+export const logoutAction = createAsyncThunk<void, undefined, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'user/logout',
+  async (_arg, { extra: api }) => {
+    await api.delete(APIRoute.Logout);
+    dropToken();
+  },
 );

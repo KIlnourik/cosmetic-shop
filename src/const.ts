@@ -15,7 +15,8 @@ export enum NameSpace {
   Cart = 'Cart',
   Coupon = 'Coupon',
   Order = 'Order',
-  ViewedProducts = 'ViewedProducts'
+  ViewedProducts = 'ViewedProducts',
+  User = 'User'
 }
 
 export enum APIRoute {
@@ -112,3 +113,5 @@ export const REQUEST_TIMEOUT = 5000;
 
 export const SIDE_CATALOG_PER_PAGE_COUNT = 4;
 export const CATALOG_PER_PAGE_COUNT = 12;
+
+export const AUTH_TOKEN_KEY_NAME = 'Bearer';

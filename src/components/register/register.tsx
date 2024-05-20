@@ -1,8 +1,6 @@
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -12,25 +10,31 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { AppRoute } from '../../const';
 import { Helmet } from 'react-helmet-async';
 import { FormEvent } from 'react';
+import { useAppDispatch } from '../../hooks';
+import { registerUserAction } from '../../store/api-actions';
+import { RegisterData } from '../../types/user';
 
 const defaultTheme = createTheme();
 
 function Register(): JSX.Element {
+
+  const dispatch = useAppDispatch();
+
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     const data = new FormData(evt.currentTarget);
-
-    // TODO исправить на отправку на сервер
-    console.log({
+    dispatch(registerUserAction({
+      firstName: data.get('firstName'),
+      lastName: data.get('lastName'),
       email: data.get('email'),
       password: data.get('password'),
-    });
+    } as RegisterData));
   };
 
   return (
     <>
       <Helmet>
-        <title>Регистрация</title>
+        <title>Maroon: Регистрация</title>
       </Helmet>
       <ThemeProvider theme={defaultTheme}>
         <Container className="main main_top-spaced" component="main" maxWidth="xs" sx={{
@@ -39,7 +43,6 @@ function Register(): JSX.Element {
           <CssBaseline />
           <Box
             sx={{
-              marginTop: 8,
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
@@ -92,12 +95,7 @@ function Register(): JSX.Element {
                     autoComplete="new-password"
                   />
                 </Grid>
-                <Grid item xs={12}>
-                  <FormControlLabel
-                    control={<Checkbox value="allowExtraEmails" color="primary" />}
-                    label="Я хочу получать рассылку по указанному Email"
-                  />
-                </Grid>
+
               </Grid>
               <Button
                 type="submit"
