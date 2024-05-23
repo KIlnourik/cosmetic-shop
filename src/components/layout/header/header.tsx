@@ -149,7 +149,7 @@ const Header = memo(function Header(): JSX.Element {
           </nav>
           <ul className="header__actions user-actions">
             <li className="user-actions__item">
-              <Link className="user-actions__link user-actions__user" to="#"
+              <Link className="user-actions__link user-actions__user" to={AppRoute.Login}
                 aria-label="Пользователь">
                 <svg height="21" width="16">
                   <use xlinkHref="#user-icon"></use>

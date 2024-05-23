@@ -5,7 +5,6 @@ import Layout from '../layout/layout';
 import MainPage from '../../pages/main-page/main-page';
 import CatalogPage from '../../pages/catalog-page/catalog-page';
 import ProductPage from '../../pages/product-page/product-page';
-import { products } from '../../mocks/products';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import LoginPage from '../../pages/login-page/login-page';
 import RegisterPage from '../../pages/register-page/register-page';
@@ -21,9 +20,7 @@ function App(): JSX.Element {
           <Route
             path={AppRoute.Catalog}
             element={
-              <CatalogPage
-                products={products}
-              />} />
+              <CatalogPage />} />
           <Route path={AppRoute.Product} element={<ProductPage />} />
           <Route path={AppRoute.Login} element={<LoginPage />} />
           <Route path={AppRoute.Register} element={<RegisterPage />} />

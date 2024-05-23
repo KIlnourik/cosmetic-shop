@@ -23,6 +23,7 @@ export enum APIRoute {
   Products = '/products',
   Users = '/users',
   Auth = '/auth',
+  CheckAuth = '/auth_me',
   Register = '/register',
   Orders = '/orders',
   Coupons = '/coupons',

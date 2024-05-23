@@ -12,7 +12,7 @@ import { Helmet } from 'react-helmet-async';
 import { FormEvent } from 'react';
 import { useAppDispatch } from '../../hooks';
 import { registerUserAction } from '../../store/api-actions';
-import { RegisterData } from '../../types/user';
+import { RegisterData } from '../../types/register-data';
 
 const defaultTheme = createTheme();
 

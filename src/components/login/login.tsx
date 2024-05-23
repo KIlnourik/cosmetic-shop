@@ -1,8 +1,6 @@
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -12,21 +10,23 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { AppRoute } from '../../const';
 import { Helmet } from 'react-helmet-async';
 import { FormEvent } from 'react';
+import { useAppDispatch } from '../../hooks';
+import { loginAction } from '../../store/api-actions';
+import { AuthData } from '../../types/auth-data';
 
 
-// TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
 function Login(): JSX.Element {
+  const dispatch = useAppDispatch();
+
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-
-    // TODO исправить на отправку на сервер
-    console.log({
+    dispatch(loginAction({
       email: data.get('email'),
       password: data.get('password'),
-    });
+    } as AuthData));
   };
 
   return (
@@ -41,7 +41,6 @@ function Login(): JSX.Element {
           <CssBaseline />
           <Box
             sx={{
-              marginTop: 8,
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
@@ -71,10 +70,6 @@ function Login(): JSX.Element {
                 id="password"
                 autoComplete="current-password"
               />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Запомнить меня"
-              />
               <Button
                 type="submit"
                 fullWidth
@@ -84,11 +79,6 @@ function Login(): JSX.Element {
                 Войти
               </Button>
               <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2" underline="none">
-                    Забыли пароль?
-                  </Link>
-                </Grid>
                 <Grid item>
                   <Link href={AppRoute.Register} variant="body2" underline="none">
                     {"Нет аккаунта? Зарегистрируйтесь"}
