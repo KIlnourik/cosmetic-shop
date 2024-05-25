@@ -5,7 +5,7 @@ import storage from 'redux-persist/lib/storage';
 const persistConfig = {
   key: 'root',
   storage,
-  blacklist: ['Product', 'Coupon']
+  blacklist: ['Product', 'Coupon', 'Order']
 }
 
 export const persistedReducer = persistReducer(persistConfig, rootReducer);

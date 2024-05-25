@@ -50,10 +50,14 @@ html {
   box-sizing: border-box;
   font-family: "Raleway", "Arial", sans-serif;
   color: #122947;
+  margin: 0;
+  padding: 0;
+  min-width: 100%;
 }
 
 body {
   margin: 0;
+  padding: 0;
 }
 
 @media (max-width: 1199px) {

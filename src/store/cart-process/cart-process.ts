@@ -42,6 +42,7 @@ export const cartProcess = createSlice({
     },
     resetCart: (state) => {
       state.cartProducts = [];
+      console.log('HUY');
     }
   },
 });

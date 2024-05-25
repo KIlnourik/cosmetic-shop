@@ -10,7 +10,7 @@ import { getAllProducts } from '../../store/product-process/selector';
 import { addToViewedProducts } from '../../store/viewed-products-process/viewed-products-process';
 import { addToCart, increaseProducts } from '../../store/cart-process/cart-process';
 import { getCartProducts } from '../../store/cart-process/selector';
-import { Badge, BadgeProps, ThemeProvider, createTheme, styled } from '@mui/material';
+import { Badge, BadgeProps, styled } from '@mui/material';
 import { ShoppingCart } from '@mui/icons-material';
 import { CartProduct } from '../../types/state';
 
@@ -31,6 +31,18 @@ const getSimilarProds = (prods: Product[], product: Product): Product[] =>
     (item) => product.name === item.name
       && product.categorie === item.categorie
       && product.volume.split(' ')[1] === item.volume.split(' ')[1]);
+
+const StyledBadge = styled(Badge)<BadgeProps>(() => ({
+  '& .MuiBadge-badge': {
+    right: -40,
+    top: 2,
+    border: '10px solid #f4f1ed',
+    borderRadius: '50%',
+    font: 'normal 500 16px / 140% "Mplus", "Arial", sans-serif',
+    height: 30,
+    padding: 0,
+  },
+}));
 
 function ProductCardFull({ product }: Props): JSX.Element {
   const [isCompoundOpen, setCompoundOpen] = useState<boolean>(false);
@@ -79,104 +91,84 @@ function ProductCardFull({ product }: Props): JSX.Element {
 
   }, [dispatch, isInCart, cartProduct]);
 
-  const StyledBadge = styled(Badge)<BadgeProps>(() => ({
-    '& .MuiBadge-badge': {
-      right: -40,
-      top: 2,
-      border: '10px solid #f4f1ed',
-      borderRadius: '50%',
-      font: 'normal 500 16px / 140% "Mplus", "Arial", sans-serif',
-      height: 30,
-      padding: 0,
-    },
-  }));
 
-  const cardTheme = createTheme({
-    palette: {
-      info: {
-        main: '#f4f1ed',
-      }
-    }
-  })
 
   return (
-    <ThemeProvider theme={cardTheme}>
-      <section className="card">
-        <div className="card__wrapper">
-          <div className="card__image-wrapper">
-            <ProductImage
-              path={product.image}
-              productName={product.name}
-              productType={product.categorieRus}
-              className={'card'}
-            />
+    <section className="card">
+      <div className="card__wrapper">
+        <div className="card__image-wrapper">
+          <ProductImage
+            path={product.image}
+            productName={product.name}
+            productType={product.categorieRus}
+            className={'card'}
+          />
+        </div>
+        <div className="card__content">
+          <h1 className="card__content-title">{getProductTitle(product.name)}<small>{product.categorieRus}</small></h1>
+          <div className="card__text">
+            <p>{product.description}</p>
           </div>
-          <div className="card__content">
-            <h1 className="card__content-title">{getProductTitle(product.name)}<small>{product.categorieRus}</small></h1>
-            <div className="card__text">
-              <p>{product.description}</p>
-            </div>
-            <ul className="card__info">
-              <li className={`card__accordion accordion accordion_inited ${isCompoundOpen ? AccordeonToggleClass.Open : AccordeonToggleClass.Close}`}>
-                <div className="card__accordion-head">
-                  <h2 className="card__accordion-title">Состав</h2>
-                  <button className="card__accordion-toggler accordion__toggler" type="button" aria-label="Открыть" onClick={handleCompounOpenBtnClick}>
-                    <span className="accordion__toggler-icon"></span>
-                  </button>
-                </div>
-                <div className="card__accordion-content accordion__content">
-                  <p className="card__accordion-text accordion__inner">{product.compound}</p>
-                </div>
-              </li>
-              <li className={`card__accordion accordion accordion_inited ${isHowToUseOpen ? AccordeonToggleClass.Open : AccordeonToggleClass.Close}`} >
-                <div className="card__accordion-head">
-                  <h2 className="card__accordion-title">Способ применения</h2>
-                  <button className="card__accordion-toggler accordion__toggler" type="button" aria-label="Открыть" onClick={handleHowToUseBtnClick}>
-                    <span className="accordion__toggler-icon"></span>
-                  </button>
-                </div>
-                <div className="card__accordion-content accordion__content">
-                  <div className="card__accordion-text accordion__inner">{product.howToUse}</div>
-                </div>
-              </li>
-            </ul>
-            <form className="card__options" action="" method="">
-              <div className="card__option">
-                <p className="card__option-title">Объем:</p>
-                <ul className="card__option-list">
-                  {similarProducts &&
-                    similarProducts.sort(productSortingByVolume).map((item, index) => (
-                      <li className="card__option-item" key={index}>
-                        <input className="card__input-radio visually-hidden" id={item.volume} type="radio" name="volume" value={item.volume} checked={product.volume === item.volume} onChange={handleVolumeChange}
-                        />
-                        <label className="card__radio" htmlFor={item.volume}>{item.volume}</label>
-                      </li>
-                    ))
-                  }
-                </ul>
+          <ul className="card__info">
+            <li className={`card__accordion accordion accordion_inited ${isCompoundOpen ? AccordeonToggleClass.Open : AccordeonToggleClass.Close}`}>
+              <div className="card__accordion-head">
+                <h2 className="card__accordion-title">Состав</h2>
+                <button className="card__accordion-toggler accordion__toggler" type="button" aria-label="Открыть" onClick={handleCompounOpenBtnClick}>
+                  <span className="accordion__toggler-icon"></span>
+                </button>
               </div>
-              <div className="card__price"><span>{product.price} ₽</span>
-                {
-                  (isInCart && cartProduct)
-                    ?
-                    <StyledBadge
-                      color='info'
-                      badgeContent={productCartCount}>
-                      <button className="card__button" id="card-submit" type="button"
-                      onClick={() => dispatch(increaseProducts(cartProduct))} >
-                        В корзине
-                        <ShoppingCart />
-                      </button>
-                    </StyledBadge>
-                    :
-                    <button className="card__button" id="card-submit" type="button" onClick={() => handleCartBtnClick(product)}>Добавить в корзину</button>
+              <div className="card__accordion-content accordion__content">
+                <p className="card__accordion-text accordion__inner">{product.compound}</p>
+              </div>
+            </li>
+            <li className={`card__accordion accordion accordion_inited ${isHowToUseOpen ? AccordeonToggleClass.Open : AccordeonToggleClass.Close}`} >
+              <div className="card__accordion-head">
+                <h2 className="card__accordion-title">Способ применения</h2>
+                <button className="card__accordion-toggler accordion__toggler" type="button" aria-label="Открыть" onClick={handleHowToUseBtnClick}>
+                  <span className="accordion__toggler-icon"></span>
+                </button>
+              </div>
+              <div className="card__accordion-content accordion__content">
+                <div className="card__accordion-text accordion__inner">{product.howToUse}</div>
+              </div>
+            </li>
+          </ul>
+          <form className="card__options" action="" method="">
+            <div className="card__option">
+              <p className="card__option-title">Объем:</p>
+              <ul className="card__option-list">
+                {similarProducts &&
+                  similarProducts.sort(productSortingByVolume).map((item, index) => (
+                    <li className="card__option-item" key={index}>
+                      <input className="card__input-radio visually-hidden" id={item.volume} type="radio" name="volume" value={item.volume} checked={product.volume === item.volume} onChange={handleVolumeChange}
+                      />
+                      <label className="card__radio" htmlFor={item.volume}>{item.volume}</label>
+                    </li>
+                  ))
                 }
-              </div>
-            </form>
-          </div>
-        </div >
-      </section >
-    </ThemeProvider >
+              </ul>
+            </div>
+            <div className="card__price"><span>{product.price} ₽</span>
+              {
+                (isInCart && cartProduct)
+                  ?
+                  <StyledBadge
+                    color='info'
+                    badgeContent={productCartCount}>
+                    <button className="card__button" id="card-submit" type="button"
+                      onClick={() => dispatch(increaseProducts(cartProduct))} >
+                      В корзине
+                      <ShoppingCart />
+                    </button>
+                  </StyledBadge>
+                  :
+                  <button className="card__button" id="card-submit" type="button" onClick={() => handleCartBtnClick(product)}>Добавить в корзину</button>
+              }
+            </div>
+          </form>
+        </div>
+      </div >
+    </section >
   );
 }
 

@@ -1,10 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../const';
 import { OrderProcess } from '../../types/state';
-import { sendOrderAction} from '../api-actions';
+import { fetchOrdersAction, sendOrderAction} from '../api-actions';
 
 const initialState: OrderProcess = {
   orderStatus: undefined,
+  orders: [],
+  isOrderLoading: false,
 };
 
 export const orderProcess = createSlice({
@@ -25,6 +27,16 @@ export const orderProcess = createSlice({
       })
       .addCase(sendOrderAction.rejected, (state) => {
         state.orderStatus = false;
+      })
+      .addCase(fetchOrdersAction.pending, (state) => {
+        state.isOrderLoading = true;
+      })
+      .addCase(fetchOrdersAction.fulfilled, (state, action) => {
+        state.orders = action.payload;
+        state.isOrderLoading = false;
+      })
+      .addCase(fetchOrdersAction.rejected, (state) => {
+        state.isOrderLoading = false;
       });
   },
 });

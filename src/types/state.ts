@@ -1,5 +1,6 @@
 import { AuthStatus } from '../const';
 import { store } from '../store/index';
+import { Order } from './order-post';
 import { Product } from './product';
 import { UserData } from './user-data';
 
@@ -38,6 +39,8 @@ export type CouponProcess = {
 
 export type OrderProcess = {
   orderStatus?: boolean;
+  orders: Order[];
+  isOrderLoading: boolean;
 }
 
 export type ViewedProductsProcess = {

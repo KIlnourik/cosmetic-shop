@@ -2,15 +2,8 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../../const';
 import Logo from '../../logo/logo';
 import { memo, useEffect, useRef } from 'react';
-import { Badge, ThemeProvider, createTheme } from '@mui/material';
-import { useAppSelector } from '../../../hooks';
-import { getCartProducts } from '../../../store/cart-process/selector';
-import { CartProduct } from '../../../types/state';
-
-const getCartProductsTotalCount = (cartProducts: CartProduct[]): number => {
-  const totalCount = cartProducts.reduce((acc, product) => acc + product.count, 0);
-  return totalCount;
-}
+import UserButton from '../../user-button/user-button';
+import CartButton from '../../cart-button/cart-button';
 
 const Header = memo(function Header(): JSX.Element {
   const headerRef = useRef<HTMLElement | null>(null);
@@ -77,8 +70,6 @@ const Header = memo(function Header(): JSX.Element {
     }
   };
 
-  const cartProducts = useAppSelector(getCartProducts);
-
   useEffect(() => {
     if (menuRef.current && headerRef.current) {
       window.addEventListener('scroll', () => {
@@ -94,16 +85,7 @@ const Header = memo(function Header(): JSX.Element {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [headerRef, menuRef]);
 
-  const headerTheme = createTheme({
-    palette: {
-      info: {
-        main: '#f4f1ed',
-      }
-    }
-  })
-
   return (
-    <ThemeProvider theme={headerTheme} >
       <header className="header header_transparent" ref={headerRef}>
         <div className="header__wrapper">
           <button className="header__menu-button" aria-label="Меню" ref={buttonRef}></button>
@@ -149,30 +131,14 @@ const Header = memo(function Header(): JSX.Element {
           </nav>
           <ul className="header__actions user-actions">
             <li className="user-actions__item">
-              <Link className="user-actions__link user-actions__user" to={AppRoute.Login}
-                aria-label="Пользователь">
-                <svg height="21" width="16">
-                  <use xlinkHref="#user-icon"></use>
-                </svg>
-              </Link>
+              <UserButton />
             </li>
             <li className="user-actions__item">
-              <Badge
-                color='info'
-                badgeContent={getCartProductsTotalCount(cartProducts)}
-              >
-                <Link className="user-actions__link user-actions__cart" to={AppRoute.Cart} aria-label="Корзина">
-                  <svg height="21" width="18">
-                    <use xlinkHref="#cart-icon"></use>
-                  </svg>
-                </Link>
-              </Badge>
+              <CartButton />
             </li>
           </ul>
-
         </div>
       </header>
-    </ThemeProvider>
   );
 })
 

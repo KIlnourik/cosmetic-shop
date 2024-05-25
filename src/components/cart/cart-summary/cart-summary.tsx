@@ -8,6 +8,12 @@ import { sendOrderAction } from '../../../store/api-actions';
 import { OrderCartProducts } from '../../../types/order-post';
 import { resetCart } from '../../../store/cart-process/cart-process';
 import { resetCoupon } from '../../../store/coupon-process/coupon-process';
+import * as dayjs from 'dayjs';
+import 'dayjs/locale/ru';
+import { getAuthStatus, getUserData } from '../../../store/user-process/selector';
+import { AppRoute, AuthStatus } from '../../../const';
+import { useNavigate } from 'react-router-dom';
+import { UserData } from '../../../types/user-data';
 
 const getSummaryValue = (cartProducts: CartProduct[]) => cartProducts.reduce((accum, product) =>
   accum + (product.product.price * product.count), 0);
@@ -23,6 +29,10 @@ const getOrderProducts = (cartProducts: CartProduct[]): OrderCartProducts[] => {
   cartProducts.map((cartProduct) => (
     result.push({
       productId: cartProduct.product.id,
+      name: cartProduct.product.name,
+      categorie: cartProduct.product.categorie,
+      categorieRus: cartProduct.product.categorieRus,
+      volume: cartProduct.product.volume,
       count: cartProduct.count
     })
   ));
@@ -31,28 +41,32 @@ const getOrderProducts = (cartProducts: CartProduct[]): OrderCartProducts[] => {
 
 function CartSummary(): JSX.Element {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const cartProducts = useAppSelector(getCartProducts);
   const coupons = useAppSelector(getCoupons);
+  const authStatus = useAppSelector(getAuthStatus);
+  const userData = useAppSelector(getUserData);
+
   const [discount, setDiscount] = useState(0);
   const [orderPrice, setOrderPrice] = useState(0);
   const [validCoupon, setValidCoupon] = useState<Coupon | undefined | null>(undefined);
   const [orderCartProducts, setOrderCartProducts] = useState<OrderCartProducts[]>([]);
+  const [user, setUser] = useState<UserData | undefined>(undefined);
   const couponRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     setOrderPrice(getSummaryValue(cartProducts));
 
-    if (validCoupon && validCoupon?.discountValue) {
+    (validCoupon && validCoupon?.discountValue)
+      ?
       setDiscount(validCoupon.discountValue * orderPrice)
-    } else {
+      :
       setDiscount(0);
-    }
 
-    if (cartProducts) {
-      setOrderCartProducts(getOrderProducts(cartProducts));
-    }
+    cartProducts && setOrderCartProducts(getOrderProducts(cartProducts));
+    userData && setUser(userData);
 
-  }, [cartProducts, orderPrice, validCoupon, validCoupon?.discountValue])
+  }, [cartProducts, userData, orderPrice, validCoupon, validCoupon?.discountValue])
 
   const handleCoupon = () => {
     if (couponRef.current?.value) {
@@ -63,13 +77,19 @@ function CartSummary(): JSX.Element {
   };
 
   const handleOrder = () => {
-    dispatch(sendOrderAction({
-      products: orderCartProducts,
-      coupon: validCoupon?.coupon,
-      totalPrice: orderPrice
-    }));
-    dispatch(resetCart);
-    dispatch(resetCoupon);
+    if (authStatus === AuthStatus.Auth && user) {
+      dispatch(sendOrderAction({
+        userId: user.id,
+        date: dayjs().locale('ru').format('DD.MM.YYYY HH:mm'),
+        products: orderCartProducts,
+        coupon: validCoupon?.coupon,
+        totalPrice: orderPrice
+      }));
+      dispatch(resetCoupon);
+      dispatch(resetCart);
+    } else {
+      navigate(AppRoute.Login);
+    }
   };
 
   return (
@@ -99,7 +119,6 @@ function CartSummary(): JSX.Element {
             label='Промокод'
             inputRef={couponRef}
             error={validCoupon === null}
-
             sx={{
               minWidth: '100%',
               backgroundColor: '#fff',

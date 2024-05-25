@@ -7,8 +7,8 @@ import { AuthData } from '../types/auth-data';
 import { RegisterData } from '../types/register-data';
 import { UserData, UserResponse } from '../types/user-data';
 import { URLSearchParams } from 'url';
-import { OrderPost } from '../types/order-post';
-import { saveToken, dropToken, getToken } from '../services/token';
+import { Order, OrderPost } from '../types/order-post';
+import { saveToken, getToken } from '../services/token';
 import { redirectToRoute } from './action';
 
 export const fetchProductsAction = createAsyncThunk<Product[], URLSearchParams, {
@@ -64,8 +64,20 @@ export const sendOrderAction = createAsyncThunk<void, OrderPost, {
   extra: AxiosInstance;
 }>(
   'data/orderPost',
-  async ({ products, coupon, totalPrice }, { extra: api }) => {
-    await api.post<number>(APIRoute.Orders, { products, coupon, totalPrice });
+  async ({ ...data }, { extra: api }) => {
+    await api.post<number>(APIRoute.Orders, { ...data });
+  }
+);
+
+export const fetchOrdersAction = createAsyncThunk<Order[], OrderPost, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/getOrders',
+  async (_args, { extra: api }) => {
+    const { data } = await api.get<Order[]>(APIRoute.Orders);
+    return data;
   }
 );
 
@@ -112,15 +124,3 @@ export const loginAction = createAsyncThunk<UserData, AuthData, {
     return data?.data;
   },
 );
-
-// export const logoutAction = createAsyncThunk<void, undefined, {
-//   dispatch: AppDispatch;
-//   state: State;
-//   extra: AxiosInstance;
-// }>(
-//   'user/logout',
-//   async (_arg, { extra: api }) => {
-//     await api.delete(APIRoute.Logout);
-//     dropToken();
-//   },
-// );
