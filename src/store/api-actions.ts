@@ -65,7 +65,7 @@ export const sendOrderAction = createAsyncThunk<void, OrderPost, {
 }>(
   'data/orderPost',
   async ({ ...data }, { extra: api }) => {
-    await api.post<number>(APIRoute.Orders, { ...data });
+    await api.post<OrderPost>(APIRoute.Orders, { ...data });
   }
 );
 

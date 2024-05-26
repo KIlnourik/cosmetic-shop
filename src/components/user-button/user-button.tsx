@@ -53,6 +53,9 @@ function UserButton(): JSX.Element {
         onClick={handleClick}
         sx={{
           padding: 0,
+          ':hover': {
+            cursor: 'pointer'
+          }
         }}
       >
         <svg height='21' width='16'>

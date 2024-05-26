@@ -4,6 +4,7 @@ import CartSummary from './cart-summary/cart-summary';
 import { useAppSelector } from '../../hooks';
 import { getCartProducts } from '../../store/cart-process/selector';
 import { AppRoute } from '../../const';
+import OrderSuccessPopup from '../order-success-popup/order-success-popup';
 
 function Cart(): JSX.Element {
 
@@ -49,6 +50,7 @@ function Cart(): JSX.Element {
       }
 
       <CartSummary />
+      <OrderSuccessPopup />
     </Container>
   );
 }

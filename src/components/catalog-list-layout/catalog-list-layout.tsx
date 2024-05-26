@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { SideCatalogType } from '../../const';
 import { useAppSelector } from '../../hooks';
 import { getViewedProducts } from '../../store/viewed-products-process/selector';

@@ -85,8 +85,6 @@ function CartSummary(): JSX.Element {
         coupon: validCoupon?.coupon,
         totalPrice: orderPrice
       }));
-      dispatch(resetCoupon);
-      dispatch(resetCart);
     } else {
       navigate(AppRoute.Login);
     }
