@@ -1,10 +1,19 @@
-import { Divider, Grid, List, ListItem, Typography } from '@mui/material';
+import { Divider, Grid, ListItem, Typography } from '@mui/material';
 import OrderList from '../order-list/order-list';
+import { Order as OrderType } from '../../../types/order-post';
 
-function Order(): JSX.Element {
+type Props = {
+  order: OrderType;
+}
+
+function Order({ order }: Props): JSX.Element {
+
   return (
     <>
-      <ListItem >
+      <ListItem sx={{
+        display: 'flex',
+        flexDirection: 'column'
+      }}>
         <Grid container sx={{
           alignContent: 'center'
         }} >
@@ -14,20 +23,32 @@ function Order(): JSX.Element {
               variant='h5'
               className='catalog__title'
               sx={{ fontWeight: 400 }}>
-              Заказ №1
+              Заказ
             </Typography>
             <Typography
               component={'p'}
               variant='body1'
               className='catalog__title'
               sx={{ fontWeight: 400 }}>
-              от 25.05.2024
+              от {order.date}
             </Typography>
           </Grid>
           <Grid item xs={12} sm={8}>
-            <OrderList />
+            <OrderList products={order.products} />
           </Grid>
         </Grid>
+        <Divider />
+        <Typography
+          component={'h3'}
+          variant='h5'
+          className='catalog__title'
+          sx={{
+            fontWeight: 400,
+            mb: 2,
+            alignSelf: 'end'
+          }}>
+          Итоговая сумма заказа: {order.totalPrice} &#x20bd;
+        </Typography>
       </ListItem>
       <Divider />
     </>

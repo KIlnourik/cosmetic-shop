@@ -22,7 +22,7 @@ export const fetchProductsAction = createAsyncThunk<Product[], URLSearchParams, 
     return data;
   });
 
-export const fetchAllProductsAction = createAsyncThunk<Product[], void, {
+export const fetchAllProductsAction = createAsyncThunk<Product[], undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
@@ -69,14 +69,14 @@ export const sendOrderAction = createAsyncThunk<void, OrderPost, {
   }
 );
 
-export const fetchOrdersAction = createAsyncThunk<Order[], OrderPost, {
+export const fetchOrdersAction = createAsyncThunk<Order[], number, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'data/getOrders',
-  async (_args, { extra: api }) => {
-    const { data } = await api.get<Order[]>(APIRoute.Orders);
+  async (userId, { extra: api }) => {
+    const { data } = await api.get<Order[]>(`${APIRoute.Orders}?userId=${userId}`);
     return data;
   }
 );

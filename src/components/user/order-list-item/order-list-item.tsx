@@ -1,6 +1,13 @@
 import { Typography, ListItem } from '@mui/material';
+import { OrderCartProduct } from '../../../types/order-post';
+import { getProductTitle } from '../../../utils/utils';
 
-function OrderListItem(): JSX.Element {
+type Props ={
+  product: OrderCartProduct;
+}
+
+
+function OrderListItem({product}: Props): JSX.Element {
   return (
     <ListItem sx={{
       minHeight: 50,
@@ -13,14 +20,21 @@ function OrderListItem(): JSX.Element {
         variant='body1'
         className='catalog__title'
         sx={{ fontWeight: 500 }}>
-        Продукт, объем
+        {getProductTitle(product.categorieRus, product.name)}
       </Typography>
       <Typography
         component={'p'}
         variant='body1'
         className='catalog__title'
         sx={{ fontWeight: 500 }}>
-        Количество шт.
+        {product.volume}
+      </Typography>
+      <Typography
+        component={'p'}
+        variant='body1'
+        className='catalog__title'
+        sx={{ fontWeight: 500 }}>
+        {product.count} шт.
       </Typography>
     </ListItem>
   );

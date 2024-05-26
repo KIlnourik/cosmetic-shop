@@ -1,7 +1,12 @@
 import { List } from '@mui/material';
 import OrderListItem from '../order-list-item/order-list-item';
+import { OrderCartProduct } from '../../../types/order-post';
 
-function OrderList(): JSX.Element {
+type Props = {
+  products: OrderCartProduct[];
+}
+
+function OrderList({products}: Props): JSX.Element {
   return (
     <List
       component={'ul'}
@@ -12,10 +17,11 @@ function OrderList(): JSX.Element {
         display: 'block'
       }}
     >
-      <OrderListItem />
-      <OrderListItem />
-      <OrderListItem />
-      <OrderListItem />
+      {
+        products.map(product => (
+          <OrderListItem product={product}/>
+        ))
+      }
     </List>
   );
 }

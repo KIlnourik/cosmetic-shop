@@ -2,12 +2,15 @@ import { useNavigate } from 'react-router-dom';
 import { AppRoute, AuthStatus } from '../../const';
 import { MouseEvent, useEffect, useState } from 'react';
 import { Box, Menu, MenuItem } from '@mui/material';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getAuthStatus, getUserData } from '../../store/user-process/selector';
 import { dropToken } from '../../services/token';
 import { UserData } from '../../types/user-data';
+import { resetCart } from '../../store/cart-process/cart-process';
+import { logoutAction } from '../../store/user-process/user-process';
 
 function UserButton(): JSX.Element {
+  const dispatch = useAppDispatch();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -31,6 +34,8 @@ function UserButton(): JSX.Element {
   const handleLogout = () => {
     dropToken();
     setUser(undefined);
+    dispatch(resetCart());
+    dispatch(logoutAction());
     navigate(AppRoute.Login);
   };
 

@@ -1,4 +1,4 @@
-export type OrderCartProducts = {
+export type OrderCartProduct = {
   productId: number,
   name: string,
   categorie: string,
@@ -10,13 +10,15 @@ export type OrderCartProducts = {
 export type OrderPost = {
   userId: number,
   date: string,
-  products: OrderCartProducts[],
+  products: OrderCartProduct[],
   coupon: string | null | undefined,
   totalPrice: number,
 }
 
 export type Order = {
+  id: number,
   userId: number,
   date: string,
-  products: OrderCartProducts[],
+  products: OrderCartProduct[],
+  totalPrice: number,
 }
