@@ -10,6 +10,7 @@ import { checkAuthAction, fetchAllProductsAction, fetchCouponsAction } from './s
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Spinner from './components/spinner/spinner';
+import React from 'react';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
@@ -18,6 +19,7 @@ store.dispatch(fetchCouponsAction());
 store.dispatch(checkAuthAction());
 
 root.render(
+  <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={<Spinner />} persistor={persistor}>
         <HistoryRouter history={browserHistory} >
@@ -26,4 +28,5 @@ root.render(
         </HistoryRouter>
       </PersistGate>
     </Provider>
+  </React.StrictMode>
 )
