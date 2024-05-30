@@ -6,7 +6,7 @@ import { getCoupons } from '../../../store/coupon-process/selector';
 import { CartProduct, Coupon } from '../../../types/state';
 import { sendOrderAction } from '../../../store/api-actions';
 import { OrderCartProduct } from '../../../types/order-post';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs'
 import 'dayjs/locale/ru';
 import { getAuthStatus, getUserData } from '../../../store/user-process/selector';
 import { AppRoute, AuthStatus } from '../../../const';
