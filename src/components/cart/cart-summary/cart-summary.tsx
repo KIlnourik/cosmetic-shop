@@ -5,9 +5,7 @@ import { getCartProducts } from '../../../store/cart-process/selector';
 import { getCoupons } from '../../../store/coupon-process/selector';
 import { CartProduct, Coupon } from '../../../types/state';
 import { sendOrderAction } from '../../../store/api-actions';
-import { OrderCartProducts } from '../../../types/order-post';
-import { resetCart } from '../../../store/cart-process/cart-process';
-import { resetCoupon } from '../../../store/coupon-process/coupon-process';
+import { OrderCartProduct } from '../../../types/order-post';
 import * as dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import { getAuthStatus, getUserData } from '../../../store/user-process/selector';
@@ -24,8 +22,8 @@ const getValidCoupon = (coupon: string, coupons: Coupon[]): Coupon | null => {
   return null;
 };
 
-const getOrderProducts = (cartProducts: CartProduct[]): OrderCartProducts[] => {
-  const result: OrderCartProducts[] = [];
+const getOrderProducts = (cartProducts: CartProduct[]): OrderCartProduct[] => {
+  const result: OrderCartProduct[] = [];
   cartProducts.map((cartProduct) => (
     result.push({
       productId: cartProduct.product.id,
@@ -50,7 +48,7 @@ function CartSummary(): JSX.Element {
   const [discount, setDiscount] = useState(0);
   const [orderPrice, setOrderPrice] = useState(0);
   const [validCoupon, setValidCoupon] = useState<Coupon | undefined | null>(undefined);
-  const [orderCartProducts, setOrderCartProducts] = useState<OrderCartProducts[]>([]);
+  const [orderCartProducts, setOrderCartProducts] = useState<OrderCartProduct[]>([]);
   const [user, setUser] = useState<UserData | undefined>(undefined);
   const couponRef = useRef<HTMLInputElement>(null);
 

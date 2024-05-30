@@ -1,15 +1,15 @@
 import { useNavigate } from 'react-router-dom';
-import { AppRoute, AuthStatus } from '../../const';
 import { MouseEvent, useEffect, useState } from 'react';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Box from '@mui/material/Box';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getAuthStatus, getUserData } from '../../store/user-process/selector';
-import { dropToken } from '../../services/token';
-import { UserData } from '../../types/user-data';
-import { resetCart } from '../../store/cart-process/cart-process';
-import { logoutAction } from '../../store/user-process/user-process';
+import { useAppDispatch, useAppSelector } from '../../../../hooks';
+import { getAuthStatus, getUserData } from '../../../../store/user-process/selector';
+import { UserData } from '../../../../types/user-data';
+import { dropToken } from '../../../../services/token';
+import { resetCart } from '../../../../store/cart-process/cart-process';
+import { logoutAction } from '../../../../store/user-process/user-process';
+import { AppRoute, AuthStatus } from '../../../../const';
 
 function UserButton(): JSX.Element {
   const dispatch = useAppDispatch();

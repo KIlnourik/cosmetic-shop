@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../../const';
 import Logo from '../../logo/logo';
 import { memo, useEffect, useRef } from 'react';
-import UserButton from '../../user-button/user-button';
-import CartButton from '../../cart-button/cart-button';
+import UserButton from './user-button/user-button';
+import CartButton from './cart-button/cart-button';
 
 const Header = memo(function Header(): JSX.Element {
   const headerRef = useRef<HTMLElement | null>(null);

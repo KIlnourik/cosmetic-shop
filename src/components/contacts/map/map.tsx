@@ -1,8 +1,9 @@
 import { useEffect, useRef } from 'react';
-import useMap from '../../hooks/useMap';
+import useMap from '../../../hooks/useMap';
+import { MAP_CITY } from '../../../const';
 import { Icon, Marker } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { MAP_CITY } from '../../const';
+
 
 const defaultCustomIcon = new Icon({
   iconUrl: '/img/mark.svg',

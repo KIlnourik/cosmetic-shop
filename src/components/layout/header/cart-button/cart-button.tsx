@@ -1,10 +1,10 @@
-import { CartProduct } from '../../types/state';
-import { useAppSelector } from '../../hooks';
-import { getCartProducts } from '../../store/cart-process/selector';
+
+import { useAppSelector } from '../../../../hooks';
+import { CartProduct } from '../../../../types/state';
+import { getCartProducts } from '../../../../store/cart-process/selector';
 import { Badge } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
-
+import { AppRoute } from '../../../../const';
 
 const getCartProductsTotalCount = (cartProducts: CartProduct[]): number => {
   const totalCount = cartProducts.reduce((acc, product) => acc + product.count, 0);
