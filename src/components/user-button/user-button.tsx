@@ -1,7 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import { AppRoute, AuthStatus } from '../../const';
 import { MouseEvent, useEffect, useState } from 'react';
-import { Box, Menu, MenuItem } from '@mui/material';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Box from '@mui/material/Box';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getAuthStatus, getUserData } from '../../store/user-process/selector';
 import { dropToken } from '../../services/token';

@@ -15,3 +15,9 @@ export type SkinType = {
   title: string,
   items: object,
 };
+
+export type City = {
+  lat: number;
+  lng: number;
+  zoom: number;
+};

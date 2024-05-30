@@ -1,4 +1,3 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
 import { Provider } from 'react-redux';
@@ -19,7 +18,6 @@ store.dispatch(fetchCouponsAction());
 store.dispatch(checkAuthAction());
 
 root.render(
-  <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={<Spinner />} persistor={persistor}>
         <HistoryRouter history={browserHistory} >
@@ -28,5 +26,4 @@ root.render(
         </HistoryRouter>
       </PersistGate>
     </Provider>
-  </React.StrictMode >,
 )

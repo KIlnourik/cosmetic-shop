@@ -1,4 +1,4 @@
-import { FilterType } from './types/types';
+import { City, FilterType } from './types/types';
 
 export enum AppRoute {
   Root = '/',
@@ -117,3 +117,9 @@ export const SIDE_CATALOG_PER_PAGE_COUNT = 4;
 export const CATALOG_PER_PAGE_COUNT = 12;
 
 export const AUTH_TOKEN_KEY_NAME = 'Bearer';
+
+export const MAP_CITY: City = {
+  lat: 59.93791367332671,
+  lng: 30.32282782142634,
+  zoom: 17
+}
