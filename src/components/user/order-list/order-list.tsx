@@ -19,7 +19,7 @@ function OrderList({products}: Props): JSX.Element {
     >
       {
         products.map(product => (
-          <OrderListItem product={product}/>
+          <OrderListItem product={product} key={`${product.productId}${product.name}`}/>
         ))
       }
     </List>

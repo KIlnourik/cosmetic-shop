@@ -10,6 +10,7 @@ import { dropToken } from '../../../../services/token';
 import { resetCart } from '../../../../store/cart-process/cart-process';
 import { logoutAction } from '../../../../store/user-process/user-process';
 import { AppRoute, AuthStatus } from '../../../../const';
+import { resetViewedProducts } from '../../../../store/viewed-products-process/viewed-products-process';
 
 function UserButton(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -37,6 +38,7 @@ function UserButton(): JSX.Element {
     dropToken();
     setUser(undefined);
     dispatch(resetCart());
+    dispatch(resetViewedProducts());
     dispatch(logoutAction());
     navigate(AppRoute.Login);
   };

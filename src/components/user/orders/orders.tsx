@@ -41,7 +41,7 @@ function Orders(): JSX.Element {
           {orders.length
             ?
             orders.map(order => (
-              <Order order={order} />
+              <Order order={order} key={`${order.id}${order.userId}`}/>
             ))
             :
             <Typography

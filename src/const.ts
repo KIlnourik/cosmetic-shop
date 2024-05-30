@@ -121,5 +121,7 @@ export const AUTH_TOKEN_KEY_NAME = 'Bearer';
 export const MAP_CITY: City = {
   lat: 59.93791367332671,
   lng: 30.32282782142634,
-  zoom: 17
+  zoom: 16
 }
+
+export const MAX_VIEWED_PRODUCTS_COUNT = 9;
