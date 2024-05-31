@@ -158,7 +158,7 @@ picture {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 30;
+  z-index: 1100;
 
   display: flex;
   justify-content: center;
@@ -318,7 +318,7 @@ picture {
 
 @media (max-width: 1199px) {
   .navigation__content {
-    z-index: 15;
+    z-index: 1110;
     background-color: #f8f8f6;
     box-shadow: 0 4px 30px rgba(214, 214, 214, 0.19);
   }
