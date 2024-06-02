@@ -121,7 +121,7 @@ function CartItem({ cartProduct }: Props): JSX.Element {
             alignItems: 'center',
             justifyContent: 'center'
           }}>
-            <IconButton onClick={handleMinusBtnClick}>
+            <IconButton onClick={handleMinusBtnClick} disabled={productCount === ProductCount.MinCount}>
               <Remove fontSize="small" />
             </IconButton>
             <Input
@@ -133,7 +133,7 @@ function CartItem({ cartProduct }: Props): JSX.Element {
               }}
               inputRef={inputRef}
               onInput={handleInputChange} />
-            <IconButton onClick={handlePlusBtnClick} >
+            <IconButton onClick={handlePlusBtnClick} disabled={productCount === ProductCount.MaxCount}>
               <Add fontSize="small" />
             </IconButton>
           </Grid>
