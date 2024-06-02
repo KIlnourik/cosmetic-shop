@@ -43,9 +43,13 @@ function CatalogPage(): JSX.Element {
 
   const handleResetFilter = (evt: SyntheticEvent) => {
     evt.preventDefault();
-    setSearchParams({});
-    dispatch(fetchProductsAction(searchParams))
-  }
+    setSPF(false);
+    setBestSeller(false);
+    setSkinTypes([]);
+    setCategories([]);
+    setSearchParams();
+    dispatch(fetchProductsAction(searchParams));
+  };
 
   const handleInputChange = (value: string, filterType: FilterType) => {
     switch (filterType.name) {

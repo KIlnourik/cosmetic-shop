@@ -81,7 +81,7 @@ function CartSummary(): JSX.Element {
         date: dayjs().locale('ru').format('DD.MM.YYYY HH:mm'),
         products: orderCartProducts,
         coupon: validCoupon?.coupon,
-        totalPrice: orderPrice
+        totalPrice: orderPrice - discount
       }));
     } else {
       navigate(AppRoute.Login);

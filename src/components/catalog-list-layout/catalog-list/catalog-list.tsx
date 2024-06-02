@@ -54,7 +54,7 @@ function CatalogList({ catalogType, currentProduct, filteredProducts }: Props): 
   }, [dispatch, products.length, offset, itemsPerPage, currentProduct, similarProducts.length, catalogType, filteredProducts ])
 
   const handlePrevBtnClick = (currentPage: number): void => {
-    if (currentPage >= 1 && currentPage <= pageCount) {
+    if (currentPage > 1 && currentPage <= pageCount) {
       setPage(currentPage - 1);
       setOffset((currentPage - 2) * itemsPerPage);
     }

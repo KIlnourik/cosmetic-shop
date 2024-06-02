@@ -91,8 +91,6 @@ function ProductCardFull({ product }: Props): JSX.Element {
 
   }, [dispatch, isInCart, cartProduct]);
 
-
-
   return (
     <section className="card">
       <div className="card__wrapper">
