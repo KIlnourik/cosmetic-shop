@@ -23,28 +23,28 @@ function Pagination({
     <div className="pagination">
       <div className="pagination__numbers">
         <span className="pagination__number">
-          <a className="pagination__number-link pagination__number-link_current" href="#"
-            aria-label="Первая страница">
+          <button className="pagination__number-link pagination__number-link_current"
+            aria-label="Текущая страница">
             {currentPage}
-          </a>
+          </button>
         </span>
         <span className="pagination__number">
-          <a className="pagination__number-link" href="#" aria-label="Восьмая страница (последняя)">
+          <button className="pagination__number-link" aria-label="Последняя страница" >
             {pageCount}
-          </a>
+          </button>
         </span>
       </div>
       <div className="pagination__arrows">
-        <a className="pagination__arrow" href="#" aria-label="Предыдущая страница" onClick={() => handlePrevBtnClick(currentPage)}>
+        <button className="pagination__arrow" aria-label="Предыдущая страница" onClick={() => handlePrevBtnClick(currentPage)} disabled={currentPage === 1}>
           <svg className="slider-icon" height="12" width="26">
             <use xlinkHref="#arrow-left"></use>
           </svg>
-        </a>
-        <a className="pagination__arrow" href="#" aria-label="Следующая страница" onClick={() => handleNextBtnClick(currentPage)}>
+        </button>
+        <button className="pagination__arrow" aria-label="Следующая страница" onClick={() => handleNextBtnClick(currentPage)} disabled={currentPage === pageCount}>
           <svg className="slider-icon" height="12" width="26">
             <use xlinkHref="#main-arrow"></use>
           </svg>
-        </a>
+        </button>
       </div>
     </div>
   );

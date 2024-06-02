@@ -65,7 +65,7 @@ function CatalogList({ catalogType, currentProduct, filteredProducts }: Props): 
       setPage(currentPage + 1);
       setOffset(currentPage * itemsPerPage);
     }
-  }
+  };
 
   return (
     <>

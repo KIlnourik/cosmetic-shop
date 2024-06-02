@@ -2620,6 +2620,8 @@ picture {
 .pagination__number-link {
   font: normal 500 18px/145% "Mplus", "Arial", sans-serif;
   color: #9a9da0;
+  background-color: transparent;
+  border: none;
   outline: 0;
 }
 
@@ -2629,11 +2631,19 @@ picture {
 
 .pagination__arrow {
   background: 0 0;
+  padding: 0;
   display: flex;
   width: 26px;
   height: 12px;
   cursor: pointer;
   outline: 0;
+  background-color: transparent;
+  border: none;
+}
+
+.pagination__arrow:disabled {
+  opacity: 0.5;
+  cursor: default;
 }
 
 .social-list a {
