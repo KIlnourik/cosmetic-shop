@@ -2,15 +2,16 @@ import { useEffect, useRef } from 'react';
 import { initAccordion, destroyAccordion, onAccorderonTogglerClick } from '../../../utils/utils';
 import { MOBILE_MAX_WIDTH } from '../../../const';
 import { FilterType } from '../../../types/types';
-import CatalogFilterItem from '../catalog-filter-item/catalog-filter-item';
+import AdditionalCatalogFilterItem from '../additional-catalog-filter-item/additional-catalog-filter-item';
 
 type Props = {
   filterType: FilterType;
-  params: string[],
-  handleInputChange: (value: string, filters: FilterType) => void;
+  isSPF: boolean,
+  isBestSeller: boolean,
+  handleAdditionalInputChange: (name: string) => void
 }
 
-function CatalogFilterList({ filterType, params,handleInputChange}: Props): JSX.Element {
+function AdditionalCatalogFilterList({ filterType, isSPF, isBestSeller, handleAdditionalInputChange }: Props): JSX.Element {
   const filterBlockRef = useRef<HTMLDivElement | null>(null);
 
   const setMobileFilterAccordions = () => {
@@ -28,8 +29,6 @@ function CatalogFilterList({ filterType, params,handleInputChange}: Props): JSX.
     setMobileFilterAccordions();
   });
 
-  const filterItems = filterType.items;
-
   return (
     <div className={`filter__block accordion filter__block_${filterType.name}`} ref={filterBlockRef}>
       <div className="filter__block-head">
@@ -40,20 +39,16 @@ function CatalogFilterList({ filterType, params,handleInputChange}: Props): JSX.
       </div>
       <div className="accordion__content">
         <ul className="filter__list accordion__inner">
-          {Object.entries(filterItems).map(([key, value], index) => (
-            <CatalogFilterItem key={`${filterType.name}${index}`}
-              id={index}
-              params={params}
-              filterItemValue={key}
-              filterItemTitle={value}
-              filters={filterType}
-              handleInputChange={handleInputChange}
-            />
-          ))}
+          <AdditionalCatalogFilterItem
+            isSPF={isSPF}
+            isBestSeller={isBestSeller}
+            filters={filterType}
+            handleAdditionalInputChange={handleAdditionalInputChange}
+          />
         </ul>
       </div>
     </div>
   );
 }
 
-export default CatalogFilterList;
+export default AdditionalCatalogFilterList;

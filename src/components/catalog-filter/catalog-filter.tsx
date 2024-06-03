@@ -1,7 +1,8 @@
-import { SyntheticEvent, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { AdditionalFilters, CareTypes, FILTER_HIDDEN_CLASS, SkinTypes } from '../../const';
 import CatalogFilterList from './catalog-filter-list/catalog-filter-list';
 import { FilterType } from '../../types/types';
+import AdditionalCatalogFilterList from './additional-catalog-filter-list/additional-catalog-filter-list';
 
 
 type Props = {
@@ -10,10 +11,10 @@ type Props = {
   isBestSeller: boolean,
   skinTypes: string[],
   categories: string[]
-  handleInputChange?: (value: string, filters: FilterType) => void,
-  handleSubmit: (evt: SyntheticEvent<HTMLFormElement>) => void,
+  handleInputChange: (value: string, filters: FilterType) => void,
+  // handleSubmit: (evt: SyntheticEvent<HTMLFormElement>) => void,
   handleAdditionalInputChange: (name: string) => void
-  handleResetFilter: (evt: SyntheticEvent) => void,
+  // handleResetFilter: (evt: SyntheticEvent) => void,
 };
 
 function CatalogFilter({
@@ -22,9 +23,9 @@ function CatalogFilter({
   skinTypes,
   categories,
   handleInputChange,
-  handleSubmit,
+  // handleSubmit,
   handleAdditionalInputChange,
-  handleResetFilter
+  // handleResetFilter
 }: Props): JSX.Element {
 
   const closeBtnRef = useRef<HTMLButtonElement | null>(null);
@@ -57,10 +58,10 @@ function CatalogFilter({
     document.addEventListener('click', onFilterOutsideClick);
   }
 
-  const handleFormSubmit = (evt: SyntheticEvent<HTMLFormElement>) => {
-    handleSubmit(evt);
-    handleClose();
-  }
+  // const handleFormSubmit = (evt: SyntheticEvent<HTMLFormElement>) => {
+  //   handleSubmit(evt);
+  //   handleClose();
+  // }
 
   return (
     <div className={`catalog-head catalog-head_filter-inited ${filterOpen ? '' : FILTER_HIDDEN_CLASS}`} ref={catalogHeadRef} >
@@ -73,7 +74,7 @@ function CatalogFilter({
       </div>
       <div className="catalog-head__filter">
         <div className="wrapper">
-          <form className="filter" action="#" method="#" onSubmit={handleFormSubmit}>
+          <form className="filter" action="#" method="#">
             <div className="filter__inner">
               {CareTypes.map((filterType, index) => (
                 <CatalogFilterList
@@ -88,19 +89,19 @@ function CatalogFilter({
                 params={skinTypes}
                 handleInputChange={handleInputChange}
               />
-              <CatalogFilterList
+              <AdditionalCatalogFilterList
                 filterType={AdditionalFilters}
                 isSPF={isSPF}
                 isBestSeller={isBestSeller}
                 handleAdditionalInputChange={handleAdditionalInputChange}
               />
-              <div className="filter__buttons">
+              {/* <div className="filter__buttons">
                 <button className="filter__button"
                   id="filter-submit"
                   type="submit"
                 >Применить</button>
                 <button className="filter__button" id="filter-reset" type="reset" onClick={handleResetFilter}>Сбросить</button>
-              </div>
+              </div> */}
             </div>
           </form>
         </div>

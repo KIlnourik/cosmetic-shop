@@ -23,15 +23,8 @@ function CatalogPage(): JSX.Element {
   const [skinTypes, setSkinTypes] = useState(searchParams.getAll('skinType[]') || []);
   const [categories, setCategories] = useState(searchParams.getAll('categorie') || []);
 
-  const queryParams = new URLSearchParams({});
-
   useEffect(() => {
-    dispatch(fetchProductsAction(searchParams));
-  }, [dispatch, searchParams])
-
-  const handleSubmit = (evt: SyntheticEvent<HTMLFormElement>) => {
-    evt.preventDefault();
-
+    const queryParams = new URLSearchParams({});
     if (isSPF) queryParams.append('isSPF', 'true');
     if (isBestSeller) queryParams.append('isBestSeller', 'true');
     if (skinTypes.length) skinTypes.map(skinType => queryParams.append('skinType[]', skinType));
@@ -39,25 +32,37 @@ function CatalogPage(): JSX.Element {
     setSearchParams(queryParams);
 
     dispatch(fetchProductsAction(searchParams));
-  };
+  }, [categories, dispatch, isSPF, isBestSeller, skinTypes, categories, searchParams])
 
-  const handleResetFilter = (evt: SyntheticEvent) => {
-    evt.preventDefault();
-    setSPF(false);
-    setBestSeller(false);
-    setSkinTypes([]);
-    setCategories([]);
-    setSearchParams();
-    dispatch(fetchProductsAction(searchParams));
-  };
+  // console.log(categories);
+
+  // const handleSubmit = (evt: SyntheticEvent<HTMLFormElement>) => {
+  //   evt.preventDefault();
+  //   if (isSPF) queryParams.append('isSPF', 'true');
+  //   if (isBestSeller) queryParams.append('isBestSeller', 'true');
+  //   if (skinTypes.length) skinTypes.map(skinType => queryParams.append('skinType[]', skinType));
+  //   if (categories.length) categories.map(categorie => queryParams.append('categorie[]', categorie));
+  //   setSearchParams(queryParams);
+  //   dispatch(fetchProductsAction(searchParams));
+  // };
+
+  // const handleResetFilter = (evt: SyntheticEvent) => {
+  //   evt.preventDefault();
+  //   setSPF(false);
+  //   setBestSeller(false);
+  //   setSkinTypes([]);
+  //   setCategories([]);
+  //   setSearchParams();
+  //   dispatch(fetchProductsAction(searchParams));
+  // };
 
   const handleInputChange = (value: string, filterType: FilterType) => {
     switch (filterType.name) {
       case 'face':
-        setCategories(getFilterItems(value as string, categories));
+        setCategories(getFilterItems(value, categories));
         break;
       case 'body':
-        setCategories(getFilterItems(value as string, categories));
+        setCategories(getFilterItems(value, categories));
         break;
       case 'skinType':
         Object.entries(SkinTypes.items).map(([key, objValue]) => {
@@ -92,9 +97,9 @@ function CatalogPage(): JSX.Element {
             skinTypes={skinTypes}
             categories={categories}
             handleInputChange={handleInputChange}
-            handleSubmit={handleSubmit}
+            // handleSubmit={handleSubmit}
             handleAdditionalInputChange={handleAdditionalInputChange}
-            handleResetFilter={handleResetFilter}
+            // handleResetFilter={handleResetFilter}
           />
           {
             (filteredProducts && !isFilteredProductsLoading)
